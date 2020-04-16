@@ -3,81 +3,97 @@
 
 <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
 
-  <title>Coming Soon - Start Bootstrap Theme</title>
+<title>Coming Soon - Start Bootstrap Theme</title>
 
-  {%  load static %}
-  <!-- Bootstrap core CSS -->
-  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+{%  load static %}
+<!-- Bootstrap core CSS -->
+<link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
-  <!-- Custom fonts for this template -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-  <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+<!-- Custom fonts for this template -->
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+<link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
 
-  <!-- Custom styles for this template -->
-  <link href="{% static 'css/coming-soon.min.css' %}" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="{% static 'css/coming-soon.min.css' %}" rel="stylesheet">
 
 </head>
 
 <body>
 
-  <div class="overlay"></div>
-  <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
-    <source src="{% static 'mp4/bg.mp4' %}" type="video/mp4">
-  </video>
+<div class="overlay"></div>
+<video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+<source src="{% static 'mp4/bg.mp4' %}" type="video/mp4">
+</video>
 
-  <div class="masthead">
-    <div class="masthead-bg"></div>
-    <div class="container h-100">
-      <div class="row h-100">
-        <div class="col-12 my-auto">
-          <div class="masthead-content text-white py-5 py-md-0">
-            <h1 class="mb-3">Car Recognition System</h1>
-              <p class="mb-5">We try to recognize the correct car </br>
-              <strong>From</strong>! Apr. 2020!</p>
-            <div class="input-group input-group-newsletter">
-              <input type="email" class="form-control" placeholder="위치검색" aria-label="위치검색" aria-describedby="basic-addon">
-              <div class="input-group-append">
-                <button class="btn btn-secondary" type="button">Search</button>
-              </div>
-            </div>
+<div class="masthead">
+<div class="masthead-bg"></div>
+<div class="container h-100">
+  <div class="row h-100">
+    <div class="col-12 my-auto">
+      <div class="masthead-content text-white py-5 py-md-0">
+        <h1 class="mb-3">Car Recognition System</h1>
+          <p class="mb-5">We try to recognize the correct car </br>
+          <strong>From</strong>! Apr. 2020!</p>
+        <div class="input-group input-group-newsletter">
+          <input type="button" value="위치검색" class="form-control" data-target="#search-modal" data-toggle="modal">
+          <div class="input-group-append">
+            <button class="btn btn-secondary" type="button">Search</button>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+</div>
 
-  <div class="social-icons">
-    <ul class="list-unstyled text-center mb-0">
-      <li class="list-unstyled-item">
-        <a href="#">
-          <i class="fab fa-twitter"></i>
-        </a>
-      </li>
-      <li class="list-unstyled-item">
-        <a href="#">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-      </li>
-      <li class="list-unstyled-item">
-        <a href="#">
-          <i class="fab fa-instagram"></i>
-        </a>
-      </li>
-    </ul>
+<div class="social-icons">
+<ul class="list-unstyled text-center mb-0">
+  <li class="list-unstyled-item">
+    <a href="#">
+      <i class="fab fa-twitter"></i>
+    </a>
+  </li>
+  <li class="list-unstyled-item">
+    <a href="#">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+  </li>
+  <li class="list-unstyled-item">
+    <a href="#">
+      <i class="fab fa-instagram"></i>
+    </a>
+  </li>
+</ul>
+</div>
+
+<div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title" id="myModalLabel">위치검색</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   </div>
+  <div class="modal-body">
+    <img src="" id="sample" style="width:50%; height:50%">
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary">검색</button>
+  </div>
+</div>
+</div>
+</div>
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-
-  <!-- Custom scripts for this template -->
-  <script src="{% static 'js/coming-soon.min.js' %}"></script>
+<!-- Custom scripts for this template -->
+<script src="{% static 'js/coming-soon.min.js' %}"></script>
 
 </body>
 
