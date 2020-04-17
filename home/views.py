@@ -8,3 +8,12 @@ def index(req) :
     }
 
     return render(req, "index.html", context=context)
+
+def login(req):
+    return render(req, "login.html")
+
+def register(req):
+    return render(req, "register.html")
+
+def mypage(req):
+    return render(req, "mypage.html")
