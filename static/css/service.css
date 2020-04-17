@@ -1,0 +1,57 @@
+     
+        *{
+            margin: 0px;
+            padding: 0px;
+            border-collapse: collapse;
+        }
+        
+        .service_title{
+            margin-left: 50px; 
+            color:cornflowerblue; 
+            margin-bottom: 30px; 
+            margin-top: 30px;
+        }    
+        
+        /*search box css start here*/
+        .search-sec{
+            background: #F8F8F8;
+            padding: 2.5rem;
+        }
+        .search-slt{
+            display: block;
+            width: 100%;
+            font-size: 1.5rem;
+            line-height: 1.5;
+            color: #55595c;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+/*
+            height: calc(3rem + 2px) !important;
+            border-radius:0;
+*/
+        }
+        .wrn-btn{
+            width:100%;
+            font-size: 16px;
+            font-weight: 400;
+            text-transform: capitalize;
+/*
+            height: calc(3rem + 2px) !important;
+            border-radius:0;
+*/
+        }
+        
+        #tab_button{
+            font-size: 18px;
+            width: 100%;
+            border-radius: 0;
+            border-bottom: 0.4px solid #bbbbbb;
+            line-height: 40px;
+        }
+
+        #result_div{
+/*            border: 1px solid black;*/
+            font-size: 18px;
+        }
+        
