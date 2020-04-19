@@ -12,6 +12,10 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
+
 </head>
 
 
@@ -43,22 +47,30 @@
 
         <h1>{{ cctv }}</h1>
 
+
+
+
         <br>
 
         <div class="container">
             <div class="row search-sec">
                 <form action="recog" method="post">
-                    <select style="width: 200px;height: 30px;" name="cctv">
-                        <option>cctv1</option>
-                        <option>cctv2</option>
-                        <option>cctv3</option>
-                        <option>cctv4</option>
+
+                    <select id="selectBox" style="width: 200px;height: 30px;" name="cctv">
+
+                        <option id="cctv1">cctv1</option>
+                        <option id="cctv2">cctv2</option>
+                        <option id="cctv3">cctv3</option>
+                        <option id="cctv4">cctv4</option>
                     </select>
 
                     <input class="btn-primary" type="submit" value="submit">
                 </form>
             </div>
         </div>
+
+
+
 
         <div class="container">
 
@@ -93,8 +105,7 @@
         <br>
 	</footer>
 
-</body>
-</html>
 
-    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
+</body>
+
+</html>
