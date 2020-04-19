@@ -79,7 +79,7 @@
                     <div class="jumbotron_recog">
                         <h1 class="text-center">차량 인식 서비스</h1>
                         <p class="text-center">CCTV에 촬영된 차량 분류 및 재식별하는 프로그램입니다.</p>
-                        <p class="text-center"><a class="btn btn-lg btn-primary" data-target="#modal1" data-toggle="modal">서비스 시작하기</a></p>
+                        <p class="text-center"><a class="btn btn-lg btn-primary" data-target="#recogModal" data-toggle="modal">인식 서비스 시작하기</a></p>
                     </div>
 			</div>
     </div>
@@ -87,9 +87,9 @@
     <div class="tab-pane fade in" id="Statistic" style="width: 100%;">
      <div class="row main">
                     <div class="jumbotron_chart">
-                        <h1 class="text-center">차량 식별 통계 서비스</h1>
+                        <h1 class="text-center">인식 통계 서비스</h1>
                         <p class="text-center">식별된 차량의 통계를 그래프를 통해 보여줍니다.</p>
-                        <p class="text-center"><a class="btn btn-lg btn-primary" data-target="#modal2" data-toggle="modal">서비스 시작하기</a></p>
+                        <p class="text-center"><a class="btn btn-lg btn-primary" data-target="#statisticModal" data-toggle="modal">통계 서비스 시작하기</a></p>
                     </div>
         </div>
     </div>
@@ -102,11 +102,13 @@
 				<div class="col-sm-4">
 					<h4>시스템 목적</h4>
 					<p>CCTV 상에서 찾고자 하는 차량을 딥러닝 기반 기술로 자동으로 재식별하여 대상이 되는 차량을 빠른 속도로 추적하여 범죄 수사나 차량 추적에 도움이 될 수 있음</p>
-				</div>
+				<br>
+                </div>
 				<div class="col-sm-4">
 					<h4>프로그램 사용법</h4>
 					<p>프로그램 사용법은 다음과 같은 순서로 진행합니다.</p>
-				</div>
+				<br>
+                </div>
 				<div class="col-sm-4">
 					<h4>서비스</h4>
                     <ol>
@@ -131,11 +133,37 @@
 	</footer>
 
 		<div class="row">
-			<div class="modal" id="modal1" tabindex="-1">
+			<div class="modal" id="recogModal" tabindex="-1">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							시스템 특징
+							차량 인식 서비스
+							<button class="close" data-dismiss="modal">&times;</button>
+						</div>
+						<div class="modal-body" style="text-align: center;">
+							<form action="{% url 'recog' %}" method="post">
+                               {% csrf_token %}
+                                <select name="cctv">
+                                    <option>cctv1</option>
+                                    <option>cctv2</option>
+                                    <option>cctv3</option>
+                                    <option>cctv4</option>
+                                </select>
+                                <input type="submit" name="제출">
+                            <!--	<img src="images/cctv.jpg" id="imagepreview" style="width: 100px;height: 100px;">  -->
+                            </form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="modal" id="statisticModal" tabindex="-1">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							인식 통계 서비스
 							<button class="close" data-dismiss="modal">&times;</button>
 						</div>
 						<div class="modal-body" style="text-align: center;">
