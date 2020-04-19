@@ -28,14 +28,26 @@
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li><a href="{% url 'index' %}">Home</a></li>
-						<li class="active"><a href="{% url 'recognition' %}">Service</a></li>
+						<li class="active"><a href="{% url 'index' %}">
+                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                            Home
+                        </a></li>
+						<li><a href="{% url 'recognition' %}">
+                            <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
+                            Service
+                        </a></li>
 					</ul>
-						
-				
+
+
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="{% url 'login' %}">Login</a></li>
-						<li><a href="{% url 'register' %}">Register</a></li>
+						<li><a href="{% url 'login' %}">
+                            Login
+                            <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                        </a></li>
+						<li><a href="{% url 'register' %}">
+                            Register
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        </a></li>
 					</ul>
 				</div>
 			</div>
@@ -47,16 +59,16 @@
 
         <div class="container">
             <div class="row search-sec">
-                <form action="recog" method="post">
-                    <select style="width: 200px;height: 30px;" name="cctv">
-                        <option>cctv1</option>
-                        <option>cctv2</option>
-                        <option>cctv3</option>
-                        <option>cctv4</option>
-                    </select>
-
-                    <input class="btn-primary" type="submit" value="submit">
-                </form>
+               <form action="{% url 'recog' %}" method="post">
+                   {% csrf_token %}
+                   <select name="cctv">
+                       <option>cctv1</option>
+                       <option>cctv2</option>
+                       <option>cctv3</option>
+                       <option>cctv4</option>
+                   </select>
+                   <input type="submit" name="제출">
+               </form>
             </div>
         </div>
 
@@ -79,6 +91,7 @@
             </div>
 
         </div>
+
         <br>
     
     <footer style="background-color: #F8F8F8">
@@ -92,7 +105,6 @@
 			</div>
         <br>
 	</footer>
-
 </body>
 </html>
 
