@@ -40,9 +40,9 @@
 				</div>
 			</div>
 		</nav>
-
-        <h1>{{ cctv }}</h1>
-
+        {% if cctv %}
+          <h1>{{ cctv }}</h1>
+        {% endif %}
         <br>
 
         <div class="container">
