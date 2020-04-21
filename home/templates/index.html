@@ -44,14 +44,26 @@
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="{% url 'index' %}">Home</a></li>
-						<li><a href="{% url 'recognition' %}">Service</a></li>
+						<li class="active"><a href="{% url 'index' %}">
+                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                            Home
+                        </a></li>
+						<li><a href="{% url 'recognition' %}">
+                            <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
+                            Service
+                        </a></li>
 					</ul>
 						
 				
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="{% url 'login' %}">Login</a></li>
-						<li><a href="{% url 'register' %}">Register</a></li>
+						<li><a href="{% url 'login' %}">
+                            Login
+                            <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                        </a></li>
+						<li><a href="{% url 'register' %}">
+                            Register
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        </a></li>
 					</ul>
 				</div>
 			</div>
@@ -60,12 +72,18 @@
 	         <ul class="nav nav-tabs">
               <li class="nav-item active">
                   
-                  <a class="nav-link" data-toggle="tab" href="#Recognize" style="color: black; font-size:15px; margin-top: 15px">인식</a>
+                  <a class="nav-link" data-toggle="tab" href="#Recognize" style="color: black; font-size:15px; margin-top: 15px">
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                      인식
+                  </a>
                   
               </li>
 
               <li class="nav-item in">
-                <a class="nav-link" data-toggle="tab" href="#Statistic" style="color: black; font-size:15px; margin-top: 15px">통계</a>
+                <a class="nav-link" data-toggle="tab" href="#Statistic" style="color: black; font-size:15px; margin-top: 15px">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                    통계
+                </a>
                
               </li>
             </ul>
@@ -142,17 +160,12 @@
 							차량 인식 서비스
 							<button class="close" data-dismiss="modal">&times;</button>
 						</div>
-						<div class="modal-body" style="text-align: center;">
+						<div class="modal-body" style="width:450px;height:540px;text-align: center;background-image: url({% static 'images/map.png' %})">
 							<form action="{% url 'recog' %}" method="post">
                                {% csrf_token %}
-                                <select name="cctv">
-                                    <option>cctv1</option>
-                                    <option>cctv2</option>
-                                    <option>cctv3</option>
-                                    <option>cctv4</option>
-                                </select>
-                                <input type="submit" name="제출">
-                            <!--	<img src="images/cctv.jpg" id="imagepreview" style="width: 100px;height: 100px;">  -->
+                                <input type="radio" value="cctv1" name="cctv" required>cctv1
+                                <input type="radio" value="cctv2" name="cctv">cctv2
+                                <input type="submit" value="submit">
                             </form>
 						</div>
 					</div>
@@ -169,10 +182,19 @@
 							<button class="close" data-dismiss="modal">&times;</button>
 						</div>
 						<div class="modal-body" style="text-align: center;">
-							선택창
-                            <a class="btn btn-primary" href="{% url 'recognition' %}">버튼</a>
-						<!--	<img src="images/cctv.jpg" id="imagepreview" style="width: 100px;height: 100px;">  -->
-						</div>
+						    <form action="{% url 'stat' %}" method="post">
+                               {% csrf_token %}
+                                <select name="cctv">
+                                    <option></option>
+                                    <option>cctv1</option>
+                                    <option>cctv2</option>
+                                    <option>cctv3</option>
+                                    <option>cctv4</option>
+                                </select>
+                                <input type="submit" name="제출">
+                            <!--	<img src="images/cctv.jpg" id="imagepreview" style="width: 100px;height: 100px;">  -->
+                            </form>
+                        </div>
 					</div>
 				</div>
 			</div>

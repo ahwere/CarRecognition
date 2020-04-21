@@ -12,10 +12,6 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
-
 </head>
 
 
@@ -32,45 +28,49 @@
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li><a href="{% url 'index' %}">Home</a></li>
-						<li class="active"><a href="{% url 'recognition' %}">Service</a></li>
+						<li class="active"><a href="{% url 'index' %}">
+                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                            Home
+                        </a></li>
+						<li><a href="{% url 'recognition' %}">
+                            <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
+                            Service
+                        </a></li>
 					</ul>
-						
-				
+
+
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="{% url 'login' %}">Login</a></li>
-						<li><a href="{% url 'register' %}">Register</a></li>
+						<li><a href="{% url 'login' %}">
+                            Login
+                            <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                        </a></li>
+						<li><a href="{% url 'register' %}">
+                            Register
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        </a></li>
 					</ul>
 				</div>
 			</div>
 		</nav>
-
-        <h1>{{ cctv }}</h1>
-
-
-
-
+        {% if cctv %}
+          <h1>{{ cctv }}</h1>
+        {% endif %}
         <br>
 
         <div class="container">
             <div class="row search-sec">
-                <form action="recog" method="post">
-
-                    <select id="selectBox" style="width: 200px;height: 30px;" name="cctv">
-
-                        <option id="cctv1">cctv1</option>
-                        <option id="cctv2">cctv2</option>
-                        <option id="cctv3">cctv3</option>
-                        <option id="cctv4">cctv4</option>
-                    </select>
-
-                    <input class="btn-primary" type="submit" value="submit">
-                </form>
+               <form action="{% url 'recog' %}" method="post">
+                   {% csrf_token %}
+                   <select name="cctv">
+                       <option>cctv1</option>
+                       <option>cctv2</option>
+                       <option>cctv3</option>
+                       <option>cctv4</option>
+                   </select>
+                   <input type="submit" name="제출">
+               </form>
             </div>
         </div>
-
-
-
 
         <div class="container">
 
@@ -85,12 +85,13 @@
 
             <div class="col-sm-6" style="text-align:center">
 
-                    <iframe src="https://youtube.com/embed/_YDqoaTAtww"
+                    <iframe src="https://youtube.com/embed/QG5j9gksYFQ"
                     style="width: 600px; height: 370px; margin-top: 5px; display:inline;" framborder="0" allowfullscreen></iframe>
 
             </div>
 
         </div>
+
         <br>
     
     <footer style="background-color: #F8F8F8">
@@ -104,8 +105,8 @@
 			</div>
         <br>
 	</footer>
-
-
 </body>
-
 </html>
+
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
