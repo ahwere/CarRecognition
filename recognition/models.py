@@ -1,9 +1,15 @@
 from django.db import models
+from car.models import Car
 # Create your models here.
 
+class Cctv(models.Model) :
+    video_link = models.CharField(max_length=200)
+    location = models.CharField(max_length=100)
+    start_time = models.DateTimeField()
+
 class CctvLog(models.Model) :
-    username = models.ForeignKey('auth.User', to_field='username', on_delete=models.CASCADE)
-    location = models.CharField(max_length=200)
-    time = models.DateTimeField()
+    car_model = models.ForeignKey(Car, to_field='model', on_delete=models.CASCADE, default='')
     color = models.CharField(max_length=20)
+    appearance_time = models.DateTimeField()
     direction = models.TextChoices('front', 'back')
+    cctv_id = models.ForeignKey(Cctv, to_field='id', on_delete=models.CASCADE, default='')

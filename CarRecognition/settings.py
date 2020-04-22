@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'home',
     'recognition',
     'car',
+    'django_seed',
 ]
 
 MIDDLEWARE = [
