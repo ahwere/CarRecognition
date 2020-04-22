@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>커피탄 리</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+    {% load static %}
+	<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
+	<link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+
+</head>
+<body>
+	<section class="login-form">
+        
+        <div style="text-align: center"> 
+            <a class="btn" href="{% url 'index' %}">돌아가기</a>
+        </div>
+        
+        <h1>로그인</h1>
+        <form action="">
+            <div class="int-area">
+                <input type="text" name="id" id="id" autocomplete="off" required>
+                <label for="id">아이디</label>
+            </div>
+            <div class="int-area">
+                <input type="password" name="pw" id="pw" autocomplete="off" required>
+                <label for="pw">비밀번호</label>
+            </div>
+            <div class="btn-area">
+                <button id="btn" type="submit">로그인</button>
+            </div>
+        </form>
+        <div class="caption">
+            <a href="#">비밀번호를 잊어버리셨습니까?</a>
+        </div>
+    </section>
+    
+    <script>
+        let id= $('#id');
+        let pw= $('#pw');
+        let btn= $('#btn');
+        
+        $(btn).on('click', function(){
+             if($(id).val() == ""){
+                $(id).next('label').addClass('warning');
+                setTimeout(function(){
+                	$('label').removeClass('warning');
+                },1400);
+            }
+            else if($(pw).val() == ""){
+                $(pw).next('label').addClass('warning');
+                setTimeout(function(){
+                	$('label').removeClass('warning');
+                },1400);
+            }
+        });
+    </script>
+</body>
+</html>
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
