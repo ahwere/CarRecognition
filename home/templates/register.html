@@ -5,7 +5,7 @@
 {#	<meta charset="utf-8">#}
 {#    {% load static %}#}
 {##}
-{#	<meta name="viewport" content="width=device-width, initial-scale=1">	#}
+{#	<meta name="viewport" content="width=device-width, initial-scale=1">#}
 {#	<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">#}
 {#	<link rel="stylesheet" href="{% static 'css/login.css' %}">#}
 {#    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">#}
@@ -13,11 +13,11 @@
 {#</head>#}
 {#<body>#}
 {#	<section class="login-form">#}
-{#        #}
-{#        <div style="text-align: center"> #}
+{##}
+{#        <div style="text-align: center">#}
 {#            <a class="btn" href="{% url 'index' %}">돌아가기</a>#}
 {#        </div>#}
-{#        #}
+{##}
 {#        <h1>회원가입</h1>#}
 {#        <form action="">#}
 {#            <div class="int-area">#}
@@ -41,14 +41,14 @@
 {#            </div>#}
 {#        </form>#}
 {#    </section>#}
-{#    #}
+{##}
 {#    <script>#}
 {#        let id= $('#id');#}
 {#        let pw= $('#pw');#}
 {#        let pwChk= $('#pwChk');#}
 {#        let name= $('#name');#}
 {#        let btn= $('#btn');#}
-{#        #}
+{##}
 {#        $(btn).on('click', function(){#}
 {#             if($(id).val() == ""){#}
 {#                $(id).next('label').addClass('warning');#}
@@ -81,3 +81,10 @@
 {##}
 {#<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>#}
 {#	<script src="{% static 'vendor/bootstrap/js/bootstrap.js'%}"></script>#}
+
+<h1>Sign Up</h1>
+<form class="site-form" action="{'% url 'home:register' %'}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Signup">
+</form>
