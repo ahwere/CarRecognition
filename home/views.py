@@ -1,5 +1,9 @@
 from django.shortcuts import render
-
+import json
+from django.views import View
+from django.http import JsonResponse
+from django.contrib.auth.models import User
+from home.forms import PostForm
 # Create your views here.
 
 def index(req) :
