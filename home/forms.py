@@ -1,10 +1,8 @@
 from django import forms
-from django.contrib.auth.models import User
+from home.models import Profile
 
-class PostForm(forms.ModelForm):
+class ProfileForm(forms.ModelForm):
 
     class Meta:
-        model = User
-        fields = ('username', 'password', 'first_name', 'is_staff', )
-        # model = Profile
-        # fields = ('user', 'permission',)
+        model = Profile
+        fields = ('name',)

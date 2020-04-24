@@ -1,6 +1,8 @@
 from django.db import models
 from recognition.models import Cctv
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 # Create your models here.
 
 class UserLog(models.Model) :
@@ -10,3 +12,24 @@ class UserLog(models.Model) :
 
     class Meta:
         db_table = "UserLog"
+
+class Profile(models.Model) :
+    class MemberPermission(models.TextChoices):
+        ADMIN = 'admin'
+        MEMBER = 'member'
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=20)
+    permission = models.CharField(MemberPermission.choices, default=MemberPermission.MEMBER, max_length=10)
+
+    class Meta:
+        db_table = 'Profile'
+
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()
