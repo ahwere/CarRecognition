@@ -1,84 +1,88 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>커피탄 리</title>
-	<meta charset="utf-8">
+    <title>커피탄 리</title>
+    <meta charset="utf-8">
     {% load static %}
 
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
-	<link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
 
 </head>
 <body>
-	<section class="login-form">
+<section class="login-form">
 
-        <div style="text-align: center">
-            <a class="btn" href="{% url 'home:index' %}">돌아가기</a>
+    <div style="text-align: center">
+        <a class="btn" href="{% url 'home:index' %}">돌아가기</a>
+    </div>
+
+    <h1>회원가입</h1>
+    <form action="/register/" method="post">
+        {% csrf_token %}
+        <div class="int-area">
+            <input type="text" name="username" id="id" autocomplete="off" required>
+            <label for="id">아이디</label>
         </div>
+        <div class="int-area">
+            <input type="password" name="password1" id="password1" autocomplete="off" required>
+            <label for="pw">비밀번호</label>
+        </div>
+        <div class="int-area">
+            <input type="password" name="password2" id="password2" autocomplete="off" required>
+            <label for="pwChk">비밀번호확인</label>
+        </div>
+        <div class="int-area">
+            <input type="text" name="name" id="name" autocomplete="off" required>
+            <label for="name">이름</label>
+        </div>
+        <div class="btn-area">
+            <button id="btn" type="submit">회원가입</button>
+        </div>
+    </form>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <script>alert("{{ message }}")</script>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</section>
 
-        <h1>회원가입</h1>
-        <form action="/register/" method="post">
-            {% csrf_token %}
-            <div class="int-area">
-                <input type="text" name="username" id="id" autocomplete="off" required>
-                <label for="id">아이디</label>
-            </div>
-            <div class="int-area">
-                <input type="password" name="password1" id="password1" autocomplete="off" required>
-                <label for="pw">비밀번호</label>
-            </div>
-            <div class="int-area">
-                <input type="password" name="password2" id="password2" autocomplete="off" required>
-                <label for="pwChk">비밀번호확인</label>
-            </div>
-            <div class="int-area">
-                <input type="text" name="name" id="name" autocomplete="off" required>
-                <label for="name">이름</label>
-            </div>
-            <div class="btn-area">
-                <button id="btn" type="submit">회원가입</button>
-            </div>
-        </form>
-    </section>
+<script>
+    let id = $('#id');
+    let pw = $('#pw');
+    let pwChk = $('#pwChk');
+    let name = $('#name');
+    let btn = $('#btn');
 
-    <script>
-        let id= $('#id');
-        let pw= $('#pw');
-        let pwChk= $('#pwChk');
-        let name= $('#name');
-        let btn= $('#btn');
-
-        $(btn).on('click', function(){
-             if($(id).val() == ""){
-                $(id).next('label').addClass('warning');
-                setTimeout(function(){
-                	$('label').removeClass('warning');
-                },1400);
-            }
-            else if($(pw).val() == ""){
-                $(pw).next('label').addClass('warning');
-                setTimeout(function(){
-                	$('label').removeClass('warning');
-                },1400);
-            }
-            else if($(pwChk).val() == ""){
-                $(pwChk).next('label').addClass('warning');
-                setTimeout(function(){
-                	$('label').removeClass('warning');
-                },1400);
-            }
-            else if($(name).val() == ""){
-                $(name).next('label').addClass('warning');
-                setTimeout(function(){
-                	$('label').removeClass('warning');
-                },1400);
-            }
-        });
-    </script>
+    $(btn).on('click', function () {
+        if ($(id).val() == "") {
+            $(id).next('label').addClass('warning');
+            setTimeout(function () {
+                $('label').removeClass('warning');
+            }, 1400);
+        } else if ($(pw).val() == "") {
+            $(pw).next('label').addClass('warning');
+            setTimeout(function () {
+                $('label').removeClass('warning');
+            }, 1400);
+        } else if ($(pwChk).val() == "") {
+            $(pwChk).next('label').addClass('warning');
+            setTimeout(function () {
+                $('label').removeClass('warning');
+            }, 1400);
+        } else if ($(name).val() == "") {
+            $(name).next('label').addClass('warning');
+            setTimeout(function () {
+                $('label').removeClass('warning');
+            }, 1400);
+        }
+    });
+</script>
 </body>
 </html>
 
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="{% static 'vendor/bootstrap/js/bootstrap.js'%}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
