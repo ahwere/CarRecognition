@@ -7,9 +7,15 @@ class Cctv(models.Model) :
     location = models.CharField(max_length=100)
     start_time = models.DateTimeField()
 
+    class Meta:
+        db_table = "Cctv"
+
 class CctvLog(models.Model) :
     car_model = models.ForeignKey(Car, to_field='model', on_delete=models.CASCADE, default='')
     color = models.CharField(max_length=20)
     appearance_time = models.DateTimeField()
     direction = models.TextChoices('front', 'back')
     cctv_id = models.ForeignKey(Cctv, to_field='id', on_delete=models.CASCADE, default='')
+
+    class Meta:
+        db_table = "CctvLog"
