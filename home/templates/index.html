@@ -53,13 +53,13 @@
             <ul class="nav navbar-nav navbar-right">
 
                 {% if user_name == None %}
-                    <li><a href="{% url 'home:login' %}">
-                        Login
-                    </a></li>
-                    <li><a href="{% url 'home:register' %}">Register</a></li>
+                <li><a href="{% url 'home:login' %}">
+                    Login
+                </a></li>
+                 <li><a href="{% url 'home:register' %}">Register</a></li>
                 {% else %}
-                    <li><a href="{% url 'home:mypage' %}">{{ user_name.name }}</a></li>
-                    <li><a href="{% url 'home:logout' %}">Logout</a></li>
+                 <li><a href="{% url 'home:mypage' %}">{{ user_name.name }}</a></li>
+                 <li><a href="{% url 'home:logout' %}">Logout</a></li>
                 {% endif %}
             </ul>
         </div>

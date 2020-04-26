@@ -2,6 +2,7 @@
 <html>
 
 	<head>
+
 		<meta charset="URF-8">
 		<meta name = "viewport" content= "width = device-width", initial-scale="1">
 		<title>차량 인식 서비스</title>
@@ -132,6 +133,7 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 
 
         </style>
+
       		<nav class="nav navbar-default">
 			<div class="container-fluid">
 				<div class="nav-header">
@@ -140,18 +142,22 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="{% url 'index' %}">커피탄 리</a>
+					<a class="navbar-brand" href="{% url 'home:index' %}">커피탄 리</a>
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li><a href="{% url 'index' %}">Home</a></li>
+						<li><a href="{% url 'home:index' %}">Home</a></li>
 						<li><a href="{% url 'recognition' %}">Service</a></li>
 					</ul>
 						
 				
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="{% url 'login' %}">Login</a></li>
-						<li><a href="{% url 'register' %}">Register</a></li>
+                    {% if user_name == None %}
+
+                    {% else %}
+                    <li><a href="{% url 'home:mypage' %}">{{ user_name.name }}</a></li>
+                    <li><a href="{% url 'home:logout' %}">Logout</a></li>
+                    {% endif %}
 					</ul>
 				</div>
 			</div>
@@ -191,17 +197,22 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
             <div class="row main">
                 <div class="col-sm-8 col-sm-offset-2">
 				<h3>회원 정보 수정</h3>
-				<hr class="col-sm-12" style="color:white">
-					<form class="" method="post" action="#">
 
+                    <div class = "error_message">
+                        {{ error }}
+                    </div>
+
+				<hr class="col-sm-12" style="color:white">
+					<form class="update_form" method="post" action="{% url 'home:update' %}">
+                        {% csrf_token %}
 
 						<div class="form-group">
 							<label class="cols-sm-2 control-label">아이디(ID)</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 
-									<span>&nbsp;&nbsp;&nbsp;bgg01578</span>
-<!--									<input type="text" class="form-control" name="id" id="id" value="bgg01578" placeholder="아이디를 입력하세요."/>-->
+									<span>&nbsp;&nbsp;&nbsp;{{user_name.user}}</span>
+								    <input type="hidden" class="form-control" name="id" id="id" value="{{user_name.user}}"/>
 								</div>
 							</div>
 						</div>
@@ -211,27 +222,37 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fas fa-user fa"></i></span>
-									<input type="text" class="form-control" name="name" id="name"  placeholder="이름을 입력하세요."/>
+									<input type="text" class="form-control" name="name" id="name"  value="{{user_name.name}}" placeholder="이름을 입력하세요."/>
 								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="password" class="cols-sm-2 control-label"><span class=req>*</span>비밀번호(Password)</label>
+							<label for="origin_password" class="cols-sm-2 control-label"><span class=req>*</span>기존 비밀번호(Password)</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="password"  placeholder="비밀번호를 입력하세요"/>
+									<input type="password" class="form-control" name="origin_password" id="origin_password" placeholder="현재 비밀번호를 입력하세요"/>
 								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="confirm" class="cols-sm-2 control-label"><span class=req>*</span>비밀번호 확인(Confirm Password)</label>
+							<label for="password1" class="cols-sm-2 control-label"><span class=req>*</span>새 비밀번호(Password)</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+									<input type="password" class="form-control" name="password1" id="password1" placeholder="비밀번호를 입력하세요"/>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="password2" class="cols-sm-2 control-label"><span class=req>*</span>비밀번호 확인(Confirm Password)</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-check" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="confirm" id="confirm"  placeholder="비밀번호 확인"/>
+									<input type="password" class="form-control" name="password2" id="password2"  placeholder="비밀번호 확인"/>
 								</div>
 							</div>
 						</div>
@@ -239,8 +260,8 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 
 						<div class="form-group">
 						    <div class="col-sm-6 col-sm-offset-3">
-							 <a href="#" target="_blank" type="button" class="btn btn-secondary btn-lg btn-block base_button">회원정보 수정</a>
-							</div>
+							 <input type="submit" class="base_button" value="회원 정보 수정"style="margin-top: 0px; width:250px; margin-left: 20px; font-size: large">
+                            </div>
 						</div>
 
 					</form>
@@ -311,8 +332,8 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 
 				        <div class="form-group">
 						    <div class="col-sm-6 col-sm-offset-3">
-							 <a href="#" target="_blank" type="button" id="button" class="btn btn-secondary btn-lg btn-block base_button">회원 탈퇴</a>
-							</div>
+						 <input type="submit" class="base_button" value="회원 탈퇴"style="margin-top: 0px; width:250px; margin-left: 20px; font-size: large">
+                            </div>
 						</div>
 
 					</form>
