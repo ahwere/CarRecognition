@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
 }
 body{
     display: flex;
@@ -9,9 +10,10 @@ body{
     align-items: center;
     height: 100vh;
     background-size: cover;
+    
 }
 body::before{
-    content: "";    
+    content: "";
     position: absolute;
     z-index: 1;
     top: 0;

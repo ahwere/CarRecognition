@@ -1,178 +1,204 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>커피탄 리</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>커피탄 리</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
+	<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
 
 </head>
 <body>
-<style type="text/css">
-    .jumbotron_recog {
-        background-image: url( {% static 'images/jumbotronRecog.jpg' %});
-        background-size: cover;
-        text-shadow: black 0.2em 0.2em 0.2em;
-        color: white;
-        height: 300px;
-        padding: 6%;
+	<style type="text/css">
+		.jumbotron_recog{
+			background-image: url( {% static 'images/jumbotronRecog.jpg' %});
+			background-size: cover;
+			text-shadow: black 0.2em 0.2em 0.2em;
+			color:white;
+            height: 300px;
+            padding: 6%;
+            
+            
+		}
+        .jumbotron_chart{
+			background-image: url({% static 'images/jumbotronChart.jpg' %});
+			background-size: cover;
+			color:white;
+            text-shadow: black 0.2em 0.2em 0.2em;
+			height: 300px;
+            padding: 6%;
+		}
+	</style>
+		<nav class="nav navbar-default">
+			<div class="container-fluid">
+				<div class="nav-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="{% url 'index' %}">커피탄 리</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="{% url 'index' %}">
+                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                            Home
+                        </a></li>
+						<li><a href="{% url 'recognition' %}">
+                            <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
+                            Service
+                        </a></li>
+					</ul>
 
+                    <ul class="nav navbar-nav navbar-right">
+						{% if user_name == None %}
+                        <li><a href="{% url 'login' %}">
+                            Login
+                            <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                        </a></li>
+						<li><a href="{% url 'register' %}">
+                            Register
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        </a></li>
+                        {% else %}
+                            <li><a href="{% url 'home:mypage' %}">{{ user_name.name }}</a></li>
+                            <li><a href="{% url 'home:logout' %}">Logout</a></li>
+                        {% endif %}
+					</ul>
+				</div>
+			</div>
+		</nav>
+	<div class="container">
+	         <ul class="nav nav-tabs">
+              <li class="nav-item active">
+                  
+                 <a class="nav-link" data-toggle="tab" href="#Recognize" style="color: black; font-size:15px; margin-top: 15px">
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                      인식
+                  </a>
+              </li>
 
-    }
-
-    .jumbotron_chart {
-        background-image: url({% static 'images/jumbotronChart.jpg' %});
-        background-size: cover;
-        color: white;
-        text-shadow: black 0.2em 0.2em 0.2em;
-        height: 300px;
-        padding: 6%;
-    }
-</style>
-<nav class="nav navbar-default">
-    <div class="container-fluid">
-        <div class="nav-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{% url 'home:index' %}">커피탄 리</a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="{% url 'home:index' %}">Home</a></li>
-                <li><a href="{% url 'recognition' %}">Service</a></li>
+              <li class="nav-item in">
+                <a class="nav-link" data-toggle="tab" href="#Statistic" style="color: black; font-size:15px; margin-top: 15px">
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                    통계
+                </a>
+              </li>
             </ul>
-
-
-            <ul class="nav navbar-nav navbar-right">
-
-                {% if user_name == None %}
-                    <li><a href="{% url 'home:login' %}">
-                        Login
-                    </a></li>
-                    <li><a href="{% url 'home:register' %}">Register</a></li>
-                {% else %}
-                    <li><a href="{% url 'home:mypage' %}">{{ user_name.name }}</a></li>
-                    <li><a href="{% url 'home:logout' %}">Logout</a></li>
-                {% endif %}
-            </ul>
-        </div>
-    </div>
-</nav>
-<div class="container">
-    <ul class="nav nav-tabs">
-        <li class="nav-item active">
-
-            <a class="nav-link" data-toggle="tab" href="#Recognize"
-               style="color: black; font-size:15px; margin-top: 15px">인식</a>
-
-        </li>
-
-        <li class="nav-item in">
-            <a class="nav-link" data-toggle="tab" href="#Statistic"
-               style="color: black; font-size:15px; margin-top: 15px">통계</a>
-
-        </li>
-    </ul>
-    <!--
-            <a class="btn btn-dark" href="index.html"><i class="fas fa-car"></i> 인식</a>
-            <a class="btn btn-dark" href="chart.html"><i class="fas fa-chart-bar"></i> 통계</a>
-
-    -->
-    <div class="tab-content">
-        <div class="tab-pane fade active in" id="Recognize" style="width: 100%;">
+<!--
+		<a class="btn btn-dark" href="index.html"><i class="fas fa-car"></i> 인식</a>
+		<a class="btn btn-dark" href="chart.html"><i class="fas fa-chart-bar"></i> 통계</a>
+		
+-->
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="Recognize" style="width: 100%;">
             <div class="row">
-                <div class="jumbotron_recog">
-                    <h1 class="text-center">차량 인식 서비스</h1>
-                    <p class="text-center">CCTV에 촬영된 차량 분류 및 재식별하는 프로그램입니다.</p>
-                    <p class="text-center"><a class="btn btn-lg btn-primary" data-target="#modal1" data-toggle="modal">서비스
-                        시작하기</a></p>
-                </div>
-            </div>
+                    <div class="jumbotron_recog">
+                        <h1 class="text-center">차량 인식 서비스</h1>
+                        <p class="text-center">CCTV에 촬영된 차량 분류 및 재식별하는 프로그램입니다.</p>
+                        <p class="text-center"><a class="btn btn-lg btn-primary" data-target="#modal1" data-toggle="modal">서비스 시작하기</a></p>
+                    </div>
+			</div>
+    </div>
+
+    <div class="tab-pane fade in" id="Statistic" style="width: 100%;">
+     <div class="row main">
+                    <div class="jumbotron_chart">
+                        <h1 class="text-center">차량 식별 통계 서비스</h1>
+                        <p class="text-center">식별된 차량의 통계를 그래프를 통해 보여줍니다.</p>
+                        <p class="text-center"><a class="btn btn-lg btn-primary" data-target="#modal2" data-toggle="modal">서비스 시작하기</a></p>
+                    </div>
         </div>
-
-        <div class="tab-pane fade in" id="Statistic" style="width: 100%;">
-            <div class="row main">
-                <div class="jumbotron_chart">
-                    <h1 class="text-center">차량 식별 통계 서비스</h1>
-                    <p class="text-center">식별된 차량의 통계를 그래프를 통해 보여줍니다.</p>
-                    <p class="text-center"><a class="btn btn-lg btn-primary" data-target="#modal2" data-toggle="modal">서비스
-                        시작하기</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<br>
-<div class="container">
-    <div class="col-sm-4">
-        <h4>시스템 목적</h4>
-        <p>CCTV 상에서 찾고자 하는 차량을 딥러닝 기반 기술로 자동으로 재식별하여 대상이 되는 차량을 빠른 속도로 추적하여 범죄 수사나 차량 추적에 도움이 될 수 있음</p>
-    </div>
-    <div class="col-sm-4">
-        <h4>프로그램 사용법</h4>
-        <p>프로그램 사용법은 다음과 같은 순서로 진행합니다.</p>
-    </div>
-    <div class="col-sm-4">
-        <h4>서비스</h4>
-        <ol>
-            <li>인식 서비스</li>
-            <li>통계 서비스</li>
-        </ol>
     </div>
 </div>
 
-<br>
-<footer style="background-color: #F8F8F8">
-    <div class="container">
-        <br>
-        <div class="row">
-            <div class="col-sm-3" style="text-align: center;"><h4>Copyright &copy; 2020</h4><h4>커피탄 리 (Captain)</h4>
-            </div>
-            <div class="col-sm-6" style="text-align: center"><h4>Capston Design Group3</h4>
-                <p>( Hwang Ho, Kim Min Chan, Lee Yoon Gu, Yu Ju Hyun, Lee Joong Hoon )</p></div>
-            <div class="col-sm-3"><h4 style="text-align: center;"><span class="glyphicon glyphicon-ok"></span>&nbsp;by
-                커피탄리</h4></div>
-            <br>
-        </div>
     </div>
+	
+<br>
+    	<div class="container">
+				<div class="col-sm-4">
+					<h4>시스템 목적</h4>
+					<p>CCTV 상에서 찾고자 하는 차량을 딥러닝 기반 기술로 자동으로 재식별하여 대상이 되는 차량을 빠른 속도로 추적하여 범죄 수사나 차량 추적에 도움이 될 수 있음</p>
+				</div>
+				<div class="col-sm-4">
+					<h4>프로그램 사용법</h4>
+					<p>프로그램 사용법은 다음과 같은 순서로 진행합니다.</p>
+				</div>
+				<div class="col-sm-4">
+					<h4>서비스</h4>
+                    <ol>
+                        <li>인식 서비스</li>
+                        <li>통계 서비스</li>
+                    </ol>
+				</div>
+			</div>
+
     <br>
-</footer>
+	<footer style="background-color: #F8F8F8">
+		<div class="container">
+				<br>
+				<div class="row">
+					<div class="col-sm-3" style="text-align: center;"><h4>Copyright &copy; 2020</h4><h4>커피탄 리 (Captain)</h4></div>
+					<div class="col-sm-6" style="text-align: center"><h4>Capston Design Group3</h4><p>( Hwang Ho, Kim Min Chan, Lee Yoon Gu, Yu Ju Hyun, Lee Joong Hoon )</p></div>
+					<div class="col-sm-3"><h4 style="text-align: center;"><span class="glyphicon glyphicon-ok"></span>&nbsp;by 커피탄리</h4></div>
+                    <br>
+				</div>
+			</div>
+        <br>
+	</footer>
 
-<div class="row">
-    <div class="modal" id="modal1" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    시스템 특징
-                    <button class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body" style="text-align: center;">
-                    선택창
-                    <a class="btn btn-primary" href="{% url 'recognition' %}">버튼</a>
-                    <!--	<img src="images/cctv.jpg" id="imagepreview" style="width: 100px;height: 100px;">  -->
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <script>alert("{{ message }}")</script>
-        {% endfor %}
-    </ul>
-{% endif %}
+		<div class="row">
+			<div class="modal" id="recogModal" tabindex="-1">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							차량 인식 서비스
+							<button class="close" data-dismiss="modal">&times;</button>
+						</div>
+						<div class="modal-body" style="width:450px;height:540px;text-align: center;background-image: url({% static 'images/map.png' %})">
+							<form action="{% url 'recog' %}" method="post">
+                               {% csrf_token %}
+                                <input type="radio" value="cctv1" name="cctv" required>cctv1
+                                <input type="radio" value="cctv2" name="cctv">cctv2
+                                <input type="submit" value="submit">
+                            </form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="modal" id="statisticModal" tabindex="-1">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							인식 통계 서비스
+							<button class="close" data-dismiss="modal">&times;</button>
+						</div>
+						<div class="modal-body" style="text-align: center;">
+						    <form action="{% url 'stat' %}" method="post">
+                               {% csrf_token %}
+                                <select name="cctv">
+                                    <option></option>
+                                    <option>cctv1</option>
+                                    <option>cctv2</option>
+                                    <option>cctv3</option>
+                                    <option>cctv4</option>
+                                </select>
+                                <input type="submit" name="제출">
+                            <!--	<img src="images/cctv.jpg" id="imagepreview" style="width: 100px;height: 100px;">  -->
+                            </form>
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
 </body>
 </html>
 
-<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
+  	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
