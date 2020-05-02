@@ -39,15 +39,15 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="{% url 'index' %}">커피탄 리</a>
+					<a class="navbar-brand" href="{% url 'home:index' %}">커피탄 리</a>
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="{% url 'index' %}">
+						<li class="active"><a href="{% url 'home:index' %}">
                             <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                             Home
                         </a></li>
-						<li><a href="{% url 'recognition' %}">
+						<li><a href="{% url 'recognition:recognition' %}">
                             <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
                             Service
                         </a></li>
@@ -55,11 +55,11 @@
 
                     <ul class="nav navbar-nav navbar-right">
 						{% if user_name == None %}
-                        <li><a href="{% url 'login' %}">
+                        <li><a href="{% url 'home:login' %}">
                             Login
                             <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
                         </a></li>
-						<li><a href="{% url 'register' %}">
+						<li><a href="{% url 'home:register' %}">
                             Register
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         </a></li>
@@ -71,6 +71,7 @@
 				</div>
 			</div>
 		</nav>
+
 	<div class="container">
 	         <ul class="nav nav-tabs">
               <li class="nav-item active">
@@ -88,18 +89,14 @@
                 </a>
               </li>
             </ul>
-<!--
-		<a class="btn btn-dark" href="index.html"><i class="fas fa-car"></i> 인식</a>
-		<a class="btn btn-dark" href="chart.html"><i class="fas fa-chart-bar"></i> 통계</a>
-		
--->
+
 <div class="tab-content">
     <div class="tab-pane fade active in" id="Recognize" style="width: 100%;">
             <div class="row">
                     <div class="jumbotron_recog">
                         <h1 class="text-center">차량 인식 서비스</h1>
                         <p class="text-center">CCTV에 촬영된 차량 분류 및 재식별하는 프로그램입니다.</p>
-                        <p class="text-center"><a class="btn btn-lg btn-primary" data-target="#modal1" data-toggle="modal">서비스 시작하기</a></p>
+                        <p class="text-center"><a class="btn btn-lg btn-primary" data-target="#recogModal" data-toggle="modal">서비스 시작하기</a></p>
                     </div>
 			</div>
     </div>
@@ -109,7 +106,7 @@
                     <div class="jumbotron_chart">
                         <h1 class="text-center">차량 식별 통계 서비스</h1>
                         <p class="text-center">식별된 차량의 통계를 그래프를 통해 보여줍니다.</p>
-                        <p class="text-center"><a class="btn btn-lg btn-primary" data-target="#modal2" data-toggle="modal">서비스 시작하기</a></p>
+                        <p class="text-center"><a class="btn btn-lg btn-primary" data-target="#statisticModal" data-toggle="modal">서비스 시작하기</a></p>
                     </div>
         </div>
     </div>
@@ -159,7 +156,7 @@
 							<button class="close" data-dismiss="modal">&times;</button>
 						</div>
 						<div class="modal-body" style="width:450px;height:540px;text-align: center;background-image: url({% static 'images/map.png' %})">
-							<form action="{% url 'recog' %}" method="post">
+							<form action="{% url 'recognition:recog' %}" method="post">
                                {% csrf_token %}
                                 <input type="radio" value="cctv1" name="cctv" required>cctv1
                                 <input type="radio" value="cctv2" name="cctv">cctv2
@@ -180,7 +177,7 @@
 							<button class="close" data-dismiss="modal">&times;</button>
 						</div>
 						<div class="modal-body" style="text-align: center;">
-						    <form action="{% url 'stat' %}" method="post">
+						    <form action="{% url 'statistic:stat' %}" method="post">
                                {% csrf_token %}
                                 <select name="cctv">
                                     <option></option>

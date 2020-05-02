@@ -18,7 +18,7 @@
 
 <body>
 
-<nav class="nav navbar-default">
+		<nav class="nav navbar-default">
 			<div class="container-fluid">
 				<div class="nav-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -26,35 +26,38 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="{% url 'index' %}">커피탄 리</a>
+					<a class="navbar-brand" href="{% url 'home:index' %}">커피탄 리</a>
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="{% url 'index' %}">
+						<li class="active"><a href="{% url 'home:index' %}">
                             <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                             Home
                         </a></li>
-						<li><a href="{% url 'recognition' %}">
+						<li><a href="{% url 'recognition:recognition' %}">
                             <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
                             Service
                         </a></li>
 					</ul>
 
-
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="{% url 'login' %}">
+                    <ul class="nav navbar-nav navbar-right">
+						{% if user_name == None %}
+                        <li><a href="{% url 'home:login' %}">
                             Login
                             <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
                         </a></li>
-						<li><a href="{% url 'register' %}">
+						<li><a href="{% url 'home:register' %}">
                             Register
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         </a></li>
+                        {% else %}
+                            <li><a href="{% url 'home:mypage' %}">{{ user_name.name }}</a></li>
+                            <li><a href="{% url 'home:logout' %}">Logout</a></li>
+                        {% endif %}
 					</ul>
 				</div>
 			</div>
 		</nav>
-
 <br>
 {% if cctv %}
     <h1>{{ cctv }}</h1>
@@ -62,7 +65,7 @@
 
 <div class="container">
     <div class="row search-sec">
-        <form action="{% url 'stat' %}" method="post">
+        <form action="{% url 'statistic:stat' %}" method="post">
             {% csrf_token %}
             <select name="cctv">
                 <option>cctv1</option>
@@ -78,10 +81,10 @@
 
 <div class="container">
     <div class="col-sm-2">
-        <a class="btn btn-dark" href="{% url 'recognition' %}" id="tab_button">
+        <a class="btn btn-dark" href="{% url 'recognition:recognition' %}" id="tab_button">
             <i class="fa fa-car fa-lg" style="margin-right: 5px;"></i> Recognition</a>
         <br>
-        <a class="btn btn-dark" href="{% url 'statistic' %}" id="tab_button">
+        <a class="btn btn-dark" href="{% url 'statistic:statistic' %}" id="tab_button">
             <i class="fa fa-pie-chart fa-lg" aria-hidden="true" style="margin-right: 5px;"></i>
             <span style="margin-right: 15px;">Statistics</span></a>
     </div>
