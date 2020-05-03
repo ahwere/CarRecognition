@@ -58,7 +58,10 @@ def register(req):
     else:
         user_form = UserCreationForm()
 
-    return render(req, "register.html", {'user_form':user_form})
+    return render(req, "register.html", {'user_form': user_form})
 
 def mypage(req):
     return render(req, "mypage.html")
+
+def manage(req):
+    return render(req, "manage.html")
