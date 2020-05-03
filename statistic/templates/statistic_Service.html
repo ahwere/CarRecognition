@@ -18,47 +18,8 @@
 
 <body>
 
-		<nav class="nav navbar-default">
-			<div class="container-fluid">
-				<div class="nav-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="{% url 'home:index' %}">커피탄 리</a>
-				</div>
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<li class="active"><a href="{% url 'home:index' %}">
-                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                            Home
-                        </a></li>
-						<li><a href="{% url 'recognition:recognition' %}">
-                            <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
-                            Service
-                        </a></li>
-					</ul>
-
-                    <ul class="nav navbar-nav navbar-right">
-						{% if user_name == None %}
-                        <li><a href="{% url 'home:login' %}">
-                            Login
-                            <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
-                        </a></li>
-						<li><a href="{% url 'home:register' %}">
-                            Register
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        </a></li>
-                        {% else %}
-                            <li><a href="{% url 'home:mypage' %}">{{ user_name.name }}</a></li>
-                            <li><a href="{% url 'home:logout' %}">Logout</a></li>
-                        {% endif %}
-					</ul>
-				</div>
-			</div>
-		</nav>
-<br>
+        {% include 'nav.html' %}
+        <br>
 {% if cctv %}
     <h1>{{ cctv }}</h1>
 {% endif %}
@@ -109,18 +70,8 @@
 </div>
 
     <br>
-<footer style="background-color: #F8F8F8">
-    <div class="container">
-        <br>
-        <div class="row">
-            <div class="col-sm-3" style="text-align: center;"><h4>Copyright &copy; 2020</h4><h4>커피탄 리 (Captain)</h4></div>
-            <div class="col-sm-6" style="text-align: center"><h4>Capston Design Group3</h4><p>( Hwang Ho, Kim Min Chan, Lee Yoon Gu, Yu Ju Hyun, Lee Joong Hoon )</p></div>
-            <div class="col-sm-3"><h4 style="text-align: center;"><span class="glyphicon glyphicon-ok"></span>&nbsp;by 커피탄리</h4></div>
-        </div>
-    </div>
-    <br>
-</footer>
 
+        {% include 'footer.html' %}
 </body>
 </html>
 

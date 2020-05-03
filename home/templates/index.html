@@ -8,10 +8,10 @@
 	<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
-
 </head>
 <body>
-	<style type="text/css">
+
+    	<style type="text/css">
 		.jumbotron_recog{
 			background-image: url( {% static 'images/jumbotronRecog.jpg' %});
 			background-size: cover;
@@ -19,8 +19,8 @@
 			color:white;
             height: 300px;
             padding: 6%;
-            
-            
+
+
 		}
         .jumbotron_chart{
 			background-image: url({% static 'images/jumbotronChart.jpg' %});
@@ -31,51 +31,13 @@
             padding: 6%;
 		}
 	</style>
-		<nav class="nav navbar-default">
-			<div class="container-fluid">
-				<div class="nav-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="{% url 'home:index' %}">커피탄 리</a>
-				</div>
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<li class="active"><a href="{% url 'home:index' %}">
-                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                            Home
-                        </a></li>
-						<li><a href="{% url 'recognition:recognition' %}">
-                            <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
-                            Service
-                        </a></li>
-					</ul>
 
-                    <ul class="nav navbar-nav navbar-right">
-						{% if user_name == None %}
-                        <li><a href="{% url 'home:login' %}">
-                            Login
-                            <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
-                        </a></li>
-						<li><a href="{% url 'home:register' %}">
-                            Register
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        </a></li>
-                        {% else %}
-                            <li><a href="{% url 'home:mypage' %}">{{ user_name.name }}</a></li>
-                            <li><a href="{% url 'home:logout' %}">Logout</a></li>
-                        {% endif %}
-					</ul>
-				</div>
-			</div>
-		</nav>
+    {% include 'nav.html'%}
 
-	<div class="container">
+    <div class="container">
 	         <ul class="nav nav-tabs">
               <li class="nav-item active">
-                  
+
                  <a class="nav-link" data-toggle="tab" href="#Recognize" style="color: black; font-size:15px; margin-top: 15px">
                       <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                       인식
@@ -90,30 +52,29 @@
               </li>
             </ul>
 
-<div class="tab-content">
-    <div class="tab-pane fade active in" id="Recognize" style="width: 100%;">
-            <div class="row">
-                    <div class="jumbotron_recog">
-                        <h1 class="text-center">차량 인식 서비스</h1>
-                        <p class="text-center">CCTV에 촬영된 차량 분류 및 재식별하는 프로그램입니다.</p>
-                        <p class="text-center"><a class="btn btn-lg btn-primary" data-target="#recogModal" data-toggle="modal">서비스 시작하기</a></p>
+        <div class="tab-content">
+            <div class="tab-pane fade active in" id="Recognize" style="width: 100%;">
+                    <div class="row">
+                            <div class="jumbotron_recog">
+                                <h1 class="text-center">차량 인식 서비스</h1>
+                                <p class="text-center">CCTV에 촬영된 차량 분류 및 재식별하는 프로그램입니다.</p>
+                                <p class="text-center"><a class="btn btn-lg btn-primary" data-target="#recogModal" data-toggle="modal">서비스 시작하기</a></p>
+                            </div>
                     </div>
-			</div>
-    </div>
+            </div>
 
-    <div class="tab-pane fade in" id="Statistic" style="width: 100%;">
-     <div class="row main">
+            <div class="tab-pane fade in" id="Statistic" style="width: 100%;">
+                <div class="row main">
                     <div class="jumbotron_chart">
                         <h1 class="text-center">차량 식별 통계 서비스</h1>
                         <p class="text-center">식별된 차량의 통계를 그래프를 통해 보여줍니다.</p>
                         <p class="text-center"><a class="btn btn-lg btn-primary" data-target="#statisticModal" data-toggle="modal">서비스 시작하기</a></p>
                     </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
-    </div>
-	
 <br>
     	<div class="container">
 				<div class="col-sm-4">
@@ -134,18 +95,6 @@
 			</div>
 
     <br>
-	<footer style="background-color: #F8F8F8">
-		<div class="container">
-				<br>
-				<div class="row">
-					<div class="col-sm-3" style="text-align: center;"><h4>Copyright &copy; 2020</h4><h4>커피탄 리 (Captain)</h4></div>
-					<div class="col-sm-6" style="text-align: center"><h4>Capston Design Group3</h4><p>( Hwang Ho, Kim Min Chan, Lee Yoon Gu, Yu Ju Hyun, Lee Joong Hoon )</p></div>
-					<div class="col-sm-3"><h4 style="text-align: center;"><span class="glyphicon glyphicon-ok"></span>&nbsp;by 커피탄리</h4></div>
-                    <br>
-				</div>
-			</div>
-        <br>
-	</footer>
 
 		<div class="row">
 			<div class="modal" id="recogModal" tabindex="-1">
@@ -194,6 +143,7 @@
 				</div>
 			</div>
 		</div>
+    {% include 'footer.html' %}
 </body>
 </html>
 
