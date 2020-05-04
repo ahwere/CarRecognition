@@ -34,8 +34,12 @@
 						
 				
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="{% url 'home:login' %}">Login</a></li>
-						<li><a href="{% url 'home:register' %}">Register</a></li>
+                    {% if user_name == None %}
+
+                    {% else %}
+                    <li><a href="{% url 'home:mypage' %}">{{ user_name.name }}</a></li>
+                    <li><a href="{% url 'home:logout' %}">Logout</a></li>
+                    {% endif %}
 					</ul>
 				</div>
 			</div>
@@ -59,41 +63,7 @@
                                         <option value="CCTV4">CCTV4</option>
                                     </select> 
                                 </div>
-                                
-                                <div class="col-lg-2 col-md-3 col-sm-12 p-0">
-                                    <select class="form-control search-slt" name="kinds">
-                                        <option selected>Manufacture</option>
-                                        <option value="Kia">Kia</option>
-                                        <option value="SSangyong">SSangyong</option>
-                                        <option value="Hyundai">Hyundai</option>
-                                        <option value="BMW">BMW</option>
-                                        <option value="Volkswagen">Volkswagen</option>
-                                        <option value="Audi">Audi</option>
-                                    </select> 
-                                </div>
-                                 <div class="col-lg-2 col-md-3 col-sm-12 p-0">
-                                    <select class="form-control search-slt" name="color">
-                                        <option selected>Kinds</option>
-                                        <option value="a">차종1</option>
-                                        <option value="b">차종2</option>
-                                        <option value="c">차종3</option>
-                                        <option value="d">차종4</option>
-                                        <option value="e">차종5</option>
-                                        <option value="f">차종6</option>
-                                    </select>
-                                </div>
-                                  <div class="col-lg-2 col-md-3 col-sm-12 p-0">
-                                    <select class="form-control search-slt" name="manufacturer">
-                                        <option selected>Color</option>
-                                        <option value="black">Black</option>
-                                        <option value="white">White</option>
-                                        <option value="red">Red</option>
-                                        <option value="orange">Orange</option>
-                                        <option value="yellow">Yellow</option>
-                                        <option value="green">Green</option>
-                                        <option value="blue">Blue</option>
-                                    </select>
-                                </div>
+
                                 <div class="col-lg-2 col-md-3 col-sm-12 p-0">
                                     <button type="submit" class="btn btn-primary wrn-btn">Search</button>
                                 </div>
@@ -118,7 +88,7 @@
     
     <div class="col-sm-6" style="text-align:center">
      
-            <iframe src="https://youtube.com/embed/QG5j9gksYFQ"
+            <iframe src="https://youtube.com/embed/_YDqoaTAtww"
             style="width: 600px; height: 370px; margin-top: 5px; display:inline;" framborder="0" allowfullscreen></iframe>
             
 

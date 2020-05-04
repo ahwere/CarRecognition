@@ -10,4 +10,5 @@ urlpatterns = [
     path("mypage/",views.mypage, name="mypage"),
     path("logout/", views.logout, name="logout"),
     path("update/", views.update, name="update"),
+    path("dismember/", views.dismember, name="dismember")
 ]

@@ -26,11 +26,11 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="{% url 'index' %}">커피탄 리</a>
+					<a class="navbar-brand" href="{% url 'home:index' %}">커피탄 리</a>
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="{% url 'index' %}">
+						<li class="active"><a href="{% url 'home:index' %}">
                             <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                             Home
                         </a></li>
@@ -42,14 +42,12 @@
 
 
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="{% url 'login' %}">
-                            Login
-                            <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
-                        </a></li>
-						<li><a href="{% url 'register' %}">
-                            Register
-                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                        </a></li>
+                    {% if user_name == None %}
+
+                    {% else %}
+                    <li><a href="{% url 'home:mypage' %}">{{ user_name.name }}</a></li>
+                    <li><a href="{% url 'home:logout' %}">Logout</a></li>
+                    {% endif %}
 					</ul>
 				</div>
 			</div>

@@ -142,7 +142,7 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="{% url 'home:index' %}">커피탄 리</a>
+					<a class="navbar-brand" href="{% url 'home:index' %}">커피탄 리 </a>
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
@@ -216,6 +216,7 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 								</div>
 							</div>
 						</div>
+
 
 						<div class="form-group">
                             <label for="name" class="cols-sm-2 control-label"><span class=req>*</span>이름(Name)</label>
@@ -308,17 +309,8 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
                 <div class="col-sm-8 col-sm-offset-2">
 				<h3>회원 탈퇴</h3>
 				<hr class="col-sm-12" style="color:white">
-					<form class="" method="post" action="#">
-
-						<div class="form-group">
-							<label class="cols-sm-2 control-label"><span class=req>*</span>아이디(ID)</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="id" id="id"  placeholder="아이디를 입력하세요."/>
-								</div>
-							</div>
-						</div>
+					<form class="dismember_form" method="post" action="{% url 'home:dismember' %}">
+                        {% csrf_token %}
 
 						<div class="form-group">
 							<label for="password" class="cols-sm-2 control-label"><span class=req>*</span>비밀번호(Password)</label>
@@ -351,18 +343,23 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
     
     
 </div>
-    
-    
-	<footer style="background-color: #000000; color:#ffffff" >
-		<div class="container">
-				<br>
-				<div class="row">
-					<div class="col-sm-3" style="text-align: center;"><h4>Copyright &copy; 2020</h4><h4>커피탄 리 (Captain)</h4></div>
-					<div class="col-sm-6" style="text-align: center"><h4>Capston Design Group3</h4><p>( Hwang Ho, Kim Min Chan, Lee Yoon Gu, Yu Ju Hyun, Lee Joong Hoon )</p></div>
-					<div class="col-sm-3"><h4 style="text-align: center;"><span class="glyphicon glyphicon-ok"></span>&nbsp;by 커피탄리</h4></div>
-				</div>
-			</div>
-	</footer>
+
+<br>
+<footer style="background-color: #F8F8F8">
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-sm-3" style="text-align: center;"><h4>Copyright &copy; 2020</h4><h4>커피탄 리 (Captain)</h4>
+            </div>
+            <div class="col-sm-6" style="text-align: center"><h4>Capston Design Group3</h4>
+                <p>( Hwang Ho, Kim Min Chan, Lee Yoon Gu, Yu Ju Hyun, Lee Joong Hoon )</p></div>
+            <div class="col-sm-3"><h4 style="text-align: center;"><span class="glyphicon glyphicon-ok"></span>&nbsp;by
+                커피탄리</h4></div>
+            <br>
+        </div>
+    </div>
+    <br>
+</footer>
 
        <script>
         $('#datepicker').datepicker({
