@@ -21,114 +21,94 @@
 	    <style type="text/css">
 
 
-body, html{
-     height: 100%;
- 	background-repeat: no-repeat;
- 	background:url({% static 'images/gray_gradation3.png' %});
- 	font-family: 'Oxygen', sans-serif;
-    background-size: cover;
-}
+            body, html{
+                 height: 100%;
+                background-repeat: no-repeat;
+                background:url({% static 'images/gray_gradation3.png' %});
+                font-family: 'Oxygen', sans-serif;
+                background-size: cover;
+            }
+            h1.title {
+                font-size: 50px;
+                font-family: 'Passion One', cursive;
+                font-weight: 400;
+            }
+            .form-group{
+                margin-bottom: 20px;
+            }
+            label{
+                margin-bottom: 10px;
+                margin-left:15px;
+            }
+            input,
+            input::-webkit-input-placeholder {
+                font-size: 11px;
+                padding-top: 3px;
+            }
+            .form-control {
+                height: auto!important;
+                padding: 8px 12px !important;
+            }
+            .base_button {
+                border: 1px solid #ccc;
+                margin-top: 28px;
+                padding: 6px 12px;
+                color: #666;
+                cursor: pointer;
+                margin-bottom: 28px;
+                border-radius: 3px 3px;
+                box-shadow: 0 1px #fff inset, 0 1px #ddd;
+                background: #000000;
+                background: linear-gradient(to right, #eeeeee 0%, #ffffff 100%);
 
-h1.title {
-	font-size: 50px;
-	font-family: 'Passion One', cursive;
-	font-weight: 400;
-}
+            }
+            .base_button:hover,
+            .base_button:focus,
+            .base_button:active{
+                color:#000000;
+                border:none;
 
+            }
+            .req{
+                     color:maroon;
+                     font-size: 112%;
+             }
+            .nav-pills{
+                background:url({% static 'images/bright_gray.png' %});
+                border-radius: 15px;
+            }
+            .nav-pills .nav-item{
+                margin-left: 50px;
+                margin-right:50px;
+                border-bottom: 0.5px dotted black;
+                margin-bottom: 2px;
+            }
+            .nav-pills > .active > a,		/*각각의 a태그에 마우스를 올리거나 했을때 바뀌도록*/
+            .nav-pills > .active > a:hover,		/*현재 선택된 네비게이션 색상 이벤트*/
+            .nav-pills > .active > a:focus{
 
+                     background-color: #bbbbbb;
+            }
+            .nav-pills > li > a:hover,
+            .nav-pills > li > a:focus{	 /*네비게이션의 글자(리스트)에 마우스를 올렸을때*/
+                            background-color: #bbbbbb;
+            }
+            .nav-pills >li >a{	/*네비게이션 기본 색상*/
+                            color:white;
+            }
+            .main-center{
+                margin-top: 30px;
+                margin: 0 auto;
+                max-width: 400px;
+                padding: 10px 40px;
+                background:#009edf;
+                    color: #FFF;
+                text-shadow: none;
+                -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+            -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
+            box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 
-.form-group{
-	margin-bottom: 20px;
-}
-
-label{
-	margin-bottom: 10px;
-    margin-left:15px;
-}
-
-input,
-input::-webkit-input-placeholder {
-    font-size: 11px;
-    padding-top: 3px;
-}
-
-.form-control {
-    height: auto!important;
-    padding: 8px 12px !important;
-}
-
-.base_button {
-    border: 1px solid #ccc;
-    margin-top: 28px;
-    padding: 6px 12px;
-    color: #666;
-    cursor: pointer;
-    margin-bottom: 28px;
-    border-radius: 3px 3px;
-    box-shadow: 0 1px #fff inset, 0 1px #ddd;
-    background: #000000;
-    background: linear-gradient(to right, #eeeeee 0%, #ffffff 100%);
-
-}
-.base_button:hover,
-.base_button:focus,
-.base_button:active{
-	color:#000000;
-	border:none;
-
-}
-
-
-.req{
-         color:maroon;
-         font-size: 112%;
- }
-
-.nav-pills{
-	background:url({% static 'images/bright_gray.png' %});
-    border-radius: 15px;
-}
-
-.nav-pills .nav-item{
-    margin-left: 50px;
-    margin-right:50px;
-    border-bottom: 0.5px dotted black;
-    margin-bottom: 2px;
-}
-
-
-.nav-pills > .active > a,		/*각각의 a태그에 마우스를 올리거나 했을때 바뀌도록*/
-.nav-pills > .active > a:hover,		/*현재 선택된 네비게이션 색상 이벤트*/
-.nav-pills > .active > a:focus{
-
-         background-color: #bbbbbb;
-}
-
-.nav-pills > li > a:hover,
-.nav-pills > li > a:focus{	 /*네비게이션의 글자(리스트)에 마우스를 올렸을때*/
-                background-color: #bbbbbb;
-}
-
-.nav-pills >li >a{	/*네비게이션 기본 색상*/
-                color:white;
-}
-
-
-
-
-.main-center{
- 	margin-top: 30px;
- 	margin: 0 auto;
- 	max-width: 400px;
-    padding: 10px 40px;
-	background:#009edf;
-	    color: #FFF;
-    text-shadow: none;
-	-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
--moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
-
-}
+            }
 
 
 
@@ -136,182 +116,177 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 
         {% include 'nav.html' %}
 	<br>
-		
-<div class="container">
-    <div class="row" style="border-right: 1px solid gray;">
-           <div class="col-sm-3">
 
-            <ul class="nav nav-pills nav-stacked" style="height: 568px;">
-            <h3 style="text-align: center; margin-bottom: 25px">Menu</h3>
-              <li class="nav-item">
-                  
-                  <a class="nav-link active" data-toggle="tab" href="#Modify" style="color: black; font-size:15px; margin-top: 15px">
-                 <i class="fa fa-id-badge fa-lg"></i>&nbsp;&nbsp;프로필 수정</a>
-                  
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#Record" style="color: black; font-size:15px">
-                 <i class="fa fa-search"></i>&nbsp;&nbsp;검색 기록 조회</a>
-               
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#Dismember" style="color: black; font-size:15px">
-                 <i class="fa fa-sign-out fa-lg"></i>&nbsp;&nbsp;회원 탈퇴</a>
-                  
-              </li>
-            </ul>
-            
+        <div class="container">
+            <div class="row" style="border-right: 1px solid gray;">
+                   <div class="col-sm-3">
+
+                    <ul class="nav nav-pills nav-stacked" style="height: 568px;">
+                    <h3 style="text-align: center; margin-bottom: 25px">Menu</h3>
+                      <li class="nav-item">
+
+                          <a class="nav-link active" data-toggle="tab" href="#Modify" style="color: black; font-size:15px; margin-top: 15px">
+                         <i class="fa fa-id-badge fa-lg"></i>&nbsp;&nbsp;프로필 수정</a>
+
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#Record" style="color: black; font-size:15px">
+                         <i class="fa fa-search"></i>&nbsp;&nbsp;검색 기록 조회</a>
+
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#Dismember" style="color: black; font-size:15px">
+                         <i class="fa fa-sign-out fa-lg"></i>&nbsp;&nbsp;회원 탈퇴</a>
+
+                      </li>
+                    </ul>
+
+                    </div>
+
+            <div class="col-sm-9">
+                <div class="tab-content">
+
+                  <div class="tab-pane fade active in" id="Modify" style="width: 100%; height:568px;">
+                    <div class="row main">
+                        <div class="col-sm-8 col-sm-offset-2">
+                        <h3>회원 정보 수정</h3>
+
+                        <hr class="col-sm-12" style="color:white">
+                            <form class="update_form" method="post" action="{% url 'home:update' %}">
+                                {% csrf_token %}
+
+                                <div class="form-group">
+                                    <label class="cols-sm-2 control-label">아이디(ID)</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+
+                                            <span>&nbsp;&nbsp;&nbsp;{{user_name.user}}</span>
+                                            <input type="hidden" class="form-control" name="id" id="id" value="{{user_name.user}}"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="name" class="cols-sm-2 control-label"><span class=req>*</span>이름(Name)</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fas fa-user fa"></i></span>
+                                            <input type="text" class="form-control" name="name" id="name"  value="{{user_name.name}}" placeholder="이름을 입력하세요."/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="origin_password" class="cols-sm-2 control-label"><span class=req>*</span>기존 비밀번호(Password)</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                            <input type="password" class="form-control" name="origin_password" id="origin_password" placeholder="현재 비밀번호를 입력하세요"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password1" class="cols-sm-2 control-label"><span class=req>*</span>새 비밀번호(Password)</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                            <input type="password" class="form-control" name="password1" id="password1" placeholder="비밀번호를 입력하세요"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password2" class="cols-sm-2 control-label"><span class=req>*</span>비밀번호 확인(Confirm Password)</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                            <input type="password" class="form-control" name="password2" id="password2"  placeholder="비밀번호 확인"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="col-sm-6 col-sm-offset-3">
+                                     <input type="submit" class="base_button" value="회원 정보 수정"style="margin-top: 0px; width:250px; margin-left: 20px; font-size: large">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                 </div>
+                      <!--수정-->
+
+
+                 <div class="tab-pane fade in" id="Record" style="width: 100%; height:568px;">
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2">
+                        <h3>검색 기록 조회</h3>
+                        <hr class="col-sm-12" style="color:white">
+
+                        <form class="" method="post" action="#">
+                            <div class="col-sm-4">
+                                <input id="datepicker" width="180" />
+                            </div>
+
+                            <div class="col-sm-1">
+                                <span style="font-weight: bolder; font-size: 20px;margin-left: 6px;">&nbsp~</span>
+                            </div>
+
+                            <div class="col-sm-4	">
+                                <input id="datepicker2" width="180" />
+                            </div>
+                            <div class="col-sm-3">
+                                <a href="#" target="_blank" type="button" class="btn btn-secondary btn-lg btn-block base_button"
+                                style="margin-top: 0px; width:150px; margin-left: 20px">기록 조회</a>
+                            </div>
+                        </form>
+
+
+                        </div>
+
+                    </div>
+                </div>
+                                 <!--검색 기록 조회-->
+
+
+            <div class="tab-pane fade in" id="Dismember" style="width: 100%; height:568px;">
+                <div class="row main">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <h3>회원 탈퇴</h3>
+                        <hr class="col-sm-12" style="color:white">
+                            <form class="dismember_form" method="post" action="{% url 'home:dismember' %}">
+                                {% csrf_token %}
+
+                                <div class="form-group">
+                                    <label for="password" class="cols-sm-2 control-label"><span class=req>*</span>비밀번호(Password)</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                            <input type="password" class="form-control" name="password" id="password"  placeholder="비밀번호를 입력하세요"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-6 col-sm-offset-3">
+                                 <input type="submit" class="base_button" value="회원 탈퇴"style="margin-top: 0px; width:250px; margin-left: 20px; font-size: large">
+                                    </div>
+                                </div>
+                            </form>
+                    </div>
+                </div>
             </div>
+                                 <!--회원 탈퇴-->
+                </div>
 
-    <div class="col-sm-9">
-        <div class="tab-content">      
-         
-          <div class="tab-pane fade active in" id="Modify" style="width: 100%; height:568px;">
-            <div class="row main">
-                <div class="col-sm-8 col-sm-offset-2">
-				<h3>회원 정보 수정</h3>
-
-				<hr class="col-sm-12" style="color:white">
-					<form class="update_form" method="post" action="{% url 'home:update' %}">
-                        {% csrf_token %}
-
-						<div class="form-group">
-							<label class="cols-sm-2 control-label">아이디(ID)</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-
-									<span>&nbsp;&nbsp;&nbsp;{{user_name.user}}</span>
-								    <input type="hidden" class="form-control" name="id" id="id" value="{{user_name.user}}"/>
-								</div>
-							</div>
-						</div>
-
-
-						<div class="form-group">
-                            <label for="name" class="cols-sm-2 control-label"><span class=req>*</span>이름(Name)</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fas fa-user fa"></i></span>
-									<input type="text" class="form-control" name="name" id="name"  value="{{user_name.name}}" placeholder="이름을 입력하세요."/>
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label for="origin_password" class="cols-sm-2 control-label"><span class=req>*</span>기존 비밀번호(Password)</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="origin_password" id="origin_password" placeholder="현재 비밀번호를 입력하세요"/>
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label for="password1" class="cols-sm-2 control-label"><span class=req>*</span>새 비밀번호(Password)</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="password1" id="password1" placeholder="비밀번호를 입력하세요"/>
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label for="password2" class="cols-sm-2 control-label"><span class=req>*</span>비밀번호 확인(Confirm Password)</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-check" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="password2" id="password2"  placeholder="비밀번호 확인"/>
-								</div>
-							</div>
-						</div>
-
-
-						<div class="form-group">
-						    <div class="col-sm-6 col-sm-offset-3">
-							 <input type="submit" class="base_button" value="회원 정보 수정"style="margin-top: 0px; width:250px; margin-left: 20px; font-size: large">
-                            </div>
-						</div>
-
-					</form>
-				</div>
-			</div>
-         </div> 
-              <!--수정-->
-              
-              
-         <div class="tab-pane fade in" id="Record" style="width: 100%; height:568px;">
-            <div class="row">
-                <div class="col-sm-8 col-sm-offset-2">
-				<h3>검색 기록 조회</h3>
-				<hr class="col-sm-12" style="color:white">
-
-				<form class="" method="post" action="#">
-					<div class="col-sm-4">
-						<input id="datepicker" width="180" />
-					</div>
-
-					<div class="col-sm-1">
-						<span style="font-weight: bolder; font-size: 20px;margin-left: 6px;">&nbsp~</span>
-					</div>
-
-					<div class="col-sm-4	">
-						<input id="datepicker2" width="180" />
-					</div>
-					<div class="col-sm-3">
-						<a href="#" target="_blank" type="button" class="btn btn-secondary btn-lg btn-block base_button"
-						style="margin-top: 0px; width:150px; margin-left: 20px">기록 조회</a>
-					</div>
-				</form>
-
-
-				</div>
-
-			</div>
+                                 <!-- 탭 콘텐츠-->
+            </div>
+            </div>
         </div>
-                         <!--검색 기록 조회-->
-                         
-                         
-    <div class="tab-pane fade in" id="Dismember" style="width: 100%; height:568px;">
-     <div class="row main">
-                <div class="col-sm-8 col-sm-offset-2">
-				<h3>회원 탈퇴</h3>
-				<hr class="col-sm-12" style="color:white">
-					<form class="dismember_form" method="post" action="{% url 'home:dismember' %}">
-                        {% csrf_token %}
-
-						<div class="form-group">
-							<label for="password" class="cols-sm-2 control-label"><span class=req>*</span>비밀번호(Password)</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="password" id="password"  placeholder="비밀번호를 입력하세요"/>
-								</div>
-							</div>
-						</div>
-
-				        <div class="form-group">
-						    <div class="col-sm-6 col-sm-offset-3">
-						 <input type="submit" class="base_button" value="회원 탈퇴"style="margin-top: 0px; width:250px; margin-left: 20px; font-size: large">
-                            </div>
-						</div>
-
-					</form>
-				</div>
-        </div>
-    </div>
-                         <!--회원 탈퇴-->
-        </div>
-                                   
-                         <!-- 탭 콘텐츠-->
-                                    
-    </div>
-    
-    </div>
-    
-    
-</div>
 <br>
 
         {% include 'footer.html' %}

@@ -29,13 +29,22 @@
                             Login
                             <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
                         </a></li>
+
 						<li><a href="{% url 'home:register' %}">
                             Register
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         </a></li>
+
                         {% else %}
-                            <li><a href="{% url 'home:mypage' %}">{{ user_name.name }}</a></li>
-                            <li><a href="{% url 'home:logout' %}">Logout</a></li>
+                            <li><a href="{% url 'home:mypage' %}">
+                                '{{ user_name.name }}'의 정보
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            </a></li>
+
+                            <li><a href="{% url 'home:logout' %}">
+                                Logout
+                                <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                            </a></li>
                         {% endif %}
 					</ul>
 				</div>

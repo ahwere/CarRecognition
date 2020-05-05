@@ -24,9 +24,12 @@ def recog(req):
         user_name = Profile.objects.get(user=auth.get_user(req))
 
         cctv = req.POST['cctv']
-        context = {'cctv': cctv}
+        context = {
+            'cctv': cctv,
+            'user_name': user_name
+        }
 
-        return render(req, "recog_Service.html", context)
+        return render(req, "recog_Service.html",context)
 
     else:
         messages.info(req, '로그인 후 이용가능합니다.')
