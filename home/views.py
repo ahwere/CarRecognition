@@ -52,6 +52,7 @@ def register(req):
             login_id = User.objects.get(username=profile.user.username)
             auth.login(req, login_id)
 
+            messages.info(req, '회원가입이 정상적으로 완료되었습니다.')
             return redirect('home:index')
 
         else:
@@ -62,16 +63,15 @@ def register(req):
     return render(req, "register.html", {'user_form':user_form})
 
 def mypage(req):
-
     cur_user = req.user
 
     if cur_user.is_authenticated:
         user_name = Profile.objects.get(user=auth.get_user(req))
-        return render(req, "mypage.html",{'user_name':user_name})
+
+        return render(req, "mypage.html", {'user_name': user_name})
     else:
-        messages.info(req, '마이페이지는 로그인 후 이용가능합니다.')
-        messages.info(req, '마이페이지는 로그인 후 이용가능합니다.@')
-        return redirect('home:index')
+        messages.info(req, '로그인 후 이용가능합니다.')
+        return redirect("home:index")
 
 def update(req):
 
@@ -98,6 +98,7 @@ def update(req):
             messages.info(req,"기존 비밀번호가 일치하지 않습니다.")
 
     return render(req, "mypage.html",context)
+
 def dismember(req):
 
     user_name = Profile.objects.get(user=auth.get_user(req))
