@@ -99,6 +99,23 @@ def update(req):
 
     #messages.info(req,"현재 비밀번호 또는 새 비밀번호를 확인해 주세요.")
     return render(req, "mypage.html",context)
+def dismember(req):
+
+    user_name = Profile.objects.get(user=auth.get_user(req))
+    context= {'user_name':user_name}
+
+    if req.method == "POST":
+        current_password = req.POST.get("password")
+        user = req.user
+        if check_password(current_password,user.password):
+                auth.logout(req)
+                user.delete()
+                messages.info(req,'탈퇴 처리 되었습니다.')
+                return redirect('home:index')
+        else:
+            messages.info(req,'비밀번호가 일치하지 않습니다.')
+
+    return render(req, "index.html",context)
 
 def manage(req):
     return render(req, "manage.html")
