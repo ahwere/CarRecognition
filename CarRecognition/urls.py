@@ -25,4 +25,5 @@ urlpatterns = [
     path('', include("home.urls")),
     path('recognition/', include("recognition.urls")),
     path('statistic/', include("statistic.urls")),
+    path('manage/', include("manage.urls")),
 ]

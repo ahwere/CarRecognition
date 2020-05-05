@@ -1,0 +1,71 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+		<meta charset="URF-8">
+		<meta name = "viewport" content= "width = device-width", initial-scale="1">
+		<title>커피탄 리 : 관리자</title>
+		<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    </head>
+    <style>
+        .nav-item{
+            text-align: center;
+        }
+    </style>
+    <body>
+
+    {% include 'nav.html' %}
+<br>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-2">
+                    <ul class="nav navbar-default nav-stacked" style="height: 500px;">
+                        <h3 style="text-align: center; margin-bottom: 25px">Menu</h3>
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#cctvManage" style="color: black; font-size:15px; margin-top: 15px">
+                                <i class="fa fa-video-camera fa-lg"></i>&nbsp;&nbsp;CCTV 업로드</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#userManage" style="color: black; font-size:15px">
+                                <i class="fa fa-users fa-lg"></i>&nbsp;&nbsp;회원 관리</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-sm-8 col-sm-offset-1 navbar-default">
+                    <div class="tab-content" style="text-align: center; height: 500px;">
+                        <div class="tab-pane fade active in" id="cctvManage">
+                            <div class="row">
+                                <h3>CCTV 업로드</h3>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade in" id="userManage">
+                            <div class="row">
+                                <h3>회원 관리</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<br>
+        {% include 'footer.html' %}
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <script>alert("{{ message }}")</script>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
+	</body>
+</html>

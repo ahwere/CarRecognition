@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'statistic',
     'car',
     'django_seed',
+    'manage',
 ]
 
 MIDDLEWARE = [
