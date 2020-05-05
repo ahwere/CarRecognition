@@ -67,10 +67,10 @@ def mypage(req):
 
     if cur_user.is_authenticated:
         user_name = Profile.objects.get(user=auth.get_user(req))
-
         return render(req, "mypage.html",{'user_name':user_name})
     else:
         messages.info(req, '마이페이지는 로그인 후 이용가능합니다.')
+        messages.info(req, '마이페이지는 로그인 후 이용가능합니다.@')
         return redirect('home:index')
 
 def update(req):
