@@ -171,10 +171,6 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
                 <div class="col-sm-8 col-sm-offset-2">
 				<h3>회원 정보 수정</h3>
 
-                    <div class = "error_message">
-                        {{ error }}
-                    </div>
-
 				<hr class="col-sm-12" style="color:white">
 					<form class="update_form" method="post" action="{% url 'home:update' %}">
                         {% csrf_token %}
@@ -319,6 +315,14 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 <br>
 
         {% include 'footer.html' %}
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <script>alert("{{ message }}")</script>
+                {% endfor %}
+            </ul>
+        {% endif %}
 
        <script>
         $('#datepicker').datepicker({
