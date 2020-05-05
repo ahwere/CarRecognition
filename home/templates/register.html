@@ -42,6 +42,14 @@
     </form>
 </section>
 
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <script>alert("{{ message }}")</script>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
 <script>
     let id = $('#id');
     let pw = $('#pw');
