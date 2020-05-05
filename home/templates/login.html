@@ -36,13 +36,6 @@
         <a href="#">비밀번호를 잊어버리셨습니까?</a>
     </div>
 
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <script>alert("{{ message }}")</script>
-            {% endfor %}
-        </ul>
-    {% endif %}
 </section>
 
 <script>
@@ -64,6 +57,7 @@
         }
     });
 </script>
+
 </body>
 </html>
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>

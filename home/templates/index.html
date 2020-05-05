@@ -11,7 +11,7 @@
 </head>
 <body>
 
-    	<style type="text/css">
+    <style type="text/css">
 		.jumbotron_recog{
 			background-image: url( {% static 'images/jumbotronRecog.jpg' %});
 			background-size: cover;
@@ -144,6 +144,15 @@
 			</div>
 		</div>
     {% include 'footer.html' %}
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <script>alert("{{ message }}")</script>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
 </body>
 </html>
 

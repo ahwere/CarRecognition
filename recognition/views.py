@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from home.models import Profile
 from django.contrib import auth
+from django.contrib import messages
 # Create your views here.
 
 def recognition(req):
@@ -13,9 +14,20 @@ def recognition(req):
 
         return render(req, "recog_Service.html",{'user_name':user_name})
     else:
-        return redirect('home:index')
+        messages.info(req, '로그인 후 이용가능합니다.')
+        return redirect("home:index")
 
 def recog(req):
-    cctv = req.POST['cctv']
-    context = {'cctv': cctv}
-    return render(req, "recog_Service.html", context)
+    cur_user = req.user
+
+    if cur_user.is_authenticated:
+        user_name = Profile.objects.get(user=auth.get_user(req))
+
+        cctv = req.POST['cctv']
+        context = {'cctv': cctv}
+
+        return render(req, "recog_Service.html", context)
+
+    else:
+        messages.info(req, '로그인 후 이용가능합니다.')
+        return redirect("home:index")
