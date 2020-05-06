@@ -8,6 +8,7 @@
 		<title>차량 인식 서비스</title>
 		{% load static %}
 
+        <link rel="stylesheet" href="{% static 'css/mypage.css' %}">
 		<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -21,115 +22,17 @@
 	    <style type="text/css">
 
 
-body, html{
-     height: 100%;
- 	background-repeat: no-repeat;
- 	background:url({% static 'images/gray_gradation3.png' %});
- 	font-family: 'Oxygen', sans-serif;
-    background-size: cover;
-}
+            body, html{
+                 height: 100%;
+                background-repeat: no-repeat;
+                font-family: 'Oxygen', sans-serif;
+                background-size: cover;
+            }
 
-h1.title {
-	font-size: 50px;
-	font-family: 'Passion One', cursive;
-	font-weight: 400;
-}
-
-
-
-.form-group{
-	margin-bottom: 20px;
-}
-
-label{
-	margin-bottom: 10px;
-    margin-left:15px;
-}
-
-input,
-input::-webkit-input-placeholder {
-    font-size: 11px;
-    padding-top: 3px;
-}
-
-.form-control {
-    height: auto!important;
-    padding: 8px 12px !important;
-}
-
-.base_button {
-    border: 1px solid #ccc;
-    margin-top: 28px;
-    padding: 6px 12px;
-    color: #666;
-    cursor: pointer;
-    margin-bottom: 28px;
-    border-radius: 3px 3px;
-    box-shadow: 0 1px #fff inset, 0 1px #ddd;
-    background: #000000;
-    background: linear-gradient(to right, #eeeeee 0%, #ffffff 100%);
-
-}
-.base_button:hover,
-.base_button:focus,
-.base_button:active{
-	color:#000000;
-	border:none;
-
-}
-
-
-.req{
-         color:maroon;
-         font-size: 112%;
- }
-
-.nav-pills{
-	background:url({% static 'images/bright_gray.png' %});
-    border-radius: 15px;
-}
-
-.nav-pills .nav-item{
-    margin-left: 50px;
-    margin-right:50px;
-    border-bottom: 0.5px dotted black;
-    margin-bottom: 2px;
-}
-
-
-.nav-pills > .active > a,		/*각각의 a태그에 마우스를 올리거나 했을때 바뀌도록*/
-.nav-pills > .active > a:hover,		/*현재 선택된 네비게이션 색상 이벤트*/
-.nav-pills > .active > a:focus{
-
-         background-color: #bbbbbb;
-}
-
-.nav-pills > li > a:hover,
-.nav-pills > li > a:focus{	 /*네비게이션의 글자(리스트)에 마우스를 올렸을때*/
-                background-color: #bbbbbb;
-}
-
-.nav-pills >li >a{	/*네비게이션 기본 색상*/
-                color:white;
-}
-
-
-
-
-.main-center{
- 	margin-top: 30px;
- 	margin: 0 auto;
- 	max-width: 400px;
-    padding: 10px 40px;
-	background:#009edf;
-	    color: #FFF;
-    text-shadow: none;
-	-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
--moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
-
-}
-
+            .nav-pills{
+                background:#f8f8f8;
+                border-radius: 15px;
+            }
 
 
         </style>
@@ -138,10 +41,10 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 	<br>
 
 <div class="container">
-    <div class="row" style="border-right: 1px solid gray;">
+    <div class="row">
            <div class="col-sm-3">
 
-            <ul class="nav nav-pills nav-stacked" style="height: 568px;">
+            <ul class="nav nav-tabs nav-stacked" style="height: 640px;">
             <h3 style="text-align: center; margin-bottom: 25px">Menu</h3>
               <li class="nav-item">
 
@@ -256,13 +159,14 @@ box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 						<span style="font-weight: bolder; font-size: 20px;margin-left: 6px;">&nbsp~</span>
 					</div>
 
-					<div class="col-sm-4	">
+					<div class="col-sm-4">
 						<input id="datepicker2" width="180" />
 					</div>
+
 					<div class="col-sm-3">
-						<a href="#" target="_blank" type="button" class="btn btn-secondary btn-lg btn-block base_button"
-						style="margin-top: 0px; width:150px; margin-left: 20px">기록 조회</a>
+                        <input type="submit" class="base_button" value="기록 조회"style="margin-top: 0px; width:150px; margin-left: 20px; font-size: large">
 					</div>
+
 				</form>
 
 

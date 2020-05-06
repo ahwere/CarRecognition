@@ -1,0 +1,61 @@
+/*전체 영역 통틀어서 스타일 정의*/
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+*{
+	font-family: 'nanumgothic'
+}
+a{
+	color"#000000;
+	text-decoration: none;
+}
+a:hover{
+	color:#bbbbbb;
+	text-decoration: none;
+	cursor: pointer;
+}
+/*네비게이션 영역*/
+.navbar-default{/*배경색상*/
+	background-color: #000000;
+	border-color: #000000;
+}
+
+.navbar-default .navbar-brand{/*네비게이션 제목*/
+	color:#ffffff;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus{/*네비게이션 제목에 마우스 올렸을때*/
+	background-color: transparent;
+	color:#bbbbbb;
+}
+
+.navbar-default .navbar-nav > .active > a,		/*각각의 a태그에 마우스를 올리거나 했을때 바뀌도록*/
+.navbar-default .navbar-nav > .active > a:hover,		/*현재 선택된 네비게이션 색상 이벤트*/
+.navbar-default .navbar-nav > .active > a:focus{
+	color:white;
+	background-color: #000000;
+}
+
+.navbar-default .navbar-nav > li > a:hover,		
+.navbar-default .navbar-nav > li > a:focus{	 /*네비게이션의 글자(리스트)에 마우스를 올렸을때*/
+	background-color: #bbbbbb;
+}
+
+
+
+
+.navbar-default .navbar-nav >li >a{	/*네비게이션 기본 색상*/ 
+	color:white;
+}
+
+
+@media (max-width: 767px){/*해상도가 작을때 드랍다운 아이템 마우스 올렸을때*/
+	.navbar-default .navbar-nav .open .dropdown-menu >li >a{
+			color:#ffffff;
+	}
+	.navbar-default .navbar-nav .open .dropdown-menu >li >a:hover,
+	.navbar-default .navbar-nav .open .dropdown-menu >li >a:focus{
+			color:#bbbbbb;
+	}
+
+}
+
