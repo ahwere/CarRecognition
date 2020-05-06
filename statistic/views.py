@@ -22,11 +22,14 @@ def stat(req):
 
     if cur_user.is_authenticated:
         user_name = Profile.objects.get(user=auth.get_user(req))
-
         cctv = req.POST['cctv']
+
+        dataset = Car.objects.values('model').annotate(something=Count('model'))
+
         context = {
             'cctv': cctv,
-            'user_name': user_name
+            'user_name': user_name,
+            'dataset': dataset
         }
         return render(req, "statistic_Service.html", context)
 
