@@ -1,5 +1,5 @@
 from django.urls import path, include
-from home import views
+from . import views
 
 app_name = 'home'
 
@@ -11,5 +11,4 @@ urlpatterns = [
     path("logout/", views.logout, name="logout"),
     path("update/", views.update, name="update"),
     path("dismember/", views.dismember, name="dismember"),
-    path("manage/", views.manage, name="manage"),
 ]

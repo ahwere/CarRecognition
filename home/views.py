@@ -117,5 +117,3 @@ def dismember(req):
 
     return render(req, "mypage.html",context)
 
-def manage(req):
-    return render(req, "manage.html")
