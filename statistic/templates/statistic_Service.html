@@ -25,7 +25,6 @@
     <h1>{{ cctv }}</h1>
 {% endif %}
 
-<script src="https://code.highcharts.com/highcharts.src.js"></script>
 <div class="container">
     <div class="row search-sec">
         <form action="{% url 'statistic:stat' %}" method="post">
@@ -55,33 +54,32 @@
         <div class="container">
             <div class="row" style="margin-top:10px; ">
                 <div class="col-md-12">
-                    <dl>
-                        <script>
-                            Highcharts.chart('container', {
-                                chart: {
-                                    type: 'column'
-                                },
-                                title: {
-                                    text: 'Titanic Survivors by Ticket Class'
-                                },
-                                xAxis: {
-                                    categories: ['지나간 차'],
-                                },
 
-                                series: [
-                                    {% for entry in dataset %}
-                                    {
-                                        name: '{{ entry.model }}',
-                                        data: [{{ entry.something }}],
-                                        color: '{{ loop.index }}'
-                                    },
-                                    {% if not forloop.last %}{% endif %}{% endfor %}
-                                ]
-                            });
-                        </script>
+                    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+                    <div id="graph" style="width:75%;height:50%;margin:20px;"></div>
+                    <script>
+                        Highcharts.chart('graph', {
+                            chart: {
+                                type: 'column'
+                            },
+                            title: {
+                                text: '지나간 차 종류'
+                            },
+                            xAxis: {
+                                categories: ['지나간 차'],
+                            },
 
-                    </dl>
-
+                            series: [
+                                {% for entry in dataset %}
+                                {
+                                    name: '{{ entry.model }}',
+                                    data: [{{ entry.something }}],
+                                    color: '{{ loop.index }}'
+                                },
+                                {% if not forloop.last %}{% endif %}{% endfor %}
+                            ]
+                        });
+                    </script>
                 </div>
             </div>
         </div>
