@@ -103,7 +103,7 @@
 							차량 인식 서비스
 							<button class="close" data-dismiss="modal">&times;</button>
 						</div>
-						<div class="modal-body" style="width:450px;height:540px; text-align: center;background-image: url({% static 'images/map.png' %})">
+						<div class="modal-body" style="width:450px;height:540px;text-align: center;background-image: url({% static 'images/map.png' %})">
 							<form action="{% url 'recognition:recog' %}" method="post">
                                {% csrf_token %}
                                 <input type="radio" value="cctv1" name="cctv" required>cctv1
