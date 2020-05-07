@@ -29,6 +29,9 @@
 			height: 300px;
             padding: 6%;
 		}
+        .nav-link{
+
+        }
 	</style>
 
     {% include 'nav.html'%}
@@ -63,7 +66,7 @@
             </div>
 
             <div class="tab-pane fade in" id="Statistic" style="width: 100%;">
-                <div class="row main">
+                <div class="row">
                     <div class="jumbotron_chart">
                         <h1 class="text-center">차량 식별 통계 서비스</h1>
                         <p class="text-center">식별된 차량의 통계를 그래프를 통해 보여줍니다.</p>
@@ -104,6 +107,7 @@
 							<button class="close" data-dismiss="modal">&times;</button>
 						</div>
 						<div class="modal-body" style="width:450px;height:540px;text-align: center;background-image: url({% static 'images/map.png' %})">
+                            ㅁㄴㅇㅁㄴ
 							<form action="{% url 'recognition:recog' %}" method="post">
                                {% csrf_token %}
                                 <input type="radio" value="cctv1" name="cctv" required>cctv1

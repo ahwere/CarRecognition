@@ -40,9 +40,9 @@
         {% include 'nav.html' %}
 	<br>
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-           <div class="col-sm-3">
+           <div class="col-sm-2">
 
             <ul class="nav nav-tabs nav-stacked" style="height: 640px;">
             <h3 style="text-align: center; margin-bottom: 25px">Menu</h3>
@@ -66,7 +66,7 @@
 
             </div>
 
-    <div class="col-sm-9">
+    <div class="col-sm-8 col-sm-offset-1">
         <div class="tab-content">
 
           <div class="tab-pane fade active in" id="Modify" style="width: 100%; height:568px;">
@@ -83,25 +83,25 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 
-									<span>&nbsp;&nbsp;&nbsp;{{user_name.user}}</span>
-								    <input type="hidden" class="form-control" name="id" id="id" value="{{user_name.user}}"/>
+									<span>&nbsp;&nbsp;&nbsp;{{user.user}}</span>
+								    <input type="hidden" class="form-control" name="id" id="id" value="{{user.user}}"/>
 								</div>
 							</div>
 						</div>
 
 
 						<div class="form-group">
-                            <label for="name" class="cols-sm-2 control-label"><span class=req>*</span>이름(Name)</label>
+                            <label for="name" class="cols-sm-2 control-label"><span class=req>*</span>&nbsp;이름(Name)</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fas fa-user fa"></i></span>
-									<input type="text" class="form-control" name="name" id="name"  value="{{user_name.name}}" placeholder="이름을 입력하세요."/>
+									<input type="text" class="form-control" name="name" id="name"  value="{{user.name}}" placeholder="이름을 입력하세요."/>
 								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="origin_password" class="cols-sm-2 control-label"><span class=req>*</span>기존 비밀번호(Password)</label>
+							<label for="origin_password" class="cols-sm-2 control-label"><span class=req>*</span>&nbsp;기존 비밀번호(Password)</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
@@ -111,7 +111,7 @@
 						</div>
 
 						<div class="form-group">
-							<label for="password1" class="cols-sm-2 control-label"><span class=req>*</span>새 비밀번호(Password)</label>
+							<label for="password1" class="cols-sm-2 control-label"><span class=req>*</span>&nbsp;새 비밀번호(Password)</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
@@ -121,7 +121,7 @@
 						</div>
 
 						<div class="form-group">
-							<label for="password2" class="cols-sm-2 control-label"><span class=req>*</span>비밀번호 확인(Confirm Password)</label>
+							<label for="password2" class="cols-sm-2 control-label"><span class=req>*</span>&nbsp;비밀번호 확인(Confirm Password)</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-check" aria-hidden="true"></i></span>

@@ -10,9 +10,9 @@ def recognition(req):
     cur_user = req.user
 
     if cur_user.is_authenticated:
-        user_name = Profile.objects.get(user=auth.get_user(req))
+        user = Profile.objects.get(user=auth.get_user(req))
 
-        return render(req, "recog_Service.html",{'user_name':user_name})
+        return render(req, "recog_Service.html",{'user':user})
     else:
         messages.info(req, '로그인 후 이용가능합니다.')
         return redirect("home:index")
@@ -21,12 +21,12 @@ def recog(req):
     cur_user = req.user
 
     if cur_user.is_authenticated:
-        user_name = Profile.objects.get(user=auth.get_user(req))
+        user = Profile.objects.get(user=auth.get_user(req))
 
         cctv = req.POST['cctv']
         context = {
             'cctv': cctv,
-            'user_name': user_name
+            'user': user
         }
 
         return render(req, "recog_Service.html",context)

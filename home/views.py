@@ -9,12 +9,12 @@ from django.contrib.auth.hashers import check_password
 
 def index(req) :
 
-    user_name = None
+    user = None
 
     if req.user.is_anonymous!=True:
-        user_name = Profile.objects.get(user=auth.get_user(req))
+        user = Profile.objects.get(user=auth.get_user(req))
 
-    return render(req, "index.html", {'user_name':user_name})
+    return render(req, "index.html", {'user':user})
 
 def login(req):
     if req.method == 'POST':
@@ -66,9 +66,9 @@ def mypage(req):
     cur_user = req.user
 
     if cur_user.is_authenticated:
-        user_name = Profile.objects.get(user=auth.get_user(req))
+        user = Profile.objects.get(user=auth.get_user(req))
 
-        return render(req, "mypage.html", {'user_name': user_name})
+        return render(req, "mypage.html", {'user': user})
     else:
         messages.info(req, '로그인 후 이용가능합니다.')
         return redirect("home:index")
@@ -90,7 +90,7 @@ def update(req):
                 user.set_password(new_password)
                 user.save()
                 auth.login(req,user)
-                messages.info(req,"비밀번호가 변경 되었습니다.")
+                messages.info(req, "비밀번호가 변경 되었습니다.")
                 return redirect('home:index')
             else:
                 messages.info(req,"새로운 비밀번호를 확인해 주세요.")

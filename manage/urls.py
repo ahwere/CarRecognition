@@ -1,8 +1,9 @@
 from django.urls import path, include
 from manage import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'manage'
 urlpatterns = [
     path("", views.manage, name="manage"),
-    path("All/", views.reaUserAll, name='reaUserAll'),
 ]

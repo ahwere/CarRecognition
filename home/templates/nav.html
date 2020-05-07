@@ -24,7 +24,7 @@
 					</ul>
 
                     <ul class="nav navbar-nav navbar-right">
-						{% if user_name == None %}
+						{% if user == None %}
                         <li><a href="{% url 'home:login' %}">
                             Login
                             <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
@@ -37,7 +37,7 @@
 
                         {% else %}
                             <li><a href="{% url 'home:mypage' %}">
-                                '{{ user_name.name }}'의 정보
+                                '{{ user.name }}'의 정보
                                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                             </a></li>
 
