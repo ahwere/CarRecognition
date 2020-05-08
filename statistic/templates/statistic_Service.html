@@ -2,13 +2,14 @@
 <html>
 <head>
     {% load static %}
-	<title>커피탄 리 : 차량 통계</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
-	<link rel="stylesheet" href="{% static 'css/graph.css' %}">
+    <title>커피탄 리 : 차량 통계</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/graph.css' %}">
     <link rel="stylesheet" href="{% static 'css/service.css' %}">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
@@ -18,8 +19,8 @@
 
 <body>
 
-        {% include 'nav.html' %}
-        <br>
+{% include 'nav.html' %}
+<br>
 {% if cctv %}
     <h1>{{ cctv }}</h1>
 {% endif %}
@@ -53,29 +54,45 @@
         <div class="container">
             <div class="row" style="margin-top:10px; ">
                 <div class="col-md-12">
-            <dl>
-              <dd class="percentage percentage-11"><span class="text">Hyundai : 11</span></dd>
-              <dd class="percentage percentage-49"><span class="text">BMW : 49</span></dd>
-              <dd class="percentage percentage-16"><span class="text">Kia : 16</span></dd>
-              <dd class="percentage percentage-53"><span class="text">Volkswagen: 53</span></dd>
-              <dd class="percentage percentage-97"><span class="text">Audi : 97</span></dd>
-              <dd class="percentage percentage-62"><span class="text">SSangyong : 62</span></dd>
-              <dd class="percentage percentage-62"><span class="text">Benz : 62</span></dd>
-            </dl>
 
+                    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+                    <div id="graph" style="width:75%;height:50%;margin:20px;"></div>
+                    <script>
+                        Highcharts.chart('graph', {
+                            chart: {
+                                type: 'column'
+                            },
+                            title: {
+                                text: '지나간 차 종류'
+                            },
+                            xAxis: {
+                                categories: ['지나간 차'],
+                            },
+
+                            series: [
+                                {% for entry in dataset %}
+                                {
+                                    name: '{{ entry.model }}',
+                                    data: [{{ entry.something }}],
+                                    color: '{{ loop.index }}'
+                                },
+                                {% if not forloop.last %}{% endif %}{% endfor %}
+                            ]
+                        });
+                    </script>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-    <br>
+<br>
 
-        {% include 'footer.html' %}
+{% include 'footer.html' %}
 
 
 </body>
 </html>
 
-  <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>

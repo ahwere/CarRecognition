@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'car',
     'django_seed',
     'manage',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

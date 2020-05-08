@@ -2,6 +2,9 @@ from django.shortcuts import render,redirect
 from home.models import Profile
 from django.contrib import auth
 from django.contrib import messages
+
+from car.models import Car
+from django.db.models import Count, Q
 # Create your views here.
 
 def statistic(req):
@@ -20,11 +23,14 @@ def stat(req):
 
     if cur_user.is_authenticated:
         user_name = Profile.objects.get(user=auth.get_user(req))
-
         cctv = req.POST['cctv']
+
+        dataset = Car.objects.values('model').annotate(something=Count('model'))
+
         context = {
             'cctv': cctv,
-            'user_name': user_name
+            'user_name': user_name,
+            'dataset': dataset
         }
         return render(req, "statistic_Service.html", context)
 
