@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
-
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
 </head>
 <body>
 <section class="login-form">
@@ -24,6 +26,7 @@
             <input type="text" name="username" id="id" autocomplete="off" required>
             <label for="id">아이디</label>
         </div>
+        <input type="button" name="btn-checkId" id="btn-checkId" value="중복체크">
         <div class="int-area">
             <input type="password" name="password1" id="password1" autocomplete="off" required>
             <label for="pw">비밀번호</label>
@@ -37,7 +40,7 @@
             <label for="name">이름</label>
         </div>
         <div class="btn-area">
-            <button id="btn" type="submit">회원가입</button>
+            <button id="btn-register" type="submit">회원가입</button>
         </div>
     </form>
 </section>
@@ -50,12 +53,12 @@
             </ul>
         {% endif %}
 
-<script>
+<script type="text/javascript">
     let id = $('#id');
-    let pw = $('#pw');
-    let pwChk = $('#pwChk');
+    let pw = $('#password1');
+    let pwChk = $('#password2');
     let name = $('#name');
-    let btn = $('#btn');
+    let btn = $('#btn-register');
 
     $(btn).on('click', function () {
         if ($(id).val() == "") {
@@ -80,9 +83,42 @@
             }, 1400);
         }
     });
+
+    $(function () {
+        $('#btn-checkId').click(function() {
+            var id = $('#id').val()
+            if (id == '') {
+                alert('이메일을 입력해주세요.')
+                return;
+            }
+            $.ajax({
+                url: {% url 'home:idCheck' %},
+                type: 'get',
+                data: {
+                    'id': $('#id').val()
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.result != 'success') {
+                        console.error(response.data)
+                        return;
+                    }
+                    if (response.data == 'exist') {
+                        alert("중복된 아이디입니다.");
+                        $('#id').val('').focus();
+                        return;
+                    } else {
+                        alert(response.data);
+                        return;
+                    }
+                },
+                error: function (xhr, error) {
+                    alert("서버와의 통신에서 문제가 발생했습니다.");
+                    console.error("error : " + error);
+                }
+            })
+        });
+    });
 </script>
 </body>
 </html>
-
-<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>

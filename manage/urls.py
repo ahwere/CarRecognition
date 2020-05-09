@@ -6,4 +6,6 @@ from django.conf.urls.static import static
 app_name = 'manage'
 urlpatterns = [
     path("", views.manage, name="manage"),
+    path("reaAllUser/", views.reaAllUser, name="reaAllUser"),
+    path("rea/", views.reaOneUser, name="reaOneUser"),
 ]

@@ -1,9 +1,12 @@
+from django.core import serializers
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
 from home.models import Profile
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib import messages
+
+
 # Create your views here.
 def manage(req):
     cur_user = req.user
@@ -18,3 +21,16 @@ def manage(req):
     else:
         messages.info(req, '로그인 후 이용하세요.')
         return redirect("home:index")
+
+
+def reaAllUser(req):
+    context = Profile.objects.all().values()
+
+    return JsonResponse(list(context), safe=False)
+
+
+def reaOneUser(req):
+
+    context = Profile.objects.filter(name=req.GET['id']).values()
+
+    return JsonResponse(list(context), safe=False)

@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
-from home.models import Profile
-from django.http import HttpResponse
+from .models import Profile
+from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import check_password
@@ -61,6 +61,17 @@ def register(req):
         user_form = UserCreationForm()
 
     return render(req, "register.html", {'user_form':user_form})
+
+def idCheck(req):
+
+    user = User.objects.get(username=req.GET['id'])
+
+    result = {
+        'result': 'success',
+        # 'data' : model_to_dict(user)  # console에서 확인
+        'data': user.permission
+    }
+    return JsonResponse(result)
 
 def mypage(req):
     cur_user = req.user
