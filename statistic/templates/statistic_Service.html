@@ -25,6 +25,7 @@
     <h1>{{ cctv }}</h1>
 {% endif %}
 
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
 <div class="container">
     <div class="row search-sec">
         <form action="{% url 'statistic:stat' %}" method="post">
@@ -72,7 +73,7 @@
                             series: [
                                 {% for entry in dataset %}
                                 {
-                                    name: '{{ entry.model }}',
+                                    name: '{{ entry.brand }}',
                                     data: [{{ entry.something }}],
                                     color: '{{ loop.index }}'
                                 },

@@ -27,7 +27,7 @@ def stat(req):
 
         cctv = req.POST['cctv']
 
-        dataset = Car.objects.values('model').annotate(something=Count('model'))
+        dataset = Car.objects.values('brand').annotate(something=Count('brand'))
 
         context = {
             'cctv': cctv,
