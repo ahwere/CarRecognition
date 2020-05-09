@@ -62,16 +62,6 @@ def register(req):
 
     return render(req, "register.html", {'user_form':user_form})
 
-def idCheck(req):
-
-    user = User.objects.get(username=req.GET['id'])
-
-    result = {
-        'result': 'success',
-        # 'data' : model_to_dict(user)  # console에서 확인
-        'data': user.permission
-    }
-    return JsonResponse(result)
 
 def mypage(req):
     cur_user = req.user
