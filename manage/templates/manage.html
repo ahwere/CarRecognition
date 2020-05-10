@@ -79,7 +79,7 @@
                     $('#user_list_box').html('');
                     for(var i in data) {
                         $('#user_list_box').append('<li>' + '<a onclick=reaOneUser(id) id=9>'
-                            + data[i].id + ' ' + data[i].name + '</a>' + '</li>');
+                            + data[i].user + ' ' + data[i].name + '</a>' + '</li>');
                     }
                 },
                 error:function (xhr,error) {
@@ -101,7 +101,7 @@
                 success:function (data) {
                     $('#user_list_box').html('');
                     $('#user_list_box').append('<li>' + data[0].id + ' '
-                        + data[0].username + ' ' + data[0].permission + '</li>');
+                        + data[0].name + ' ' + data[0].permission + '</li>');
 
                     $('#user_list_box').append('<li>' + '<button onclick="reaAllUser()">'
                         + '회원목록' + '</button>' + '</li>')

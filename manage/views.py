@@ -31,6 +31,6 @@ def reaAllUser(req):
 
 def reaOneUser(req):
 
-    context = User.objects.filter(id=req.GET['id']).values()
+    result = Profile.objects.filter(id=req.GET['id']).values()
 
-    return JsonResponse(list(context), safe=False)
+    return JsonResponse(list(result), safe=False)
