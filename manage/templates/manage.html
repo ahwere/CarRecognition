@@ -36,7 +36,7 @@
                         <i class="fas fa-video fa-lg"></i>&nbsp;CCTV 관리</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " data-toggle="tab" href="#tab-content-userManage" id="tab-userManage">
+                    <a class="nav-link " data-toggle="tab" href="#tab-content-userManage" id="tab-userManage" onclick="reaAllUser()">
                         <i class="fas fa-users fa-lg"></i>&nbsp;회원 관리</a>
                 </li>
             </ul>
@@ -70,7 +70,7 @@
 
 
     <script>
-        $('#tab-userManage').click(function () {
+        function reaAllUser() {
             $.ajax({
                 url: 'reaAllUser',
                 type: 'get',
@@ -78,10 +78,8 @@
                 success:function (data) {
                     $('#user_list_box').html('');
                     for(var i in data) {
-                        $('#user_list_box').append('<li>'+ '<a onclick=hifunction(id) id="안녕">'
-                            + data[i].name + '</a>' + '</li>');
-
-
+                        $('#user_list_box').append('<li>' + '<a onclick=reaOneUser(id) id=9>'
+                            + data[i].id + ' ' + data[i].name + '</a>' + '</li>');
                     }
                 },
                 error:function (xhr,error) {
@@ -89,9 +87,9 @@
                     console.error("error : " + error);
                 }
             });
-        });
+        }
 
-        function hifunction(id) {
+        function reaOneUser(id) {
 
             $.ajax({
                 url: 'rea',
@@ -102,8 +100,11 @@
                 type: 'get',
                 success:function (data) {
                     $('#user_list_box').html('');
-                    $('#user_list_box').append('<li>' + data[0].name + '</li>');
+                    $('#user_list_box').append('<li>' + data[0].id + ' '
+                        + data[0].username + ' ' + data[0].permission + '</li>');
 
+                    $('#user_list_box').append('<li>' + '<button onclick="reaAllUser()">'
+                        + '회원목록' + '</button>' + '</li>')
                 },
                 error:function (xhr,error) {
                      alert("서버와의 통신에서 문제가 발생했습니다.");
