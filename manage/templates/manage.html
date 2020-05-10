@@ -51,7 +51,7 @@
             </div>
             <div class="tab-pane fade in" id="tab-content-userManage">
                 <h3>회원 관리</h3>
-                <div id = "user_list_box"></div>
+                <div id = "user_list_box" style="height: 450px;"></div>
 
             </div>
         </div>
@@ -77,9 +77,14 @@
                 dataType: 'json',
                 success:function (data) {
                     $('#user_list_box').html('');
+
                     for(var i in data) {
-                        $('#user_list_box').append('<li>' + '<a onclick=reaOneUser(id) id=9>'
-                            + data[i].user + ' ' + data[i].name + '</a>' + '</li>');
+                        var user_list = document.createElement("li");
+                        user_list.innerHTML = '<a id="' + data[i].id +
+                            '" onclick="reaOneUser(' + data[i].id + ')" >'
+                            +  data[i].name +'</a>'
+
+                        $('#user_list_box').append(user_list);
                     }
                 },
                 error:function (xhr,error) {
@@ -99,8 +104,9 @@
                 },
                 type: 'get',
                 success:function (data) {
+
                     $('#user_list_box').html('');
-                    $('#user_list_box').append('<li>' + data[0].id + ' '
+                    $('#user_list_box').append('<li>' + ' '
                         + data[0].name + ' ' + data[0].permission + '</li>');
 
                     $('#user_list_box').append('<li>' + '<button onclick="reaAllUser()">'
