@@ -1,20 +1,20 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
-from .models import Profile
-from django.http import HttpResponse, JsonResponse
+from home.models import Profile
+from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import check_password
 
 def index(req) :
 
-    user = None
+    user_name = None
 
     if req.user.is_anonymous!=True:
-        user = Profile.objects.get(user=auth.get_user(req))
+        user_name = Profile.objects.get(user=auth.get_user(req))
 
-    return render(req, "index.html", {'user':user})
+    return render(req, "index.html", {'user_name':user_name})
 
 def login(req):
     if req.method == 'POST':
@@ -62,14 +62,13 @@ def register(req):
 
     return render(req, "register.html", {'user_form':user_form})
 
-
 def mypage(req):
     cur_user = req.user
 
     if cur_user.is_authenticated:
-        user = Profile.objects.get(user=auth.get_user(req))
+        user_name = Profile.objects.get(user=auth.get_user(req))
 
-        return render(req, "mypage.html", {'user': user})
+        return render(req, "mypage.html", {'user_name': user_name})
     else:
         messages.info(req, '로그인 후 이용가능합니다.')
         return redirect("home:index")
@@ -91,14 +90,19 @@ def update(req):
                 user.set_password(new_password)
                 user.save()
                 auth.login(req,user)
-                messages.info(req, "비밀번호가 변경 되었습니다.")
+                messages.info(req,"정보가 변경 되었습니다.")
+                return redirect('home:index')
+            elif len(new_password)==0 and len(password_confirm)==0:
+                user_name.name = req.POST.get("name")
+                user_name.save()
+                messages.info(req, "정보가 변경 되었습니다.")
                 return redirect('home:index')
             else:
                 messages.info(req,"새로운 비밀번호를 확인해 주세요.")
         else:
             messages.info(req,"기존 비밀번호가 일치하지 않습니다.")
 
-    return render(req, "mypage.html",context)
+    return redirect("home:mypage")
 
 def dismember(req):
 
@@ -116,5 +120,5 @@ def dismember(req):
         else:
             messages.info(req,'비밀번호가 일치하지 않습니다.')
 
-    return render(req, "mypage.html",context)
+    return redirect("home:mypage")
 
