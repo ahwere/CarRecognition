@@ -90,7 +90,12 @@ def update(req):
                 user.set_password(new_password)
                 user.save()
                 auth.login(req,user)
-                messages.info(req,"비밀번호가 변경 되었습니다.")
+                messages.info(req,"정보가 변경 되었습니다.")
+                return redirect('home:index')
+            elif len(new_password)==0 and len(password_confirm)==0:
+                user_name.name = req.POST.get("name")
+                user_name.save()
+                messages.info(req, "정보가 변경 되었습니다.")
                 return redirect('home:index')
             else:
                 messages.info(req,"새로운 비밀번호를 확인해 주세요.")
