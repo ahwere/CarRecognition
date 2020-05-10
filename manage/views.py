@@ -30,7 +30,15 @@ def reaAllUser(req):
 
 
 def reaOneUser(req):
-
     result = Profile.objects.filter(id=req.GET['id']).values()
 
     return JsonResponse(list(result), safe=False)
+
+
+def delUser(req):
+    qs = User.objects.filter(id=req.GET['id'])
+    qs.delete()
+    context = {
+        'data':'성공'
+    }
+    return JsonResponse(context)

@@ -112,6 +112,7 @@ def dismember(req):
     if req.method == "POST":
         current_password = req.POST.get("password")
         user = req.user
+
         if check_password(current_password,user.password):
                 auth.logout(req)
                 user.delete()

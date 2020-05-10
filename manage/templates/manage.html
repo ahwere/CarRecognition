@@ -23,6 +23,9 @@
         .box{
             background-color: #9d9d9d;
         }
+        ul{
+            list-style: none;
+        }
     </style>
     <body>
     {% include 'nav.html' %}
@@ -68,7 +71,6 @@
             </ul>
         {% endif %}
 
-
     <script>
         function reaAllUser() {
             $.ajax({
@@ -79,7 +81,7 @@
                     $('#user_list_box').html('');
 
                     for(var i in data) {
-                        var user_list = document.createElement("li");
+                        var user_list = document.createElement("ul");
                         user_list.innerHTML = '<a id="' + data[i].id +
                             '" onclick="reaOneUser(' + data[i].id + ')" >'
                             +  data[i].name +'</a>'
@@ -95,9 +97,8 @@
         }
 
         function reaOneUser(id) {
-
             $.ajax({
-                url: 'rea',
+                url: 'reaOneUser',
                 dataType: 'json',
                 data:{
                   'id':id
@@ -106,16 +107,43 @@
                 success:function (data) {
 
                     $('#user_list_box').html('');
-                    $('#user_list_box').append('<li>' + ' '
-                        + data[0].name + ' ' + data[0].permission + '</li>');
+                    var user_list = document.createElement("ul");
+                    user_list.id = 'user_list';
 
-                    $('#user_list_box').append('<li>' + '<button onclick="reaAllUser()">'
-                        + '회원목록' + '</button>' + '</li>')
+                    user_list.innerHTML = '<li><p>' + data[0].name + ' ' + '<select name="permission">'
+                        + '<option>member</option> <option>admin</option>' + '</select>'+ '</p></li>';
+                    $('#user_list_box').append(user_list);
+
+                    $('#user_list').prepend('<li><p>' + '<button onclick="reaAllUser()">'
+                        + '회원목록' + '</button>' + '</p></li>')
+                    $('#user_list').append('<li><p>' + '<input type="button" value="권한부여">'
+                        + '<input type="button" value="회원삭제" id="' + data[0].id + '" onclick="delUser(' + data[0].id + ')">' + '</p></li>')
+
                 },
                 error:function (xhr,error) {
                      alert("서버와의 통신에서 문제가 발생했습니다.");
                     console.error("error : " + error);
 
+                }
+            });
+        }
+        
+        function delUser(id) {
+            $.ajax({
+                url: 'delUser',
+                dataType: 'json',
+                data:{
+                  'id':id
+                },
+                type:'get',
+                success:function (data) {
+                    alert(data.data);
+                    reaAllUser();
+                },
+
+                 error:function (xhr,error) {
+                     alert("서버와의 통신에서 문제가 발생했습니다.");
+                    console.error("error : " + error);
                 }
             });
         }

@@ -7,5 +7,6 @@ app_name = 'manage'
 urlpatterns = [
     path("", views.manage, name="manage"),
     path("reaAllUser/", views.reaAllUser, name="reaAllUser"),
-    path("rea/", views.reaOneUser, name="reaOneUser"),
+    path("reaOneUser/", views.reaOneUser, name="reaOneUser"),
+    path("delUser/", views.delUser, name="delUser"),
 ]
