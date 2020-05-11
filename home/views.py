@@ -20,7 +20,7 @@ def index(req) :
 
         # return HttpResponse(cctv_list)
 
-    return render(req, "index.html", {'user': user_name, 'cctv': cctv})
+    return render(req, "index.html", {'user': user_name})
 
 def login(req):
     if req.method == 'POST':
