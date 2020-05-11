@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'car',
     'django_seed',
     'manage',
-    'rest_framework'
+    'rest_framework',
+    # 'django.contrib.gis',
 ]
 
 MIDDLEWARE = [

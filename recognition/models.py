@@ -6,6 +6,8 @@ class Cctv(models.Model) :
     video_link = models.CharField(max_length=200)
     location = models.CharField(max_length=100)
     start_time = models.DateTimeField()
+    latitude = models.CharField(max_length=20, default='')
+    longtitude = models.CharField(max_length=20, default='')
 
     class Meta:
         db_table = "Cctv"

@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
 from home.models import Profile
+from recognition.models import Cctv
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import check_password
+from django.core import serializers
 
 def index(req) :
 
@@ -13,8 +15,12 @@ def index(req) :
 
     if req.user.is_anonymous!=True:
         user_name = Profile.objects.get(user=auth.get_user(req))
+        cctv = Cctv.objects.all()
+        # cctv_list = serializers.serialize('json', cctv)
 
-    return render(req, "index.html", {'user':user_name})
+        # return HttpResponse(cctv_list)
+
+    return render(req, "index.html", {'user': user_name, 'cctv': cctv})
 
 def login(req):
     if req.method == 'POST':
