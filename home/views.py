@@ -12,13 +12,12 @@ from django.core import serializers
 def index(req) :
 
     user_name = None
+    cctv = Cctv.objects.all()
 
     if req.user.is_anonymous!=True:
         user_name = Profile.objects.get(user=auth.get_user(req))
-        cctv = Cctv.objects.all()
         # cctv_list = serializers.serialize('json', cctv)
-
-        # return HttpResponse(cctv_list)
+    # return HttpResponse(cctv)
 
     return render(req, "index.html", {'user': user_name})
 
