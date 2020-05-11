@@ -1,11 +1,18 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
-from home.models import Profile
-from django.http import HttpResponse
+from home.models import Profile, UserLog
+from recognition.models import CctvLog, Cctv
+from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import check_password
+from django.template import RequestContext
+import simplejson as json
+from django.views.decorators.csrf import csrf_exempt
+from django.core import serializers
+
+
 
 def index(req) :
 
@@ -121,4 +128,23 @@ def dismember(req):
             messages.info(req,'비밀번호가 일치하지 않습니다.')
 
     return render(req, "mypage.html",context)
+
+@csrf_exempt
+def search_record(req):
+    date1 = req.POST['date1']
+    date2 = req.POST['date2']
+
+    # section = UserLog.objects.get(pk=1)
+    # section_items = TV4SectionItem.objects.values().filter(section=section).prefetch_related('content_object').order_by(
+    #     'item_order')
+    # ret['section_items'] = list(section_items)
+
+    # context["questions"] = UserLog.objects.prefetch_related('choices')
+
+    testuobj = serializers.serialize('json',UserLog.objects.all())
+    return JsonResponse(testuobj,safe=False)
+
+    # context={'date1':date1, 'date2':date2, 'testuobj':testuobj}
+    # return HttpResponse(json.dumps(context), content_type="application/json")
+
 

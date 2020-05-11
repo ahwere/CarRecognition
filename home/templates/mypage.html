@@ -146,7 +146,7 @@
 				<h3>검색 기록 조회</h3>
 				<hr class="col-sm-12" style="color:white">
 
-				<form class="" method="post" action="#">
+				<form>
 					<div class="col-sm-4">
 						<input id="datepicker1" width="180" />
 					</div>
@@ -159,51 +159,52 @@
 						<input id="datepicker2" width="180" />
 					</div>
 
-					<div class="col-sm-3">
-                        <input type="submit" class="base_button" id = "search_button" value="기록 조회"style="margin-top: 0px; width:150px; margin-left: 20px; font-size: large">
-					</div>
-
 				</form>
+                    <div class="col-sm-3">
+                        <input class="base_button" id = "search_button" value="기록 조회" style="margin-top: 0px; width:150px; margin-left: 20px; font-size: large"; readonly>
+					</div>
+                <p id = "example"> hello<br></p>
+                <script>
 
+                        $('#search_button').click(function() {
+
+                            $.ajax({
+                                url:"{% url 'home:search_record' %}",
+                                type: 'post',
+                                data: {
+                                    'date1':$('#datepicker1').val(),
+                                    'date2':$('#datepicker2').val()
+                                },
+                                dataType: 'json',
+                                success: function (data) {
+                                    var str =' ';
+                                    alert('ajax 통신 성공!');
+                                    alert(data);
+                                    for (var name in data){
+                                        str +=  data[name]
+                                    }
+                                    alert(str)
+                                    $('#example').html('<ul>'+str+'</ul>')
+                                },
+
+                                error: function(request,status,error){
+                                    alert("ajax 통신 실패")
+                                    alert(error)
+                                    alert(request)
+                                    window.location.replace("{% url 'home:index' %}")
+                                }
+
+                            })
+                        });
+
+                </script>
 
 				</div>
 
 			</div>
         </div>
                          <!--검색 기록 조회-->
-        <script>
 
-                $('#search_button').click(function() {
-
-                    $.ajax({
-                        url: {% url 'home:search_record' %},
-                        type: 'post',
-                        data: {
-                            'date1':$('#datepicker1').val(),
-                            'date2':$('#datepicker2').val()
-                        },
-                        dataType: 'json',
-                        success: function (data) {
-                            if (data.result != 'success') {
-                                console.error(response.data)
-                                return;
-                            }
-                            if (data.msg == 'exist') {
-                                alert("중복된 아이디입니다.");
-                                return;
-                            } else {
-                                alert(response.data);
-                                return;
-                            }
-                        },
-                        error: function (xhr, error) {
-                            alert("서버와의 통신에서 문제가 발생했습니다.");
-                            console.error("error : " + error);
-                        }
-                    })
-                });
-
-        </script>
 
     <div class="tab-pane fade in" id="Dismember" style="width: 100%; height:568px;">
      <div class="row main">

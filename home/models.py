@@ -29,6 +29,7 @@ class Profile(models.Model) :
 class UserLog(models.Model) :
     user = models.ForeignKey('auth.User', to_field='username', on_delete=models.CASCADE)
     search_time = models.DateTimeField()
+    end_time = models.DateTimeField()
     cctv_id = models.ForeignKey(Cctv, to_field='id', on_delete=models.CASCADE, default='')
 
     class Meta:
