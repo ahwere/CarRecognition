@@ -17,11 +17,14 @@ from django.core import serializers
 def index(req) :
 
     user_name = None
+    cctv = Cctv.objects.all()
 
     if req.user.is_anonymous!=True:
         user_name = Profile.objects.get(user=auth.get_user(req))
+        # cctv_list = serializers.serialize('json', cctv)
+    # return HttpResponse(cctv)
 
-    return render(req, "index.html", {'user':user_name})
+    return render(req, "index.html", {'user': user_name})
 
 def login(req):
     if req.method == 'POST':
@@ -119,6 +122,7 @@ def dismember(req):
     if req.method == "POST":
         current_password = req.POST.get("password")
         user = req.user
+
         if check_password(current_password,user.password):
                 auth.logout(req)
                 user.delete()

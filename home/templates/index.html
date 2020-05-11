@@ -6,8 +6,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+
 </head>
 <body>
 
@@ -19,8 +21,6 @@
         color: white;
         height: 300px;
         padding: 6%;
-
-
     }
 
     .jumbotron_chart {
@@ -62,7 +62,7 @@
                     <h1 class="text-center">차량 인식 서비스</h1>
                     <p class="text-center">CCTV에 촬영된 차량 분류 및 재식별하는 프로그램입니다.</p>
                     <p class="text-center"><a class="btn btn-lg btn-primary" data-target="#recogModal"
-                                              data-toggle="modal">서비스 시작하기</a></p>
+                                              data-toggle="modal" onclick="setlayout();">서비스 시작하기</a></p>
                 </div>
             </div>
         </div>
@@ -111,7 +111,16 @@
                 </div>
 
                 <div class="modal-body" style="width:450px;height:450px;text-align: center;">
-                    <div id="map" style="width:500px;height:400px;"></div>
+                    <div class="col-sm-4">
+                        <span style="font-weight: bolder; font-size: 15px;">시작 시간</span>
+                        <input id="start_date" width="180"/>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <span style="font-weight: bolder; font-size: 15px;">종료 시간</span>
+                        <input id="end_date" width="180"/>
+                    </div>
+                    <div id="kakao_map" style="width:565px;height:350px;"></div>
                 </div>
             </div>
         </div>
@@ -156,33 +165,44 @@
 
 </body>
 </html>
-
-<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a8a08365e71499493906a12ac8f92432"></script>
 <script>
 
-    setTimeout(function () {
-        window.dispatchEvent(new Event('resize'));
-    }, 600);
-
-    var $window = $(window);
-
-    function getMapSize() {
-        var size = new naver.maps.Size($window.width() - 15, $window.height() - 15);
-
-        return size;
-    };
-
-    $window.on('resize', function () {
-        map.setSize(getMapSize());
-    });
-
-    var container = document.getElementById('map');
+    var container = document.getElementById('kakao_map');
     var options = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        center: new kakao.maps.LatLng(37.549341, 127.0742582),
         level: 3
     };
 
     var map = new kakao.maps.Map(container, options);
+
+    function setlayout(){
+            setTimeout(function () {
+        map.relayout();}
+    ,0);
+
+    }
+
+    {##}
+    {#// 마커 이미지의 이미지 주소입니다#}
+    {#var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";#}
+    {##}
+    {#for (var i = 0; i < positions.length; i++) {#}
+    {##}
+    {#    // 마커 이미지의 이미지 크기 입니다#}
+    {#    var imageSize = new kakao.maps.Size(24, 35);#}
+    {##}
+    {#    // 마커 이미지를 생성합니다#}
+    {#    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);#}
+    {##}
+    {#    // 마커를 생성합니다#}
+    {#    var marker = new kakao.maps.Marker({#}
+    {#        map: map, // 마커를 표시할 지도#}
+    {#        position: positions[i].latlng, // 마커를 표시할 위치#}
+    {#        title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다#}
+    {#        image: markerImage // 마커 이미지#}
+    {#    });#}
+    {#}#}
+
 </script>

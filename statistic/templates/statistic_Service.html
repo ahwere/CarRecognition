@@ -74,7 +74,7 @@
                                 {% for entry in dataset %}
                                 {
                                     name: '{{ entry.brand }}',
-                                    data: [{{ entry.something }}],
+                                    data: [{{ entry.car_count }}],
                                     color: '{{ loop.index }}'
                                 },
                                 {% if not forloop.last %}{% endif %}{% endfor %}
