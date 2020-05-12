@@ -39,6 +39,17 @@ def delUser(req):
     qs = User.objects.filter(id=req.GET['id'])
     qs.delete()
     context = {
-        'data':'성공'
+        'data': '회원을 삭제했습니다.'
+    }
+    return JsonResponse(context)
+
+
+def grantUser(req):
+    qs = Profile.objects.get(id=req.GET['id'])
+    qs.permission = req.GET['permission']
+    qs.save()
+
+    context = {
+        'data' : '권한이 수정되었습니다.'
     }
     return JsonResponse(context)

@@ -82,8 +82,7 @@
 
                     for(var i in data) {
                         var user_list = document.createElement("ul");
-                        user_list.innerHTML = '<a id="' + data[i].id +
-                            '" onclick="reaOneUser(' + data[i].id + ')" >'
+                        user_list.innerHTML = '<a onclick="reaOneUser(' + data[i].id + ')" >'
                             +  data[i].name +'</a>'
 
                         $('#user_list_box').append(user_list);
@@ -110,14 +109,18 @@
                     var user_list = document.createElement("ul");
                     user_list.id = 'user_list';
 
-                    user_list.innerHTML = '<li><p>' + data[0].name + ' ' + '<select name="permission">'
-                        + '<option>member</option> <option>admin</option>' + '</select>'+ '</p></li>';
+                    user_list.innerHTML = '<li><p>' + data[0].name + ' ' + '<select id="permission" onchange="grantUser(' + data[0].id + ')">'
+                        + '<option id="member">member</option> <option id="admin">admin</option>' + '</select>'+ '</p></li>';
                     $('#user_list_box').append(user_list);
-
+                    if(data[0].permission == "member"){
+                        $('#member').attr("selected","selected");
+                    }
+                    else {
+                        $('#admin').attr("selected","selected");
+                    }
                     $('#user_list').prepend('<li><p>' + '<button onclick="reaAllUser()">'
                         + '회원목록' + '</button>' + '</p></li>')
-                    $('#user_list').append('<li><p>' + '<input type="button" value="권한부여">'
-                        + '<input type="button" value="회원삭제" id="' + data[0].id + '" onclick="delUser(' + data[0].id + ')">' + '</p></li>')
+                    $('#user_list').append('<li><p>' + '<input type="button" value="회원삭제" onclick="delUser(' + data[0].id + ')">' + '</p></li>')
 
                 },
                 error:function (xhr,error) {
@@ -146,6 +149,28 @@
                     console.error("error : " + error);
                 }
             });
+        }
+
+        function grantUser(id) {
+            $.ajax({
+                url: 'grantUser',
+                dataType:'json',
+                data:{
+                    'id':id,
+                    'permission':$('#permission').val()
+                },
+                type:'get',
+                success: function (data) {
+                    alert(data.data);
+
+                },
+                error: function (xhr,error) {
+                    alert("서버와의 통신에서 문제가 발생했습니다.");
+                    console.error("error : " + error);
+                }
+
+            });
+
         }
     </script>
 	</body>
