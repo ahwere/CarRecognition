@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.urls import reverse
 from home.models import Profile
 from recognition.models import Cctv, CctvLog
@@ -21,9 +21,17 @@ def recognition(req):
             end_time = req.POST['end_time']
 
             cctv = Cctv.objects.filter(location=location, start_time__gte=start_time).order_by('start_time')
-            cctv_log = CctvLog.objects.filter(cctv_id=cctv[0].id, appearance_time__gte=start_time, appearance_time__lte=end_time).order_by('appearance_time')
 
-        return render(req, "recog_Service.html", {'user': user, 'cctv_log': cctv_log})
+            if bool(cctv) == False:
+                cctv_log = []
+            else:
+                cctv_log = CctvLog.objects.filter(cctv_id=cctv[0].id, appearance_time__gte=start_time, appearance_time__lte=end_time).order_by('appearance_time')
+
+            return render(req, "recog_Service.html", {'user': user, 'cctv_log': cctv_log})
+
+        else:
+            return redirect("home:index")
+
 
     else:
         messages.info(req, '로그인 후 이용가능합니다.')
