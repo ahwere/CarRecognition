@@ -16,7 +16,6 @@
 
 </head>
 
-
 <body>
         {% include 'nav.html' %}
 
@@ -57,7 +56,14 @@
                 </video>
 
             </div>
-
+<div class="col-sm-4" style="text-align:center">
+                {% for entry in cctv_log %}
+                    {{ entry.car_model.model }}
+                    {{ entry.color }}
+                    {{ entry.appearance_time }}
+                    <br>
+                {% endfor %}
+            </div>
         </div>
 
         <br>
@@ -95,3 +101,5 @@
 </body>
 </html>
 
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>

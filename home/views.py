@@ -16,10 +16,14 @@ def index(req) :
 
     if req.user.is_anonymous!=True:
         user_name = Profile.objects.get(user=auth.get_user(req))
-        # cctv_list = serializers.serialize('json', cctv)
-    # return HttpResponse(cctv)
+        cctv_list = serializers.serialize('json', cctv)
 
-    return render(req, "index.html", {'user': user_name})
+        # return HttpResponse(cctv_list)
+
+    if req.method == 'POST':
+        return redirect('recognition:recognition')
+
+    return render(req, "index.html", {'user': user_name, 'cctv': cctv_list, 'count':range(cctv.count())})
 
 def login(req):
     if req.method == 'POST':
