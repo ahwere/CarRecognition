@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from home.models import Profile
+from recognition.models import Cctv, CctvLog
 from django.contrib import auth
 from django.contrib import messages
 # Create your views here.
