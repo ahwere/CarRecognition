@@ -4,6 +4,7 @@ from django.urls import reverse
 from home.models import Profile
 from django.contrib import auth
 from django.contrib import messages
+import math
 
 
 # Create your views here.
@@ -41,9 +42,9 @@ def recog(req):
 
 def recogTime(req):
 
-    x = req.GET['time']
+    x = round(float(req.GET['time']))
 
     context = {
-        'data' : x
+        'data': x
     }
     return JsonResponse(context)

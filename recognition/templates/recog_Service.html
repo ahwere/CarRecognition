@@ -63,14 +63,12 @@
         <br>
 
         {% include 'footer.html' %}
-        <input type="button" onclick="startAlert()" value="시작">
-        <input type="button" onclick="stopAlert()" value="종료">
 
     <script>
         startAlert = function() {
             playAlert = setInterval(function() {
                 var video = document.getElementById("video");
-                x = video.currentTime
+                x = video.currentTime;
                 $.ajax({
                     url:'recogTime',
                     dataType:'json',
