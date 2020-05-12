@@ -20,6 +20,9 @@ def index(req) :
 
         # return HttpResponse(cctv_list)
 
+    if req.method == 'POST':
+        return redirect('recognition:recognition')
+
     return render(req, "index.html", {'user': user_name, 'cctv': cctv_list, 'count':range(cctv.count())})
 
 def login(req):

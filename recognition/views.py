@@ -2,8 +2,10 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from home.models import Profile
+from recognition.models import Cctv, CctvLog
 from django.contrib import auth
 from django.contrib import messages
+from django.http import HttpResponse
 # Create your views here.
 
 def recognition(req):
@@ -12,10 +14,20 @@ def recognition(req):
     if cur_user.is_authenticated:
         user = Profile.objects.get(user=auth.get_user(req))
 
-        return render(req, "recog_Service.html",{'user':user})
+        if req.method == 'POST':
+            location = req.POST['location']
+            start_time = req.POST['start_time']
+            end_time = req.POST['end_time']
+
+            cctv = Cctv.objects.filter(location=location, start_time__gte=start_time).order_by('start_time')
+            cctv_log = CctvLog.objects.filter(cctv_id=cctv[0].id, appearance_time__gte=start_time, appearance_time__lte=end_time).order_by('appearance_time')
+
+        return render(req, "recog_Service.html", {'user': user, 'cctv_log': cctv_log})
+
     else:
         messages.info(req, '로그인 후 이용가능합니다.')
         return redirect("home:index")
+
 
 def recog(req):
     cur_user = req.user

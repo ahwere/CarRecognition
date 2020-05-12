@@ -110,18 +110,31 @@
                     <button class="close" data-dismiss="modal">&times;</button>
                 </div>
 
-                <div class="modal-body" style="width:450px;height:450px;text-align: center;">
-                    <div class="col-sm-4">
-                        <span style="font-weight: bolder; font-size: 15px;">시작 시간</span>
-                        <input id="start_date" width="180"/>
-                    </div>
+                <form action="/recognition/" method="POST">
+                    {% csrf_token %}
+                    <div class="modal-body" style="width:450px;height:450px;text-align: center;">
+                        <div class="col-sm-4">
+                            <span style="font-weight: bolder; font-size: 15px;">시작 시간</span>
+                            <input id="start_time" name="start_time" width="180"/>
+                        </div>
 
-                    <div class="col-sm-4">
-                        <span style="font-weight: bolder; font-size: 15px;">종료 시간</span>
-                        <input id="end_date" width="180"/>
+                        <div class="col-sm-4">
+                            <span style="font-weight: bolder; font-size: 15px;">종료 시간</span>
+                            <input id="end_time" name="end_time" width="180"/>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <input id="location" name="location" width="100" value="">
+                        </div>
+
+                        <div id="kakao_map" style="width:565px;height:350px;"></div>
+
+                        <div class="btn-area">
+                            <button id="btn" type="submit">제출</button>
+                        </div>
+
                     </div>
-                    <div id="kakao_map" style="width:565px;height:350px;"></div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -191,7 +204,6 @@
     // 마커 이미지의 이미지 주소입니다
     var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
-
     var positions = [
         {% for i in count %}
             {
@@ -203,19 +215,43 @@
 
     for (var i = 0; i < positions.length; i++) {
 
-        // 마커 이미지의 이미지 크기 입니다
         var imageSize = new kakao.maps.Size(24, 35);
-
-        // 마커 이미지를 생성합니다
-        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
         // 마커를 생성합니다
         var marker = new kakao.maps.Marker({
             map: map, // 마커를 표시할 지도
             position: positions[i].latlng, // 마커를 표시할 위치
             title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-            image: markerImage // 마커 이미지
+            clickable: true
         });
+
+        var infowindow = new kakao.maps.InfoWindow({
+            content: positions[i].title // 인포윈도우에 표시할 내용
+        });
+
+        kakao.maps.event.addListener(marker, 'click', get_location(positions[i].title));
+        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+    }
+
+    // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
+    function makeOverListener(map, marker, infowindow) {
+        return function () {
+            infowindow.open(map, marker);
+        };
+    }
+
+    // 인포윈도우를 닫는 클로저를 만드는 함수입니다
+    function makeOutListener(infowindow) {
+        return function () {
+            infowindow.close();
+        };
+    }
+
+    function get_location(info) {
+        return function () {
+            document.getElementById("location").value = info;
+        };
     }
 
 </script>

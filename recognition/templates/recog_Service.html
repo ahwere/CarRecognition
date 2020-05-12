@@ -53,7 +53,15 @@
 
                     <iframe src="https://youtube.com/embed/QG5j9gksYFQ"
                     style="width: 600px; height: 370px; margin-top: 5px; display:inline;" framborder="0" allowfullscreen></iframe>
+            </div>
 
+            <div class="col-sm-4" style="text-align:center">
+                {% for entry in cctv_log %}
+                    {{ entry.car_model.model }}
+                    {{ entry.color }}
+                    {{ entry.appearance_time }}
+                    <br>
+                {% endfor %}
             </div>
 
         </div>
