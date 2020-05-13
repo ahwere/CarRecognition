@@ -11,6 +11,9 @@ from django.template import RequestContext
 import simplejson as json
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
+from django.db.models import Q
+import datetime
+
 
 
 
@@ -135,20 +138,31 @@ def dismember(req):
 
 @csrf_exempt
 def search_record(req):
-    date1 = req.POST['date1']
-    date2 = req.POST['date2']
 
-    # section = UserLog.objects.get(pk=1)
-    # section_items = TV4SectionItem.objects.values().filter(section=section).prefetch_related('content_object').order_by(
-    #     'item_order')
-    # ret['section_items'] = list(section_items)
+    date1 = req.POST.get('date1','')
+    date2 = req.POST.get('date2','')
 
-    # context["questions"] = UserLog.objects.prefetch_related('choices')
+    m1 = int(date1[0:2])
+    d1 = int(date1[3:5])
+    y1 = int(date1[6:10])
+    m2 = int(date2[0:2])
+    d2 = int(date2[3:5])
+    y2 = int(date2[6:10])
 
-    testuobj = serializers.serialize('json',UserLog.objects.all())
-    return JsonResponse(testuobj,safe=False)
+    startdate=datetime.date(y1,m1,d1)
+    enddate = datetime.date(y2,m2,d2)
 
-    # context={'date1':date1, 'date2':date2, 'testuobj':testuobj}
-    # return HttpResponse(json.dumps(context), content_type="application/json")
+    userlogs = UserLog.objects.filter(Q(user=auth.get_user(req))&Q(search_time__gte=startdate,end_time__lte=enddate))
 
+    cctvlogs = []
+    i = 0
 
+    for userlog in userlogs:
+        query = CctvLog.objects.filter(Q(cctv_id=userlog.cctv_id) & Q(appearance_time__gte=userlog.search_time, appearance_time__lte=userlog.end_time))
+        log_list = list(query.values())
+        for value in log_list:
+            datetemp = value['appearance_time'].strftime("%m/%d/%Y %H:%M:%S")
+            value['appearance_time'] = datetemp
+            cctvlogs.append(value)
+
+    return JsonResponse(cctvlogs, safe=False)

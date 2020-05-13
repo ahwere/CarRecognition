@@ -148,7 +148,7 @@
 
 				<form>
 					<div class="col-sm-4">
-						<input id="datepicker1" width="180" />
+						<input type="text" id="datepicker1" width="180" readonly/>
 					</div>
 
 					<div class="col-sm-1">
@@ -156,18 +156,18 @@
 					</div>
 
 					<div class="col-sm-4">
-						<input id="datepicker2" width="180" />
+						<input type="text" id="datepicker2" width="180" readonly/>
 					</div>
 
 				</form>
                     <div class="col-sm-3">
-                        <input class="base_button" id = "search_button" value="기록 조회" style="margin-top: 0px; width:150px; margin-left: 20px; font-size: large"; readonly>
+                        <input class="base_button" id = "search_button" value="기록 조회" style="margin-top: 0px; width:150px; margin-left: 20px; font-size: large;"; readonly>
 					</div>
-                <p id = "example"> hello<br></p>
+                    <iframe id="txtArea1" style="display:none"></iframe>
                 <script>
 
                         $('#search_button').click(function() {
-
+                            $('#result_table_body').empty();
                             $.ajax({
                                 url:"{% url 'home:search_record' %}",
                                 type: 'post',
@@ -177,32 +177,158 @@
                                 },
                                 dataType: 'json',
                                 success: function (data) {
-                                    var str =' ';
-                                    alert('ajax 통신 성공!');
-                                    alert(data);
+                                    {#alert('ajax test 통신 성공!');#}
+                                    i=1;
                                     for (var name in data){
-                                        str +=  data[name]
+                                        $('#result_table_body')
+                                            .append('<tr>'+
+                                                '<td>'+i+'</td>'+
+                                                '<td>'+data[name].cctv_id_id+'</td>'+
+                                                '<td>'+data[name].car_model_id+'</td>'+
+                                                '<td>'+data[name].color+'</td>'+
+                                                '<td>'+data[name].appearance_time+'</td>'+ '</tr>')
+                                            i++;
                                     }
-                                    alert(str)
-                                    $('#example').html('<ul>'+str+'</ul>')
+
                                 },
 
                                 error: function(request,status,error){
-                                    alert("ajax 통신 실패")
-                                    alert(error)
-                                    alert(request)
-                                    window.location.replace("{% url 'home:index' %}")
+                                    alert("입력값을 확인해 주세요.")
+                                    {#window.location.replace("{% url 'home:mypage' %}")#}
                                 }
 
                             })
+
+
+                            if($("#result_panel").css("display") == "none"){
+                                jQuery('#result_panel').css("display", "block");
+                            }
                         });
+
+
+                        function fnExcelReport()
+                        {
+                            var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+                            var textRange;
+                            var j=0;
+                            tab = document.getElementById('result_table'); // id of table
+
+                            for(j = 0 ; j < tab.rows.length ; j++)
+                            {
+                                tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+                                //tab_text=tab_text+"</tr>";
+                            }
+
+                            tab_text=tab_text+"</table>";
+                            tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+                            tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+                            tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+                            var ua = window.navigator.userAgent;
+                            var msie = ua.indexOf("MSIE ");
+
+                            if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+                            {
+                                txtArea1.document.open("txt/html","replace");
+                                txtArea1.document.write(tab_text);
+                                txtArea1.document.close();
+                                txtArea1.focus();
+                                sa=txtArea1.document.execCommand("SaveAs",true,"Say Thanks to Sumit.xls");
+                            }
+                            else                 //other browser not tested on IE 11
+                                sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+
+                            return (sa);
+                        }
 
                 </script>
 
 				</div>
 
 			</div>
+
+			<div class="col-md-12" id = result_panel style="display: none" >
+				<div class="panel panel-primary">
+					<div class="panel-heading" style="background-color: #6c757d">
+						<h3 class="panel-title">Search Record</h3>
+						<div class="pull-right" style="margin-top: -18px;font-size: 15px;">
+							<span class="filter" id=filter_button data-toggle="tooltip" title="Toggle table filter" data-container="body" style="cursor: pointer;position: relative;margin-left:5px;">
+								<i class="glyphicon glyphicon-filter"></i>
+							</span>
+						</div>
+					</div>
+					<div class="panel-body" id = filter_box style="display:none;">
+						<input type="text" class="form-control" id="dev-table-filter" data-action="filter" data-filters="#dev-table" placeholder="Filter Developers" />
+					</div>
+                    <div style="width:100%; height:260px; overflow:auto">
+                        <table class="table table-hover" id="result_table" >
+                            <thead>
+                                <tr>
+                                    <th>num</th>
+                                    <th>cctv id</th>
+                                    <th>model</th>
+                                    <th>color</th>
+                                    <th>emergency time</th>
+                                </tr>
+                            </thead>
+                            <tbody id="result_table_body">
+
+                            </tbody>
+                        </table>
+                    </div>
+				</div>
+                <button class="pull-right base_button" id="btnExport" onclick="fnExcelReport();" style="margin-top: 0px; margin-bottom: 0px;"> Export To Excel File </button>
+			</div>
         </div>
+
+            <script>
+                (function(){
+                    'use strict';
+                    var $ = jQuery;
+                    $.fn.extend({
+                        filterTable: function(){
+                            return this.each(function(){
+                                $(this).on('keyup', function(e){
+                                    $('.filterTable_no_results').remove();
+                                    var $this = $(this),
+                                        search = $this.val().toLowerCase(),
+                                        target = $this.attr('data-filters'),
+                                        $target = $(target),
+                                        $rows = $target.find('tbody tr');
+
+                                    if(search == '') {
+                                        $rows.show();
+                                    } else {
+                                        $rows.each(function(){
+                                            var $this = $(this);
+                                            $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
+                                        })
+                                        if($target.find('tbody tr:visible').size() === 0) {
+                                            var col_count = $target.find('tr').first().find('td').size();
+                                            var no_results = $('<tr class="filterTable_no_results"><td colspan="'+col_count+'">No results found</td></tr>')
+                                            $target.find('tbody').append(no_results);
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                    });
+                    $('[data-action="filter"]').filterTable();
+                })(jQuery);
+
+                jQuery('#filter_button').click(function () {
+                    if($("#filter_box").css("display") == "none"){
+                        jQuery('#filter_box').css("display", "block");
+                    } else {
+                        jQuery('#filter_box').css("display", "none");
+                    }
+                });
+
+
+
+
+
+            </script>
                          <!--검색 기록 조회-->
 
 

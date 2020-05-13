@@ -78,3 +78,7 @@ input::-webkit-input-placeholder {
     .nav-tabs > li.active > a::after,
     .nav-tabs > li:hover > a::after
     { transform: scale(1); }
+
+    input[type="text"]:read-only {
+      background: #ffffff;
+    }
