@@ -11,9 +11,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
 
 </head>
-
 
 <body>
         {% include 'nav.html' %}
@@ -49,19 +50,54 @@
                 <span style="margin-right: 15px;">Statistics</span></a>
             </div>
 
-            <div class="col-sm-6" style="text-align:center">
-
-                    <iframe src="https://youtube.com/embed/QG5j9gksYFQ"
-                    style="width: 600px; height: 370px; margin-top: 5px; display:inline;" framborder="0" allowfullscreen></iframe>
+            <div class="col-sm-6">
+                <video id="video"controls onplay="startAlert()" onpause="stopAlert()" style="width: 300px; height: 400px;">
+                    <source src="{% static 'videos/minchan.mp4' %}">
+                </video>
 
             </div>
-
+<div class="col-sm-4" style="text-align:center">
+                {% for entry in cctv_log %}
+                    {{ entry.car_model.model }}
+                    {{ entry.color }}
+                    {{ entry.appearance_time }}
+                    <br>
+                {% endfor %}
+            </div>
         </div>
 
         <br>
 
         {% include 'footer.html' %}
 
+    <script>
+        startAlert = function() {
+            playAlert = setInterval(function() {
+                var video = document.getElementById("video");
+                x = video.currentTime;
+                $.ajax({
+                    url:'recogTime',
+                    dataType:'json',
+                    data:{
+                        'time':x
+                    },
+                    type:'get',
+                    success:function (data) {
+                        alert(data.data);
+                    },
+                    error:function (xhr,error) {
+                        alert("서버와의 통신에서 문제가 발생했습니다.");
+                        console.error("error : " + error);
+                    }
+                });
+            }, 1000);
+        };
+        stopAlert = function() {
+
+           clearInterval(playAlert);
+
+        };
+    </script>
 </body>
 </html>
 

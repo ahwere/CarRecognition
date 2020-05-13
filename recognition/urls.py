@@ -5,4 +5,5 @@ app_name = 'recognition'
 urlpatterns = [
     path("", views.recognition, name="recognition"),
     path("recog/", views.recog, name='recog'),
+    path("recogTime/", views.recogTime, name='recogTime'),
 ]
