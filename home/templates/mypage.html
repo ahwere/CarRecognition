@@ -177,7 +177,6 @@
                                 },
                                 dataType: 'json',
                                 success: function (data) {
-                                    {#alert('ajax test 통신 성공!');#}
                                     i=1;
                                     for (var name in data){
                                         $('#result_table_body')
@@ -194,7 +193,6 @@
 
                                 error: function(request,status,error){
                                     alert("입력값을 확인해 주세요.")
-                                    {#window.location.replace("{% url 'home:mypage' %}")#}
                                 }
 
                             })
@@ -258,7 +256,7 @@
 						</div>
 					</div>
 					<div class="panel-body" id = filter_box style="display:none;">
-						<input type="text" class="form-control" id="dev-table-filter" data-action="filter" data-filters="#dev-table" placeholder="Filter Developers" />
+						<input type="text" class="form-control" id="result_table_filter" data-action="filter" data-filters="#result_table" placeholder="Filter Developers" />
 					</div>
                     <div style="width:100%; height:260px; overflow:auto">
                         <table class="table table-hover" id="result_table" >
