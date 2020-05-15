@@ -9,7 +9,11 @@
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
 </head>
 <body>
 
@@ -112,19 +116,20 @@
 
                 <form action="/recognition/" method="POST">
                     {% csrf_token %}
-                    <div class="modal-body" style="width:450px;height:450px;text-align: center;">
+                    <div class="modal-body" style="width:550px;height:480px;text-align: center;">
                         <div class="col-sm-4">
                             <span style="font-weight: bolder; font-size: 15px;">시작 시간</span>
-                            <input id="start_time" name="start_time" width="180"/>
+                            <input id="start_time" type="text" name="start_time" width="180" style="margin-bottom: 15px" readonly/>
                         </div>
 
                         <div class="col-sm-4">
-                            <span style="font-weight: bolder; font-size: 15px;">종료 시간</span>
-                            <input id="end_time" name="end_time" width="180"/>
+                            <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">종료 시간</span>
+                            <input id="end_time" type="text" name="end_time" width="180" style="margin-bottom: 15px" readonly/>
                         </div>
 
                         <div class="col-sm-4">
-                            <input id="location" name="location" width="100" value="">
+                            <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">위치</span>
+                            <input id="location" name="location" width="180" value="" style="margin-bottom: 15px">
                         </div>
 
                         <div id="kakao_map" style="width:565px;height:350px;"></div>
@@ -255,3 +260,19 @@
     }
 
 </script>
+
+  <script>
+      $(function() {
+    $('#start_time').datetimepicker({
+           format: 'YYYY-MM-DD HH:mm:ss',
+            ignoreReadonly: true
+    });
+
+  });
+          $(function() {
+    $('#end_time').datetimepicker({
+           format: 'YYYY-MM-DD HH:mm:ss',
+            ignoreReadonly: true
+    });
+  });
+  </script>
