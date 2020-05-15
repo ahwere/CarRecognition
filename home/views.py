@@ -8,7 +8,6 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import check_password
 from django.template import RequestContext
-import simplejson as json
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 from django.db.models import Q
