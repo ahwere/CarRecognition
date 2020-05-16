@@ -27,6 +27,8 @@ def reaAllUser(req):
     context = []
     temp = {}
 
+    page = req.GET.get('page',1)
+
     temp_profile = Profile.objects.all()
 
     for i in range(len(temp_profile)):

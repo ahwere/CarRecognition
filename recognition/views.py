@@ -59,7 +59,7 @@ def recog(req):
 
 def recogTime(req):
 
-    x = round(float(req.GET['time']))
+    x = req.GET['time']
 
     context = {
         'data': x

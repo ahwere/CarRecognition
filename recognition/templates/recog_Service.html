@@ -70,7 +70,7 @@
         startAlert = function() {
             playAlert = setInterval(function() {
                 var video = document.getElementById("video");
-                x = video.currentTime;
+                x = video.currentTime.toFixed(0);
                 $.ajax({
                     url:'recogTime',
                     dataType:'json',
@@ -81,10 +81,9 @@
                     success:function (data) {
                         var car_list = document.createElement("li");
 
-                        car_list.innerHTML = '{{ cctv_log.i.color }}';
+                        car_list.innerHTML = '{{ cctv_log }}.i' ;
                         $('#car_list_box').append(car_list);
                         i++;
-                        alert('{{ cctv_log.2 }}')
                     },
                     error:function (xhr,error) {
                         alert("서버와의 통신에서 문제가 발생했습니다.");
