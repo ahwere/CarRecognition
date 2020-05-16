@@ -83,7 +83,7 @@
                     for(var i in data) {
                         var user_list = document.createElement("ul");
                         user_list.innerHTML = '<a onclick="reaOneUser(' + data[i].id + ')" >'
-                            +  data[i].name +'</a>'
+                            + data[i].username + ' ' +data[i].name + ' ' + data[i].permission + '</a>'
 
                         $('#user_list_box').append(user_list);
                     }

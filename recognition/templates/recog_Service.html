@@ -51,18 +51,13 @@
             </div>
 
             <div class="col-sm-6">
-                <video id="video"controls onplay="startAlert()" onpause="stopAlert()" style="width: 300px; height: 400px;">
-                    <source src="{% static 'videos/test.mp4' %}">
+                <video id="video" controls onplay="startAlert()" onpause="stopAlert()">
+                    <source src="{% static 'videos/minchan.mp4' %}">
                 </video>
-
             </div>
-<div class="col-sm-4" style="text-align:center">
-                {% for entry in cctv_log %}
-                    {{ entry.car_model.model }}
-                    {{ entry.color }}
-                    {{ entry.appearance_time }}
-                    <br>
-                {% endfor %}
+
+            <div id="car_list_box"class="col-sm-4" style="text-align:center; height: 300px;">
+
             </div>
         </div>
 
@@ -71,6 +66,7 @@
         {% include 'footer.html' %}
 
     <script>
+        var i=0;
         startAlert = function() {
             playAlert = setInterval(function() {
                 var video = document.getElementById("video");
@@ -83,7 +79,12 @@
                     },
                     type:'get',
                     success:function (data) {
-                        alert(data.data);
+                        var car_list = document.createElement("li");
+
+                        car_list.innerHTML = '{{ cctv_log.i.color }}';
+                        $('#car_list_box').append(car_list);
+                        i++;
+                        alert('{{ cctv_log.2 }}')
                     },
                     error:function (xhr,error) {
                         alert("서버와의 통신에서 문제가 발생했습니다.");
@@ -101,5 +102,3 @@
 </body>
 </html>
 
-    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>

@@ -24,10 +24,21 @@ def manage(req):
 
 
 def reaAllUser(req):
-    context = Profile.objects.all().values()
+    context = []
+    temp = {}
 
-    return JsonResponse(list(context), safe=False)
+    temp_profile = Profile.objects.all()
 
+    for i in range(len(temp_profile)):
+        temp['id'] = temp_profile[i].id
+        temp['permission'] = temp_profile[i].permission
+        temp['name'] = temp_profile[i].name
+        temp['username'] = temp_profile[i].user.username
+        context.append(temp)
+
+        temp = {}
+
+    return JsonResponse(context, safe=False)
 
 def reaOneUser(req):
     result = Profile.objects.filter(id=req.GET['id']).values()
