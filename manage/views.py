@@ -42,12 +42,6 @@ def reaAllUser(req):
 
     return JsonResponse(context, safe=False)
 
-def reaOneUser(req):
-    result = Profile.objects.filter(id=req.GET['id']).values()
-
-    return JsonResponse(list(result), safe=False)
-
-
 def delUser(req):
     qs = User.objects.filter(id=req.GET['id'])
     qs.delete()
@@ -63,6 +57,6 @@ def grantUser(req):
     qs.save()
 
     context = {
-        'data' : '권한이 수정되었습니다.'
+        'data' : qs.name + '의 권한을 ' + qs.permission + '(으)로 변경하였습니다.'
     }
     return JsonResponse(context)

@@ -26,6 +26,9 @@
         li{
             list-style: none;
         }
+        table{
+            text-align: center;
+        }
     </style>
     <body>
     {% include 'nav.html' %}
@@ -83,16 +86,26 @@
                 dataType: 'json',
                 success:function (data) {
                     $('#panel-heading').html("회원 목록")
-                    $('#panel-body').html('<table class="table"><thead><tr><td>아이디</td><td>이름</td><td>권한</td></tr></thead>' +
+                    $('#panel-body').html('<table class="table"><thead><tr><td>아이디</td><td>이름</td><td>권한</td><td>회원 삭제</td></tr></thead>' +
                         '<tbody id="user_list_box"></tbody></table>');
 
                     for(var i in data) {
                         var user_list = document.createElement("tr");
-                        user_list.innerHTML = '<td><a onclick="reaOneUser(' + data[i].id + ')" >' + data[i].username + '</a></td>' +
+                        user_list.innerHTML = '<td>' + data[i].username + '</td>' +
                                 '<td>' + data[i].name + '</td>' +
-                                '<td>' + data[i].permission + '</td>'
+                                '<td>' + '<select id="permission' + data[i].id + '" onchange="grantUser(' + data[i].id + ')">'
+                        + '<option id="member' + data[i].id + '">' + 'member</option> <option id="admin' + data[i].id + '">' + 'admin</option>' + '</select>' + '</td>'
+                        + '<td>' + '<input type="button" value="삭제" onclick="delUser(' + data[i].id + ')">'
+
+
 
                         $('#user_list_box').append(user_list);
+                        if(data[i].permission == "member"){
+                            $('#member'+data[i].id).attr("selected","selected");
+                        }
+                        else {
+                            $('#admin'+data[i].id).attr("selected","selected");
+                        }
                     }
                 },
                 error:function (xhr,error) {
@@ -102,42 +115,6 @@
             });
         }
 
-        function reaOneUser(id) {
-            $.ajax({
-                url: 'reaOneUser',
-                dataType: 'json',
-                data:{
-                  'id':id
-                },
-                type: 'get',
-                success:function (data) {
-                    $('#panel-heading').text("회원 세부 정보")
-                    $('#panel-body').html('');
-                    var user_list = document.createElement("ul");
-                    user_list.id = 'user_list';
-
-                    user_list.innerHTML = '<li><p>' + data[0].name + ' ' + '<select id="permission" onchange="grantUser(' + data[0].id + ')">'
-                        + '<option id="member">member</option> <option id="admin">admin</option>' + '</select>'+ '</p></li>';
-                    $('#panel-body').append(user_list);
-                    if(data[0].permission == "member"){
-                        $('#member').attr("selected","selected");
-                    }
-                    else {
-                        $('#admin').attr("selected","selected");
-                    }
-                    $('#panel-body').prepend('<li><p>' + '<button onclick="reaAllUser()">'
-                        + '회원목록' + '</button>' + '</p></li>')
-                    $('#panel-body').append('<li><p>' + '<input type="button" value="회원삭제" onclick="delUser(' + data[0].id + ')">' + '</p></li>')
-
-                },
-                error:function (xhr,error) {
-                     alert("서버와의 통신에서 문제가 발생했습니다.");
-                    console.error("error : " + error);
-
-                }
-            });
-        }
-        
         function delUser(id) {
             $.ajax({
                 url: 'delUser',
@@ -164,7 +141,7 @@
                 dataType:'json',
                 data:{
                     'id':id,
-                    'permission':$('#permission').val()
+                    'permission':$('#permission'+id).val()
                 },
                 type:'get',
                 success: function (data) {

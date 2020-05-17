@@ -30,7 +30,7 @@ def recognition(req):
             return render(req, "recog_Service.html", {'user': user, 'cctv_log': cctv_log})
 
         else:
-            return render(req, "recog_Service.html")
+            return render(req, "recog_Service.html", {'user': user})
 
 
     else:
