@@ -20,7 +20,7 @@ def recognition(req):
             start_time = req.POST['start_time']
             end_time = req.POST['end_time']
 
-            cctv = Cctv.objects.filter(location=location, start_time__gte=start_time).order_by('start_time')
+            cctv = Cctv.objects.filter(location=location, start_time__lte=start_time).order_by('start_time')
 
             if bool(cctv) == False:
                 cctv_log = []

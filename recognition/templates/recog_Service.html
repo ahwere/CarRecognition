@@ -51,7 +51,7 @@
             </div>
 
             <div class="col-sm-6">
-                <video id="video" controls onplay="startAlert()" onpause="stopAlert()">
+                <video id="video" controls onplay="startAlert()" onpause="stopAlert()" >
                     <source src="{% static 'videos/minchan.mp4' %}">
                 </video>
             </div>
@@ -66,30 +66,41 @@
         {% include 'footer.html' %}
 
     <script>
-        var i=0;
         startAlert = function() {
+            var video = document.getElementById("video");
+                video_time_sec = parseInt(video.currentTime.toFixed(0))%60;
+                video_time_min = parseInt(parseInt(video.currentTime.toFixed(0))/60);
+                x = {{ cctv_log.0.appearance_time.second }} + video_time_sec;
+                y = {{ cctv_log.0.appearance_time.minute }} + video_time_min;
+
+                if(x=={{ cctv_log.0.appearance_time.second }}&&y=={{ cctv_log.0.appearance_time.minute }})
+                {
+                    var car_list = document.createElement("li");
+
+                    car_list.innerHTML = '{{ cctv_log.0.color }}' + ' ' + '{{ cctv_log.0.car_model.model }}' + ' ' + '{{ cctv_log.0.appearance_time }}'
+                    $('#car_list_box').append(car_list);
+
+                }
+
             playAlert = setInterval(function() {
                 var video = document.getElementById("video");
-                x = video.currentTime.toFixed(0);
-                $.ajax({
-                    url:'recogTime',
-                    dataType:'json',
-                    data:{
-                        'time':x
-                    },
-                    type:'get',
-                    success:function (data) {
-                        var car_list = document.createElement("li");
+                video_time_sec = parseInt(video.currentTime.toFixed(0))%60;
+                video_time_min = parseInt(parseInt(video.currentTime.toFixed(0))/60);
+                x = {{ cctv_log.0.appearance_time.second }} + video_time_sec;
+                y = {{ cctv_log.0.appearance_time.minute }} + video_time_min;
 
-                        car_list.innerHTML = '{{ cctv_log }}.i' ;
-                        $('#car_list_box').append(car_list);
-                        i++;
-                    },
-                    error:function (xhr,error) {
-                        alert("서버와의 통신에서 문제가 발생했습니다.");
-                        console.error("error : " + error);
-                    }
-                });
+                {% for log in cctv_log %}
+
+                if(x=={{ log.appearance_time.second }} && y == {{ log.appearance_time.minute }})
+                {
+                    var car_list = document.createElement("li");
+
+                    car_list.innerHTML = car_list.innerHTML = '{{ log.color }}' + ' ' + '{{ log.car_model.model }}' + ' ' + '{{ log.appearance_time }}'
+
+                    $('#car_list_box').append(car_list);
+
+                }
+                {% endfor %}
             }, 1000);
         };
         stopAlert = function() {
