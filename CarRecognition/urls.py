@@ -26,4 +26,5 @@ urlpatterns = [
     path('recognition/', include("recognition.urls")),
     path('statistic/', include("statistic.urls")),
     path('manage/', include("manage.urls")),
-]
+
+] + static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)

@@ -29,6 +29,8 @@
         table{
             text-align: center;
         }
+
+
     </style>
     <body>
     {% include 'nav.html' %}
@@ -51,8 +53,35 @@
         <div class="tab-content col-sm-8 col-sm-offset-1">
             <div class="tab-pane fade active in" id="tab-content-cctvManage">
                 <h3>CCTV 관리</h3>
-                <div class="box">
-                    1
+                <div class="box" style="background-color: white">
+
+
+                 <div class="panel panel-primary">
+                    <div class="panel-heading">CCTV 목록</div>
+                    <div id = cctv_panel_body class="panel-body">
+                    <table class="table"><thead><tr><td>Location</td><td>VideoLink</td><td>StartTime</td><td></td></tr></thead>
+                        <tbody id="cctv_list_box">
+
+                            {% for temp in qs %}
+                                <tr>
+                                    <td>{{temp.location}}</td>
+                                    <td>{{temp.video_link}}</td>
+                                    <td>{{temp.start_time}}</td>
+                                    <td><input type="button" value="삭제" onclick="location.href = '{% url 'manage:delCctv' temp.id %}'"></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody></table>
+
+                    </div>
+                 </div>
+
+                 <div style="background-color: #fff">
+                    <form method = "post" action="{% url 'manage:manage' %}" enctype="multipart/form-data" style="background-color: #fff">
+                        {% csrf_token %}
+                        <input id=input_video type="file" name="video">
+                        <button type="submit">Upload file</button>
+                    </form>
+                 </div>
                 </div>
             </div>
 
@@ -67,7 +96,7 @@
         </div>
     </div>
 
-<br>
+    <br>
         {% include 'footer.html' %}
 
         {% if messages %}
@@ -79,6 +108,7 @@
         {% endif %}
 
     <script>
+
         function reaAllUser() {
             $.ajax({
                 url: 'reaAllUser',
