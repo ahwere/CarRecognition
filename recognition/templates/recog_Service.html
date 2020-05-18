@@ -66,6 +66,10 @@
         {% include 'footer.html' %}
 
     <script>
+        var cctvlog= "{{ cctv_logs }}".replace(/&quot;/g, '"');
+        var cctvlog_json = JSON.parse(cctvlog);
+
+
         var i=0;
         startAlert = function() {
             playAlert = setInterval(function() {
@@ -81,10 +85,21 @@
                     success:function (data) {
                         var car_list = document.createElement("li");
 
-                        car_list.innerHTML = '{{ cctv_log.i.color }}';
-                        $('#car_list_box').append(car_list);
-                        i++;
-                        alert('{{ cctv_log.2 }}')
+
+                        console.log(data['data'])
+                        if(Date.parse(cctvlog_json[i].appearance_time) == (Date.parse(cctvlog_json[0].appearance_time)+(data['data']-1)*1000)){
+                            car_list.innerHTML = cctvlog_json[i].color + ' ' + cctvlog_json[i].car_model_id + ' ' + cctvlog_json[i].appearance_time;
+                            $('#car_list_box').append(car_list);
+                            i++;
+                            if(i==cctvlog_json.length){
+                                console.log('출력 완료')
+                                i--
+                            }
+                        }
+
+
+
+
                     },
                     error:function (xhr,error) {
                         alert("서버와의 통신에서 문제가 발생했습니다.");

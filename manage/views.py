@@ -5,7 +5,7 @@ from django.contrib import auth
 from home.models import Profile
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib import messages
-
+from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 def manage(req):
@@ -13,8 +13,17 @@ def manage(req):
 
     if cur_user.is_authenticated:
         user = Profile.objects.get(user=auth.get_user(req))
+
         if user.permission == 'admin':
-            return render(req, "manage.html", {'user': user})
+
+            if req.method == 'POST':
+                uploaded_file = req.FILES['document']
+                fs = FileSystemStorage()
+                name = fs.save(uploaded_file.name, uploaded_file)
+                url = fs.url(name)
+                return render(req, "manage.html", {'user': user, 'url':url})
+            else:
+                return render(req, "manage.html", {'user': user})
         else:
             messages.info(req, '관리자가 아닙니다.')
             return redirect('home:index')
@@ -22,6 +31,10 @@ def manage(req):
         messages.info(req, '로그인 후 이용하세요.')
         return redirect("home:index")
 
+
+
+        print(uploaded_file.size)
+    return render(req,'manage.html')
 
 def reaAllUser(req):
     context = []
@@ -64,3 +77,4 @@ def grantUser(req):
         'data' : '권한이 수정되었습니다.'
     }
     return JsonResponse(context)
+

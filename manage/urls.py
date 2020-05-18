@@ -10,4 +10,5 @@ urlpatterns = [
     path("reaOneUser/", views.reaOneUser, name="reaOneUser"),
     path("delUser/", views.delUser, name="delUser"),
     path("grantUser/", views.grantUser, name="grantUser"),
-]
+
+]+ static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)

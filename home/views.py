@@ -20,6 +20,7 @@ def index(req) :
 
     user_name = None
     cctv = Cctv.objects.all()
+
     cctv_list = serializers.serialize('json', cctv)
 
     if req.user.is_anonymous!=True:
@@ -160,7 +161,7 @@ def search_record(req):
     i = 0
 
     for userlog in userlogs:
-        query = CctvLog.objects.filter(Q(cctv_id=userlog.cctv_id) & Q(appearance_time__gte=userlog.search_time, appearance_time__lte=userlog.end_time))
+        query = CctvLog.objects.filter(Q(cctv_id=userlog.cctv_id) & Q(appearance_time__gte=userlog.search_time, appearance_time__lte=userlog.end_time)).order_by('appearance_time')
         log_list = list(query.values())
         for value in log_list:
             datetemp = value['appearance_time'].strftime("%m/%d/%Y %H:%M:%S")

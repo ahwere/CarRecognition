@@ -5,8 +5,8 @@ from home.models import Profile
 from recognition.models import Cctv, CctvLog
 from django.contrib import auth
 from django.contrib import messages
-
-
+from django.core import serializers
+import json
 # Create your views here.
 
 def recognition(req):
@@ -20,14 +20,20 @@ def recognition(req):
             start_time = req.POST['start_time']
             end_time = req.POST['end_time']
 
-            cctv = Cctv.objects.filter(location=location, start_time__gte=start_time).order_by('start_time')
-
+            cctv = Cctv.objects.filter(location=location, start_time__lte=start_time).order_by('start_time')
+            cctv_logs=[]
             if bool(cctv) == False:
-                cctv_log = []
+                cctv_logs = []
             else:
-                cctv_log = CctvLog.objects.filter(cctv_id=cctv[0].id, appearance_time__gte=start_time, appearance_time__lte=end_time).order_by('appearance_time')
+                cctv_logs = CctvLog.objects.filter(cctv_id=cctv[0].id, appearance_time__gte=start_time, appearance_time__lte=end_time).order_by('appearance_time').values()
+                for temp in cctv_logs:
+                    datetemp = temp['appearance_time'].strftime("%Y/%m/%d %H:%M:%S")
+                    temp['appearance_time'] = datetemp
 
-            return render(req, "recog_Service.html", {'user': user, 'cctv_log': cctv_log})
+
+            cctv_logjson = json.dumps(list(cctv_logs))
+
+            return render(req, "recog_Service.html", {'user': user, 'cctv_logs': cctv_logjson})
 
         else:
             return render(req, "recog_Service.html")
