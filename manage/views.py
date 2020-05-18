@@ -40,6 +40,8 @@ def reaAllUser(req):
     context = []
     temp = {}
 
+    page = req.GET.get('page',1)
+
     temp_profile = Profile.objects.all()
 
     for i in range(len(temp_profile)):
@@ -52,12 +54,6 @@ def reaAllUser(req):
         temp = {}
 
     return JsonResponse(context, safe=False)
-
-def reaOneUser(req):
-    result = Profile.objects.filter(id=req.GET['id']).values()
-
-    return JsonResponse(list(result), safe=False)
-
 
 def delUser(req):
     qs = User.objects.filter(id=req.GET['id'])
@@ -74,7 +70,7 @@ def grantUser(req):
     qs.save()
 
     context = {
-        'data' : '권한이 수정되었습니다.'
+        'data' : qs.name + '의 권한을 ' + qs.permission + '(으)로 변경하였습니다.'
     }
     return JsonResponse(context)
 
