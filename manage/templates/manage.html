@@ -29,6 +29,8 @@
         table{
             text-align: center;
         }
+
+
     </style>
     <body>
     {% include 'nav.html' %}
@@ -65,7 +67,7 @@
                                     <td>{{temp.location}}</td>
                                     <td>{{temp.video_link}}</td>
                                     <td>{{temp.start_time}}</td>
-                                    <td><a href="{% url 'manage:delCctv' temp.id %}">삭제</a></td>
+                                    <td><input type="button" value="삭제" onclick="location.href = '{% url 'manage:delCctv' temp.id %}'"></td>
                                 </tr>
                             {% endfor %}
                         </tbody></table>
@@ -94,7 +96,7 @@
         </div>
     </div>
 
-<br>
+    <br>
         {% include 'footer.html' %}
 
         {% if messages %}
