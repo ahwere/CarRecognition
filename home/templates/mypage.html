@@ -214,13 +214,12 @@
                             for(j = 0 ; j < tab.rows.length ; j++)
                             {
                                 tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
-                                //tab_text=tab_text+"</tr>";
                             }
 
                             tab_text=tab_text+"</table>";
-                            tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
-                            tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
-                            tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+                            tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");
+                            tab_text= tab_text.replace(/<img[^>]*>/gi,"");
+                            tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, "");
 
                             var ua = window.navigator.userAgent;
                             var msie = ua.indexOf("MSIE ");
@@ -233,7 +232,7 @@
                                 txtArea1.focus();
                                 sa=txtArea1.document.execCommand("SaveAs",true,"Say Thanks to Sumit.xls");
                             }
-                            else                 //other browser not tested on IE 11
+                            else
                                 sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
 
                             return (sa);
@@ -256,7 +255,7 @@
 						</div>
 					</div>
 					<div class="panel-body" id = filter_box style="display:none;">
-						<input type="text" class="form-control" id="result_table_filter" data-action="filter" data-filters="#result_table" placeholder="Filter Developers" />
+						<input type="text" class="form-control" id="result_table_filter" data-action="filter" data-filters="#result_table" placeholder="cctv id / model / color / emergency time" />
 					</div>
                     <div style="width:100%; height:260px; overflow:auto">
                         <table class="table table-hover" id="result_table" >
