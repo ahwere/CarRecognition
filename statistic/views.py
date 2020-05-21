@@ -29,6 +29,10 @@ def stat(req):
     cur_user = req.user
     cctv = Cctv.objects.all()
     cctv_list = serializers.serialize('json', cctv)
+    brand_arr = []
+    brand_dic = {}
+    submit_arr = []
+    cctv_log = []
 
     if cur_user.is_authenticated:
         user = Profile.objects.get(user=auth.get_user(req))
@@ -40,24 +44,18 @@ def stat(req):
 
             filter_cctv = Cctv.objects.filter(location=location, start_time__lte=start_time).order_by('start_time')
 
-            if bool(filter_cctv) == False:
-                cctv_log = []
-            else:
-                # cctv_log = CctvLog.objects.select_related().filter(cctv_id=filter_cctv[0].id, appearance_time__gte=start_time,
-                #                                   appearance_time__lte=end_time).order_by('appearance_time')
-
+            if bool(filter_cctv) == True:
                 cctv_log = CctvLog.objects.filter(cctv_id=filter_cctv[0].id, appearance_time__gte=start_time,
                                                   appearance_time__lte=end_time).order_by('appearance_time')
-                brand_arr = []
-                brand_dic = {}
-                submit_arr = []
 
                 for i in cctv_log:
                     brand_arr.append(i.car_model.brand)
 
                 for i in brand_arr:
-                    try: brand_dic[i] += 1
-                    except: brand_dic[i] = 1
+                    try:
+                        brand_dic[i] += 1
+                    except:
+                        brand_dic[i] = 1
 
                 for i in brand_dic.keys():
                     temp_dic = {}
