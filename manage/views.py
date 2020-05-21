@@ -16,18 +16,17 @@ def manage(req):
 
         if user.permission == 'admin':
             qs = Cctv.objects.all()
+
             if req.method == 'POST':
                 uploaded_file = req.FILES.get('video')
                 if uploaded_file==None:
                     messages.info(req, "잘못된 파일 형식입니다.")
                     return render(req, "manage.html", {'user': user, 'qs': qs})
                 else:
-                    print(len(uploaded_file.name))
                     ext=uploaded_file.name[len(uploaded_file.name)-3:len(uploaded_file.name)]
                     if ext != 'mp4' and ext!='wmv' and ext!='mkv' and ext!='wmv' and ext!='avi' and ext!='MOV' and ext!='FLV':
                         messages.info(req,"잘못된 파일 형식입니다.")
                         return render(req, "manage.html", {'user': user, 'qs': qs})
-
 
                 fs = FileSystemStorage()
                 name = fs.save(uploaded_file.name, uploaded_file)
