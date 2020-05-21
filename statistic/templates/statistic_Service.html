@@ -1,3 +1,6 @@
+{% for i in test %}
+{{ i.car_model.brand }}
+{% endfor %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +16,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
 
 </head>
 
@@ -21,24 +32,10 @@
 
 {% include 'nav.html' %}
 <br>
-{% if cctv %}
-    <h1>{{ cctv }}</h1>
-{% endif %}
-
-<script src="https://code.highcharts.com/highcharts.src.js"></script>
 <div class="container">
     <div class="row search-sec">
-        <form action="{% url 'statistic:stat' %}" method="post">
-            {% csrf_token %}
-            <select name="cctv">
-                <option>cctv1</option>
-                <option>cctv2</option>
-                <option>cctv3</option>
-                <option>cctv4</option>
-            </select>
-            <input type="submit" name="제출">
-            <!--	<img src="images/cctv.jpg" id="imagepreview" style="width: 100px;height: 100px;">  -->
-        </form>
+        <p class="text-right"><a class="btn btn-sm btn-primary" data-target="#statisticModal"
+                                 data-toggle="modal" onclick="setlayout()">검색하기</a></p>
     </div>
 </div>
 
@@ -51,11 +48,13 @@
             <i class="fa fa-pie-chart fa-lg" aria-hidden="true" style="margin-right: 5px;"></i>
             <span style="margin-right: 15px;">Statistics</span></a>
     </div>
+
     <div class="col-sm-10" style="text-align:center">
         <div class="container">
             <div class="row" style="margin-top:10px; ">
                 <div class="col-md-12">
 
+                    {% if dataset %}
                     <script src="https://code.highcharts.com/highcharts.src.js"></script>
                     <div id="graph" style="width:75%;height:50%;margin:20px;"></div>
                     <script>
@@ -81,6 +80,7 @@
                             ]
                         });
                     </script>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -89,11 +89,140 @@
 
 <br>
 
+<div class="row">
+    <div class="modal" id="statisticModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    차량 인식 서비스
+                    <button class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <form action="/statistic/stat/" method="POST">
+                    {% csrf_token %}
+                    <div class="modal-body" style="width:550px;height:480px;text-align: center;">
+                        <div class="col-sm-4">
+                            <span style="font-weight: bolder; font-size: 15px;">시작 시간</span>
+                            <input id="statistic_start_time" type="text" name="start_time" width="180"
+                                   style="margin-bottom: 15px" readonly/>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">종료 시간</span>
+                            <input id="statistic_end_time" type="text" name="end_time" width="180"
+                                   style="margin-bottom: 15px" readonly/>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">위치</span>
+                            <input id="statistic_location" name="location" width="180" value=""
+                                   style="margin-bottom: 15px" readonly>
+                        </div>
+
+                        <div id="statistic_map" style="width:565px;height:350px;"></div>
+
+                        <div class="btn-area">
+                            <button id="btn" type="submit">제출</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% include 'footer.html' %}
 
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a8a08365e71499493906a12ac8f92432"></script>
+<script>
+        var statistic_container = document.getElementById('statistic_map');
 
+    var options = {
+        center: new kakao.maps.LatLng(37.549341, 127.0742582),
+        level: 3
+    };
+
+    var statistic_map = new kakao.maps.Map(statistic_container, options);
+
+    function setlayout() {
+        setTimeout(function () {
+                statistic_map.relayout();
+            }
+            , 0);
+    }
+
+    var cctv_obj = "{{ cctv }}".replace(/&quot;/g, '"');
+    var cctv_json = JSON.parse(cctv_obj);
+
+    // 마커 이미지의 이미지 주소입니다
+    var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+    var positions = [
+        {% for i in count %}
+            {
+                title: cctv_json[{{i}}].fields.location,
+                latlng: new kakao.maps.LatLng(cctv_json[{{i}}].fields.latitude, cctv_json[{{i}}].fields.longtitude)
+            },
+        {% endfor %}
+    ];
+
+    for (var i = 0; i < positions.length; i++) {
+
+        var imageSize = new kakao.maps.Size(24, 35);
+
+        // 마커를 생성합니다
+        var statistic_marker = new kakao.maps.Marker({
+            map: statistic_map, // 마커를 표시할 지도
+            position: positions[i].latlng, // 마커를 표시할 위치
+            title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+            clickable: true
+        });
+
+        var infowindow = new kakao.maps.InfoWindow({
+            content: positions[i].title // 인포윈도우에 표시할 내용
+        });
+
+        kakao.maps.event.addListener(statistic_marker, 'click', get_location(positions[i].title));
+        kakao.maps.event.addListener(statistic_marker, 'mouseover', makeOverListener(statistic_map, statistic_marker, infowindow));
+        kakao.maps.event.addListener(statistic_marker, 'mouseout', makeOutListener(infowindow));
+
+    }
+
+    // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
+    function makeOverListener(map, marker, infowindow) {
+        return function () {
+            infowindow.open(map, marker);
+        };
+    }
+
+    // 인포윈도우를 닫는 클로저를 만드는 함수입니다
+    function makeOutListener(infowindow) {
+        return function () {
+            infowindow.close();
+        };
+    }
+
+    function get_location(info) {
+        return function () {
+            document.getElementById("statistic_location").value = info;
+        };
+    }
+
+    $(function () {
+        $('#statistic_start_time').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+            ignoreReadonly: true
+        });
+    });
+
+    $(function () {
+        $('#statistic_end_time').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+            ignoreReadonly: true
+        });
+    });
+
+</script>
 </body>
 </html>
-
-<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>

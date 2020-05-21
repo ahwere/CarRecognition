@@ -13,14 +13,10 @@ from django.core import serializers
 from django.db.models import Q
 import datetime
 
-
-
-
 def index(req) :
 
     user_name = None
     cctv = Cctv.objects.all()
-
     cctv_list = serializers.serialize('json', cctv)
 
     if req.user.is_anonymous!=True:
