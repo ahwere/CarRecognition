@@ -76,7 +76,7 @@
                  </div>
 
                  <div style="background-color: #fff">
-                    <form method = "post" action="{% url 'manage:manage' %}" enctype="multipart/form-data" style="background-color: #fff">
+                    <form method = "post" action="{% url 'manage:uploadcctv' %}" enctype="multipart/form-data" style="background-color: #fff">
                         {% csrf_token %}
                         <input id=input_video type="file" name="video">
                         <button type="submit">Upload file</button>

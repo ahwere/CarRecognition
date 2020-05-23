@@ -36,6 +36,10 @@
                         </a></li>
 
                         {% else %}
+                            {% if user.permission  == 'admin' %}
+                                <li><a href="{% url 'manage:manage' %}">관리자 페이지
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></li>
+                            {% endif %}
                             <li><a href="{% url 'home:mypage' %}">
                                 '{{ user.name }}'의 정보
                                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>

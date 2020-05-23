@@ -16,25 +16,7 @@ def manage(req):
 
         if user.permission == 'admin':
             qs = Cctv.objects.all()
-
-            if req.method == 'POST':
-                uploaded_file = req.FILES.get('video')
-                if uploaded_file==None:
-                    messages.info(req, "잘못된 파일 형식입니다.")
-                    return render(req, "manage.html", {'user': user, 'qs': qs})
-                else:
-                    ext=uploaded_file.name[len(uploaded_file.name)-3:len(uploaded_file.name)]
-                    if ext != 'mp4' and ext!='wmv' and ext!='mkv' and ext!='wmv' and ext!='avi' and ext!='MOV' and ext!='FLV':
-                        messages.info(req,"잘못된 파일 형식입니다.")
-                        return render(req, "manage.html", {'user': user, 'qs': qs})
-
-                fs = FileSystemStorage()
-                name = fs.save(uploaded_file.name, uploaded_file)
-                url = fs.url(name)
-                messages.info(req, "동영상이 업로드 되었습니다.")
-                return render(req, "manage.html", {'user': user, 'url':url, 'qs':qs})
-            else:
-                return render(req, "manage.html", {'user': user, 'qs':qs})
+            return render(req,'manage.html', {'user':user, 'qs':qs})
         else:
             messages.info(req, '관리자가 아닙니다.')
             return redirect('home:index')
@@ -42,7 +24,27 @@ def manage(req):
         messages.info(req, '로그인 후 이용하세요.')
         return redirect("home:index")
 
-    return render(req,'manage.html')
+
+def uploadcctv(req):
+    if req.method == 'POST':
+        uploaded_file = req.FILES.get('video')
+        if uploaded_file == None:
+            messages.info(req, "파일을 선택해 주세요.")
+            return redirect('manage:manage')
+        else:
+            ext = uploaded_file.name[len(uploaded_file.name) - 3:len(uploaded_file.name)]
+            if ext != 'mp4' and ext != 'wmv' and ext != 'mkv' and ext != 'avi' and ext != 'MOV' and ext != 'FLV':
+                messages.info(req, "잘못된 파일 형식입니다.")
+                return redirect('manage:manage')
+
+            fs = FileSystemStorage()
+            name = fs.save(uploaded_file.name, uploaded_file)
+            # url = fs.url(name)
+            messages.info(req, "동영상이 업로드 되었습니다.")
+            return redirect('manage:manage')
+    else:
+        return redirect('manage:manage')
+
 
 def reaAllUser(req):
     context = []
