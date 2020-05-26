@@ -29,11 +29,16 @@ def recog(req):
 
     if cur_user.is_authenticated:
         user = Profile.objects.get(user=auth.get_user(req))
+        date = {}
 
         if req.method == 'POST':
             location = req.POST['location']
             start_time = req.POST['start_time']
             end_time = req.POST['end_time']
+
+            date['location'] = location
+            date['start_time'] = start_time
+            date['end_time'] = end_time
 
             filter_cctv = Cctv.objects.filter(location=location, start_time__lte=start_time).order_by('start_time')
 

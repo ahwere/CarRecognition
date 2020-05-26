@@ -72,19 +72,19 @@
                     <div class="modal-body" style="width:550px;height:480px;text-align: center;">
                         <div class="col-sm-4">
                             <span style="font-weight: bolder; font-size: 15px;">시작 시간</span>
-                            <input id="recognition_start_time" type="text" name="start_time" width="180"
+                            <input id="recognition_start_time" type="text" name="start_time" value="{{ date.start_time }}" width="180"
                                    style="margin-bottom: 15px" readonly/>
                         </div>
 
                         <div class="col-sm-4">
                             <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">종료 시간</span>
-                            <input id="recognition_end_time" type="text" name="end_time" width="180"
+                            <input id="recognition_end_time" type="text" name="end_time" value="{{ date.end_time }}" width="180"
                                    style="margin-bottom: 15px" readonly/>
                         </div>
 
                         <div class="col-sm-4">
                             <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">위치</span>
-                            <input id="recognition_location" name="location" width="180" value=""
+                            <input id="recognition_location" name="location" width="180" value="{{ date.location }}"
                                    style="margin-bottom: 15px" readonly>
                         </div>
 

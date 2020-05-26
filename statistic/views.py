@@ -32,20 +32,22 @@ def stat(req):
 
     if cur_user.is_authenticated:
         user = Profile.objects.get(user=auth.get_user(req))
+        date = {}
 
         if req.method == 'POST':
             location = req.POST['location']
             start_time = req.POST['start_time']
             end_time = req.POST['end_time']
 
+            date['location'] = location
+            date['start_time'] = start_time
+            date['end_time'] = end_time
+
             filter_cctv = Cctv.objects.filter(location=location, start_time__lte=start_time).order_by('start_time')
 
             if bool(filter_cctv) == False:
                 cctv_log = []
             else:
-                # cctv_log = CctvLog.objects.select_related().filter(cctv_id=filter_cctv[0].id, appearance_time__gte=start_time,
-                #                                   appearance_time__lte=end_time).order_by('appearance_time')
-
                 cctv_log = CctvLog.objects.filter(cctv_id=filter_cctv[0].id, appearance_time__gte=start_time,
                                                   appearance_time__lte=end_time).order_by('appearance_time')
                 brand_arr = []
@@ -65,9 +67,7 @@ def stat(req):
                     temp_dic['car_count'] = brand_dic[i]
                     submit_arr.append(temp_dic)
 
-        return render(req, "statistic_Service.html",
-                      {'user': user, 'cctv': cctv_list, 'count': range(cctv.count()),
-                       'dataset': submit_arr})
+        return render(req, "statistic_Service.html", {'user': user, 'cctv': cctv_list, 'count': range(cctv.count()), 'dataset': submit_arr, 'date': date})
 
     else:
         messages.info(req, '로그인 후 이용가능합니다.')

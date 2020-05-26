@@ -103,19 +103,19 @@
                     <div class="modal-body" style="width:550px;height:480px;text-align: center;">
                         <div class="col-sm-4">
                             <span style="font-weight: bolder; font-size: 15px;">시작 시간</span>
-                            <input id="statistic_start_time" type="text" name="start_time" width="180"
+                            <input id="statistic_start_time" type="text" name="start_time" value="{{ date.start_time }}" width="180"
                                    style="margin-bottom: 15px" readonly/>
                         </div>
 
                         <div class="col-sm-4">
                             <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">종료 시간</span>
-                            <input id="statistic_end_time" type="text" name="end_time" width="180"
+                            <input id="statistic_end_time" type="text" name="end_time" value="{{ date.end_time }}" width="180"
                                    style="margin-bottom: 15px" readonly/>
                         </div>
 
                         <div class="col-sm-4">
                             <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">위치</span>
-                            <input id="statistic_location" name="location" width="180" value=""
+                            <input id="statistic_location" name="location" value="{{ date.location }}" width="180" value=""
                                    style="margin-bottom: 15px" readonly>
                         </div>
 
