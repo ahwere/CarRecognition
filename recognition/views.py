@@ -48,7 +48,7 @@ def recog(req):
                 cctv_log = CctvLog.objects.filter(cctv_id=filter_cctv[0].id, appearance_time__gte=start_time,
                                                   appearance_time__lte=end_time).order_by('appearance_time')
 
-            return render(req, "recog_Service.html", {'user': user, 'cctv_log': cctv_log, 'cctv': cctv_list, 'count': range(cctv.count())})
+            return render(req, "recog_Service.html", {'user': user, 'cctv_log': cctv_log, 'cctv': cctv_list, 'count': range(cctv.count()), 'date': date})
 
         return render(req, "recog_Service.html", {'user': user, 'cctv': cctv_list, 'count': range(cctv.count())})
 
