@@ -33,27 +33,80 @@
                                  data-toggle="modal" onclick="setlayout()">검색하기</a></p>
     </div>
 </div>
+<br><br>
 
 <div class="container">
 
-    <div class="col-sm-2">
-        <a class="btn btn-dark active" href="{% url 'recognition:recognition' %}" id="tab_button">
+    <div class="col-lg-2">
+        <a class="btn active" href="{% url 'recognition:recognition' %}" id="tab_button" style="color: black">
             <i class="fa fa-car fa-lg" style="margin-right: 5px;"></i> Recognition</a>
         <br>
-        <a class="btn btn-dark" href="{% url 'statistic:statistic' %}" id="tab_button">
+        <a class="btn " href="{% url 'statistic:statistic' %}" id="tab_button" style="color: black">
             <i class="fa fa-pie-chart fa-lg" aria-hidden="true" style="margin-right: 5px;"></i>
             <span style="margin-right: 15px;">Statistics</span></a>
     </div>
 
-    <div class="col-sm-6">
-        <video id="video" controls onplay="startAlert()" onpause="stopAlert()">
-            <source src="{% static 'videos/minchan.mp4' %}">
-        </video>
-    </div>
+        {% if cctv_log %}
+            <div class="col-lg-6" style="height: 400px;text-align: center;position: relative">
+                <video id="video" controls onplay="startAlert()" onpause="stopAlert()">
+                    <source src="{% static 'videos/minchan.mp4' %}">
+                </video>
+                <div id="car_list_box" class="col-lg-4" style="text-align:center; height: 400px;overflow: scroll;border: 1px solid black">
+                </div>
+            </div>
+        {% else %}
+            <div class="col-lg-10" style="height: 400px;text-align: center;position: relative;">
+                <div id="page1">
+                    <button id="btn_page2" class="btn" onclick="page2_show()" style="position: absolute;right: 0px;width:50%; height: 100%;opacity: 0%">다음</button>
+                    사용법1
+                </div>
+                <div id="page2" style="display: none;">
+                    <button id="btn_page1" class="btn" onclick="page1_show()" style="position: absolute;left: 0px;width:50%; height: 100%;opacity: 0%">이전</button>
+                    <button id="btn_page3" class="btn" onclick="page3_show()" style="position: absolute;right: 0px;width:50%; height: 100%;opacity: 0%">다음</button>
+                    사용법2
+                </div>
+                <div id="page3" style="display: none">
+                    <button id="btn_page2" class="btn" onclick="page2_show()" style="position: absolute;left: 0px; width:50%; height: 100%;opacity: 0%">이전</button>
+                    사용법3
+                </div>
+                <div style="position: absolute;left:0px;bottom:0px;width:100%;">
+            <input id="radio_page1" type="radio" name="page" value="1" checked="checked" onclick="page1_show()">
+            <input id="radio_page2" type="radio" name="page" value="2" onclick="page2_show()">
+            <input id="radio_page3" type="radio" name="page" value="3" onclick="page3_show()">
 
-    <div id="car_list_box" class="col-sm-4" style="text-align:center; height: 300px;">
+            <script>
+                page1 = document.getElementById("page1");
+                page2 = document.getElementById("page2");
+                page3 = document.getElementById("page3");
 
-    </div>
+                function page1_show() {
+                page2.style.display = "none";
+                page3.style.display = "none";
+
+                $('#radio_page1').prop('checked',true);
+                page1.style.display = "block";
+            }
+            function page2_show() {
+                page1.style.display = "none";
+                page3.style.display = "none";
+
+
+                $('#radio_page2').prop('checked',true);
+                page2.style.display = "block";
+            }
+            function page3_show() {
+                page1.style.display = "none";
+                page2.style.display = "none";
+
+                $('#radio_page3').prop('checked',true);
+                page3.style.display = "block";
+                }
+            </script>
+                </div>
+            </div>
+        {% endif %}
+
+
 </div>
 
 <br>
@@ -105,48 +158,45 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a8a08365e71499493906a12ac8f92432"></script>
 <script>
-    {#startAlert = function () {#}
-    {#    var video = document.getElementById("video");#}
-    {#    video_time_sec = parseInt(video.currentTime.toFixed(0)) % 60;#}
-    {#    video_time_min = parseInt(parseInt(video.currentTime.toFixed(0)) / 60);#}
-    {#    x = {{ cctv_log.0.appearance_time.second }} +video_time_sec;#}
-    {#    y = {{ cctv_log.0.appearance_time.minute }} +video_time_min;#}
-    {##}
-    {#    if (x == {{ cctv_log.0.appearance_time.second }} && y =={{ cctv_log.0.appearance_time.minute }}) {#}
-    {#        var car_list = document.createElement("li");#}
-    {##}
-    {#        car_list.innerHTML = '{{ cctv_log.0.color }}' + ' ' + '{{ cctv_log.0.car_model.model }}' + ' ' + '{{ cctv_log.0.appearance_time }}'#}
-    {#        $('#car_list_box').append(car_list);#}
-    {##}
-    {#    }#}
-    {##}
-    {#    playAlert = setInterval(function () {#}
-    {#        var video = document.getElementById("video");#}
-    {#        video_time_sec = parseInt(video.currentTime.toFixed(0)) % 60;#}
-    {#        video_time_min = parseInt(parseInt(video.currentTime.toFixed(0)) / 60);#}
-    {#        x = {{ cctv_log.0.appearance_time.second }} +video_time_sec;#}
-    {#        y = {{ cctv_log.0.appearance_time.minute }} +video_time_min;#}
-    {##}
-    {#        {% for log in cctv_log %}#}
-    {##}
-    {#            if (x == {{ log.appearance_time.second }} && y == {{ log.appearance_time.minute }}) {#}
-    {#                var car_list = document.createElement("li");#}
-    {##}
-    {#                car_list.innerHTML = car_list.innerHTML = '{{ log.color }}' + ' ' + '{{ log.car_model.model }}' + ' ' + '{{ log.appearance_time }}'#}
-    {##}
-    {#                $('#car_list_box').append(car_list);#}
-    {##}
-    {#            }#}
-    {#        {% endfor %}#}
-    {#    }, 1000);#}
-    {
-        #};
-        #}
-        {#stopAlert = function () {#}
-        {#    clearInterval(playAlert);#}
-        {
-            #};
-            #}
+    startAlert = function () {
+        var video = document.getElementById("video");
+        video_time_sec = parseInt(video.currentTime.toFixed(0)) % 60;
+        video_time_min = parseInt(parseInt(video.currentTime.toFixed(0)) / 60);
+        x = {{ cctv_log.0.appearance_time.second }} +video_time_sec;
+        y = {{ cctv_log.0.appearance_time.minute }} +video_time_min;
+
+        if (x == {{ cctv_log.0.appearance_time.second }} && y =={{ cctv_log.0.appearance_time.minute }}) {
+            var car_list = document.createElement("li");
+
+            car_list.innerHTML = '{{ cctv_log.0.color }}' + ' ' + '{{ cctv_log.0.car_model.model }}' + ' ' + '{{ cctv_log.0.appearance_time }}'
+            $('#car_list_box').prepend(car_list);
+
+        }
+
+        playAlert = setInterval(function () {
+            var video = document.getElementById("video");
+            video_time_sec = parseInt(video.currentTime.toFixed(0)) % 60;
+            video_time_min = parseInt(parseInt(video.currentTime.toFixed(0)) / 60);
+            x = {{ cctv_log.0.appearance_time.second }} +video_time_sec;
+            y = {{ cctv_log.0.appearance_time.minute }} +video_time_min;
+
+            {% for log in cctv_log %}
+
+                if (x == {{ log.appearance_time.second }} && y == {{ log.appearance_time.minute }}) {
+                    var car_list = document.createElement("li");
+
+                    car_list.innerHTML = car_list.innerHTML = '{{ log.color }}' + ' ' + '{{ log.car_model.model }}' + ' ' + '{{ log.appearance_time }}'
+
+                    $('#car_list_box').prepend(car_list);
+
+                }
+            {% endfor %}
+        }, 1000);
+    }
+
+    stopAlert = function () {
+        clearInterval(playAlert);
+    }
 
             var recognition_container = document.getElementById('recognition_map');
 

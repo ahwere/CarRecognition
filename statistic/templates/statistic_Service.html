@@ -38,21 +38,20 @@
                                  data-toggle="modal" onclick="setlayout()">검색하기</a></p>
     </div>
 </div>
-
+<br><br>
 <div class="container">
-    <div class="col-sm-2">
-        <a class="btn btn-dark" href="{% url 'recognition:recognition' %}" id="tab_button">
+    <div class="col-lg-2">
+        <a class="btn" href="{% url 'recognition:recognition' %}" id="tab_button" style="color: black">
             <i class="fa fa-car fa-lg" style="margin-right: 5px;"></i> Recognition</a>
         <br>
-        <a class="btn btn-dark active" href="{% url 'statistic:statistic' %}" id="tab_button">
+        <a class="btn active" href="{% url 'statistic:statistic' %}" id="tab_button" style="color: black">
             <i class="fa fa-pie-chart fa-lg" aria-hidden="true" style="margin-right: 5px;"></i>
             <span style="margin-right: 15px;">Statistics</span></a>
     </div>
 
-    <div class="col-sm-10" style="text-align:center">
+    <div style="text-align:center;height: 400px;">
         <div class="container">
-            <div class="row" style="margin-top:10px; ">
-                <div class="col-md-12">
+                <div class="col-md-10" style="text-align:center;height: 400px;position: relative;">
 
                     {% if dataset %}
                     <script src="https://code.highcharts.com/highcharts.src.js"></script>
@@ -80,9 +79,57 @@
                             ]
                         });
                     </script>
+                    {% else %}
+                        <div id="page1">
+                            <button id="btn_page2" class="btn" onclick="page2_show()"style="position: absolute;right: 0px;height: 100%;opacity: 0%;width:50%;">다음</button>
+                            사용법1
+                        </div>
+                        <div id="page2" style="display: none;">
+                            <button id="btn_page1" class="btn" onclick="page1_show()"style="position: absolute;left: 0px;height: 100%;opacity: 0%;width:50%;">이전</button>
+                            <button id="btn_page3" class="btn" onclick="page3_show()"style="position: absolute;right: 0px;height: 100%;opacity: 0%;width:50%;">다음</button>
+                            사용법2
+                        </div>
+                        <div id="page3" style="display: none">
+                            <button id="btn_page2" class="btn" onclick="page2_show()"style="position: absolute;left: 0px;height: 100%;opacity: 0%;width:50%;">이전</button>
+                            사용법3
+                        </div>
+
+                        <div style="position: absolute;left:0px; bottom: 0px;width: 100%">
+                            <input id="radio_page1" type="radio" name="page" value="1" checked="checked" onclick="page1_show()">
+                            <input id="radio_page2" type="radio" name="page" value="2" onclick="page2_show()">
+                            <input id="radio_page3" type="radio" name="page" value="3" onclick="page3_show()">
+
+                            <script>
+                                page1 = document.getElementById("page1");
+                                page2 = document.getElementById("page2");
+                                page3 = document.getElementById("page3");
+
+                                function page1_show() {
+                                page2.style.display = "none";
+                                page3.style.display = "none";
+
+                                $('#radio_page1').prop('checked',true);
+                                page1.style.display = "block";
+                            }
+                            function page2_show() {
+                                page1.style.display = "none";
+                                page3.style.display = "none";
+
+
+                                $('#radio_page2').prop('checked',true);
+                                page2.style.display = "block";
+                            }
+                            function page3_show() {
+                                page1.style.display = "none";
+                                page2.style.display = "none";
+
+                                $('#radio_page3').prop('checked',true);
+                                page3.style.display = "block";
+                                }
+                            </script>
+                        </div>
                     {% endif %}
                 </div>
-            </div>
         </div>
     </div>
 </div>
