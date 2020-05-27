@@ -9,5 +9,6 @@ urlpatterns = [
     path("reaAllUser/", views.reaAllUser, name="reaAllUser"),
     path("delUser/", views.delUser, name="delUser"),
     path("grantUser/", views.grantUser, name="grantUser"),
-    path("<str:id>/delCctv",views.delCctv, name="delCctv")
+    path("<str:id>/delCctv",views.delCctv, name="delCctv"),
+    path("uploadcctv/", views.uploadcctv, name="uploadcctv"),
 ]+ static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)

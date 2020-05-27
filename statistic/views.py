@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from home.models import Profile
 from django.contrib import auth
 from django.contrib import messages
@@ -29,22 +30,32 @@ def stat(req):
     cur_user = req.user
     cctv = Cctv.objects.all()
     cctv_list = serializers.serialize('json', cctv)
-    brand_arr = []
-    brand_dic = {}
-    submit_arr = []
-    cctv_log = []
 
     if cur_user.is_authenticated:
         user = Profile.objects.get(user=auth.get_user(req))
+        date = {}
+        brand_arr = []
+        brand_dic = {}
+        submit_arr = []
 
         if req.method == 'POST':
             location = req.POST['location']
             start_time = req.POST['start_time']
             end_time = req.POST['end_time']
 
+            date['location'] = location
+            date['start_time'] = start_time
+            date['end_time'] = end_time
+
+            # print(location)
+
             filter_cctv = Cctv.objects.filter(location=location, start_time__lte=start_time).order_by('start_time')
 
-            if bool(filter_cctv) == True:
+            if bool(filter_cctv) == False:
+                cctv_log = []
+                return redirect('statistic:statistic')
+
+            else:
                 cctv_log = CctvLog.objects.filter(cctv_id=filter_cctv[0].id, appearance_time__gte=start_time,
                                                   appearance_time__lte=end_time).order_by('appearance_time')
 
@@ -52,10 +63,8 @@ def stat(req):
                     brand_arr.append(i.car_model.brand)
 
                 for i in brand_arr:
-                    try:
-                        brand_dic[i] += 1
-                    except:
-                        brand_dic[i] = 1
+                    try: brand_dic[i] += 1
+                    except: brand_dic[i] = 1
 
                 for i in brand_dic.keys():
                     temp_dic = {}
@@ -63,9 +72,7 @@ def stat(req):
                     temp_dic['car_count'] = brand_dic[i]
                     submit_arr.append(temp_dic)
 
-        return render(req, "statistic_Service.html",
-                      {'user': user, 'cctv': cctv_list, 'count': range(cctv.count()),
-                       'dataset': submit_arr})
+        return render(req, "statistic_Service.html", {'user': user, 'cctv': cctv_list, 'count': range(cctv.count()), 'dataset': submit_arr, 'date': date})
 
     else:
         messages.info(req, '로그인 후 이용가능합니다.')

@@ -33,27 +33,107 @@
                                  data-toggle="modal" onclick="setlayout()">검색하기</a></p>
     </div>
 </div>
+<br><br>
 
 <div class="container">
 
-    <div class="col-sm-2">
-        <a class="btn btn-dark active" href="{% url 'recognition:recognition' %}" id="tab_button">
+    <div class="col-lg-2">
+        <a class="btn active" href="{% url 'recognition:recognition' %}" id="tab_button" style="color: black">
             <i class="fa fa-car fa-lg" style="margin-right: 5px;"></i> Recognition</a>
         <br>
-        <a class="btn btn-dark" href="{% url 'statistic:statistic' %}" id="tab_button">
-            <i class="fa fa-pie-chart fa-lg" aria-hidden="true" style="margin-right: 5px;"></i>
-            <span style="margin-right: 15px;">Statistics</span></a>
+        {% if cctv_log %}
+            <div>
+                <form action="{% url 'statistic:stat' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="start_time" value="{{ date.start_time }}">
+                    <input type="hidden" name="end_time" value="{{ date.end_time }}">
+                    <input type="hidden" name="location" value="{{ date.location }}">
+
+                    <button class="btn" id="tab_button" style="color: black" type="submit">
+                        <i class="fa fa-pie-chart fa-lg" aria-hidden="true" style="margin-right: 5px;"></i>
+                        <span style="margin-right: 15px;">Statistics</span></button>
+
+                </form>
+            </div>
+        {% else %}
+            <a class="btn" href="{% url 'statistic:statistic' %}" id="tab_button" style="color: black">
+                <i class="fa fa-pie-chart fa-lg" aria-hidden="true" style="margin-right: 5px;"></i>
+                <span style="margin-right: 15px;">Statistics</span></a>
+        {% endif %}
     </div>
 
-    <div class="col-sm-6">
-        <video id="video" controls onplay="startAlert()" onpause="stopAlert()">
-            <source src="{% static 'videos/test.mp4' %}">
-        </video>
-    </div>
+    {% if cctv_log %}
+        <div class="col-lg-6" style="height: 400px;text-align: center;position: relative">
+            <video id="video" controls onplay="startAlert()" onpause="stopAlert()">
+                <source src="{% static 'videos/minchan.mp4' %}">
+            </video>
+            <div id="car_list_box" class="col-lg-4"
+                 style="text-align:center; height: 400px;overflow: scroll;border: 1px solid black">
+            </div>
+        </div>
+    {% else %}
+        <div class="col-lg-10" style="height: 400px;text-align: center;position: relative;">
+            <div id="page1">
+                <button id="btn_page2" class="btn" onclick="page2_show()"
+                        style="position: absolute;right: 0px;width:50%; height: 100%;opacity: 0%">다음
+                </button>
+                사용법1
+            </div>
+            <div id="page2" style="display: none;">
+                <button id="btn_page1" class="btn" onclick="page1_show()"
+                        style="position: absolute;left: 0px;width:50%; height: 100%;opacity: 0%">이전
+                </button>
+                <button id="btn_page3" class="btn" onclick="page3_show()"
+                        style="position: absolute;right: 0px;width:50%; height: 100%;opacity: 0%">다음
+                </button>
+                사용법2
+            </div>
+            <div id="page3" style="display: none">
+                <button id="btn_page2" class="btn" onclick="page2_show()"
+                        style="position: absolute;left: 0px; width:50%; height: 100%;opacity: 0%">이전
+                </button>
+                사용법3
+            </div>
+            <div style="position: absolute;left:0px;bottom:0px;width:100%;">
+                <input id="radio_page1" type="radio" name="page" value="1" checked="checked" onclick="page1_show()">
+                <input id="radio_page2" type="radio" name="page" value="2" onclick="page2_show()">
+                <input id="radio_page3" type="radio" name="page" value="3" onclick="page3_show()">
 
-    <div id="car_list_box" class="col-sm-4" style="text-align:center; height: 300px;">
+                <script>
+                    page1 = document.getElementById("page1");
+                    page2 = document.getElementById("page2");
+                    page3 = document.getElementById("page3");
 
-    </div>
+                    function page1_show() {
+                        page2.style.display = "none";
+                        page3.style.display = "none";
+
+                        $('#radio_page1').prop('checked', true);
+                        page1.style.display = "block";
+                    }
+
+                    function page2_show() {
+                        page1.style.display = "none";
+                        page3.style.display = "none";
+
+
+                        $('#radio_page2').prop('checked', true);
+                        page2.style.display = "block";
+                    }
+
+                    function page3_show() {
+                        page1.style.display = "none";
+                        page2.style.display = "none";
+
+                        $('#radio_page3').prop('checked', true);
+                        page3.style.display = "block";
+                    }
+                </script>
+            </div>
+        </div>
+    {% endif %}
+
+
 </div>
 
 <br>
@@ -72,19 +152,21 @@
                     <div class="modal-body" style="width:550px;height:480px;text-align: center;">
                         <div class="col-sm-4">
                             <span style="font-weight: bolder; font-size: 15px;">시작 시간</span>
-                            <input id="recognition_start_time" type="text" name="start_time" width="180"
+                            <input id="recognition_start_time" type="text" name="start_time"
+                                   value="{{ date.start_time }}" width="180"
                                    style="margin-bottom: 15px" readonly/>
                         </div>
 
                         <div class="col-sm-4">
                             <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">종료 시간</span>
-                            <input id="recognition_end_time" type="text" name="end_time" width="180"
+                            <input id="recognition_end_time" type="text" name="end_time" value="{{ date.end_time }}"
+                                   width="180"
                                    style="margin-bottom: 15px" readonly/>
                         </div>
 
                         <div class="col-sm-4">
                             <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">위치</span>
-                            <input id="recognition_location" name="location" width="180" value=""
+                            <input id="recognition_location" name="location" width="180" value="{{ date.location }}"
                                    style="margin-bottom: 15px" readonly>
                         </div>
 
@@ -93,7 +175,6 @@
                         <div class="btn-area">
                             <button id="btn" type="submit">제출</button>
                         </div>
-
                     </div>
                 </form>
             </div>
@@ -106,136 +187,134 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a8a08365e71499493906a12ac8f92432"></script>
 <script>
 
-    {% if cctv_log != null %}
-    startAlert = function () {
-        var video = document.getElementById("video");
-        video_time_sec = parseInt(video.currentTime.toFixed(0)) % 60;
-        video_time_min = parseInt(parseInt(video.currentTime.toFixed(0)) / 60);
-        x = {{ cctv_log.0.appearance_time.second }} +video_time_sec;
-        y = {{ cctv_log.0.appearance_time.minute }} +video_time_min;
-
-        if (x == {{ cctv_log.0.appearance_time.second }} && y =={{ cctv_log.0.appearance_time.minute }}) {
-            var car_list = document.createElement("li");
-
-            car_list.innerHTML = '{{ cctv_log.0.color }}' + ' ' + '{{ cctv_log.0.car_model.model }}' + ' ' + '{{ cctv_log.0.appearance_time }}'
-            $('#car_list_box').append(car_list);
-
-        }
-
-        playAlert = setInterval(function () {
+    {% if cctv_log %}
+        startAlert = function () {
             var video = document.getElementById("video");
             video_time_sec = parseInt(video.currentTime.toFixed(0)) % 60;
             video_time_min = parseInt(parseInt(video.currentTime.toFixed(0)) / 60);
             x = {{ cctv_log.0.appearance_time.second }} +video_time_sec;
             y = {{ cctv_log.0.appearance_time.minute }} +video_time_min;
 
-            {% for log in cctv_log %}
+            if (x == {{ cctv_log.0.appearance_time.second }} && y =={{ cctv_log.0.appearance_time.minute }}) {
+                var car_list = document.createElement("li");
 
-                if (x == {{ log.appearance_time.second }} && y == {{ log.appearance_time.minute }}) {
-                    var car_list = document.createElement("li");
+                car_list.innerHTML = '{{ cctv_log.0.color }}' + ' ' + '{{ cctv_log.0.car_model.model }}' + ' ' + '{{ cctv_log.0.appearance_time }}'
+                $('#car_list_box').prepend(car_list);
 
-                    car_list.innerHTML = car_list.innerHTML = '{{ log.color }}' + ' ' + '{{ log.car_model.model }}' + ' ' + '{{ log.appearance_time }}'
+            }
 
-                    $('#car_list_box').append(car_list);
+            playAlert = setInterval(function () {
+                var video = document.getElementById("video");
+                video_time_sec = parseInt(video.currentTime.toFixed(0)) % 60;
+                video_time_min = parseInt(parseInt(video.currentTime.toFixed(0)) / 60);
+                x = {{ cctv_log.0.appearance_time.second }} +video_time_sec;
+                y = {{ cctv_log.0.appearance_time.minute }} +video_time_min;
 
-                }
-            {% endfor %}
-        }, 1000);
-    {
-        };
+                {% for log in cctv_log %}
+
+                    if (x == {{ log.appearance_time.second }} && y == {{ log.appearance_time.minute }}) {
+                        var car_list = document.createElement("li");
+
+                        car_list.innerHTML = car_list.innerHTML = '{{ log.color }}' + ' ' + '{{ log.car_model.model }}' + ' ' + '{{ log.appearance_time }}'
+
+                        $('#car_list_box').prepend(car_list);
+
+                    }
+                {% endfor %}
+            }, 1000);
         }
+
         stopAlert = function () {
             clearInterval(playAlert);
-        {
-            };
-            }
+        }
+
     {% endif %}
 
-            var recognition_container = document.getElementById('recognition_map');
+    var recognition_container = document.getElementById('recognition_map');
 
-            var options = {
-                center: new kakao.maps.LatLng(37.549341, 127.0742582),
-                level: 3
-            };
+    var options = {
+        center: new kakao.maps.LatLng(37.549341, 127.0742582),
+        level: 3
+    };
 
-            var recognition_map = new kakao.maps.Map(recognition_container, options);
+    var recognition_map = new kakao.maps.Map(recognition_container, options);
 
-            function setlayout() {
-                setTimeout(function () {
-                        recognition_map.relayout();
-                    }
-                    , 0);
+    function setlayout() {
+        setTimeout(function () {
+                recognition_map.relayout();
             }
+            , 0);
+    }
 
-            var cctv_obj = "{{ cctv }}".replace(/&quot;/g, '"');
-            var cctv_json = JSON.parse(cctv_obj);
+    var cctv_obj = "{{ cctv }}".replace(/&quot;/g, '"');
+    var cctv_json = JSON.parse(cctv_obj);
 
-            // 마커 이미지의 이미지 주소입니다
-            var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+    // 마커 이미지의 이미지 주소입니다
+    var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
-            var positions = [
-                {% for i in count %}
-                    {
-                        title: cctv_json[{{i}}].fields.location,
-                        latlng: new kakao.maps.LatLng(cctv_json[{{i}}].fields.latitude, cctv_json[{{i}}].fields.longtitude)
-                    },
-                {% endfor %}
-            ];
+    var positions = [
+        {% for i in count %}
+            {
+                title: cctv_json[{{i}}].fields.location,
+                latlng: new kakao.maps.LatLng(cctv_json[{{i}}].fields.latitude, cctv_json[{{i}}].fields.longtitude)
+            },
+        {% endfor %}
+    ];
 
-            for (var i = 0; i < positions.length; i++) {
+    for (var i = 0; i < positions.length; i++) {
 
-                var imageSize = new kakao.maps.Size(24, 35);
+        var imageSize = new kakao.maps.Size(24, 35);
 
-                // 마커를 생성합니다
-                var recognition_marker = new kakao.maps.Marker({
-                    map: recognition_map, // 마커를 표시할 지도
-                    position: positions[i].latlng, // 마커를 표시할 위치
-                    title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                    clickable: true
-                });
+        // 마커를 생성합니다
+        var recognition_marker = new kakao.maps.Marker({
+            map: recognition_map, // 마커를 표시할 지도
+            position: positions[i].latlng, // 마커를 표시할 위치
+            title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+            clickable: true
+        });
 
-                var infowindow = new kakao.maps.InfoWindow({
-                    content: positions[i].title // 인포윈도우에 표시할 내용
-                });
+        var infowindow = new kakao.maps.InfoWindow({
+            content: positions[i].title // 인포윈도우에 표시할 내용
+        });
 
-                kakao.maps.event.addListener(recognition_marker, 'click', get_location(positions[i].title));
-                kakao.maps.event.addListener(recognition_marker, 'mouseover', makeOverListener(recognition_map, recognition_marker, infowindow));
-                kakao.maps.event.addListener(recognition_marker, 'mouseout', makeOutListener(infowindow));
-            }
+        kakao.maps.event.addListener(recognition_marker, 'click', get_location(positions[i].title));
+        kakao.maps.event.addListener(recognition_marker, 'mouseover', makeOverListener(recognition_map, recognition_marker, infowindow));
+        kakao.maps.event.addListener(recognition_marker, 'mouseout', makeOutListener(infowindow));
+    }
 
-            // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
-            function makeOverListener(map, marker, infowindow) {
-                return function () {
-                    infowindow.open(map, marker);
-                };
-            }
+    // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
+    function makeOverListener(map, marker, infowindow) {
+        return function () {
+            infowindow.open(map, marker);
+        };
+    }
 
-            // 인포윈도우를 닫는 클로저를 만드는 함수입니다
-            function makeOutListener(infowindow) {
-                return function () {
-                    infowindow.close();
-                };
-            }
+    // 인포윈도우를 닫는 클로저를 만드는 함수입니다
+    function makeOutListener(infowindow) {
+        return function () {
+            infowindow.close();
+        };
+    }
 
-            function get_location(info) {
-                return function () {
-                    document.getElementById("recognition_location").value = info;
-                };
-            }
+    function get_location(info) {
+        return function () {
+            document.getElementById("recognition_location").value = info;
+        };
+    }
 
-            $(function () {
-                $('#recognition_start_time').datetimepicker({
-                    format: 'YYYY-MM-DD HH:mm:ss',
-                    ignoreReadonly: true
-                });
-            });
+    $(function () {
+        $('#recognition_start_time').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+            ignoreReadonly: true
+        });
+    });
 
-            $(function () {
-                $('#recognition_end_time').datetimepicker({
-                    format: 'YYYY-MM-DD HH:mm:ss',
-                    ignoreReadonly: true
-                });
-            });
+    $(function () {
+        $('#recognition_end_time').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+            ignoreReadonly: true
+        });
+    });
 
 </script>
 </body>
