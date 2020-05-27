@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
 from home.models import Profile
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from recognition.models import Cctv
@@ -11,12 +11,15 @@ from recognition.models import Cctv
 def manage(req):
     cur_user = req.user
 
+    cctv = Cctv.objects.all()
+    cctv_list = serializers.serialize('json', cctv)
+
     if cur_user.is_authenticated:
         user = Profile.objects.get(user=auth.get_user(req))
 
         if user.permission == 'admin':
             qs = Cctv.objects.all()
-            return render(req,'manage.html', {'user':user, 'qs':qs})
+            return render(req,'manage.html', {'user': user, 'qs': qs, 'cctv': cctv_list, 'count': range(cctv.count())})
         else:
             messages.info(req, '관리자가 아닙니다.')
             return redirect('home:index')
@@ -28,6 +31,10 @@ def manage(req):
 def uploadcctv(req):
     if req.method == 'POST':
         uploaded_file = req.FILES.get('video')
+        start_time = req.POST['start_time']
+        end_time = req.POST['end_time']
+        location = req.POST['location']
+
         if uploaded_file == None:
             messages.info(req, "파일을 선택해 주세요.")
             return redirect('manage:manage')
