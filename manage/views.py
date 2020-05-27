@@ -88,4 +88,5 @@ def delCctv(req,id):
     qs = Cctv.objects.get(id=id)
     qs.delete()
 
+    messages.info(req,'CCTV를 삭제했습니다.')
     return redirect('manage:manage')
