@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/button.css' %}">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -36,6 +37,7 @@
         height: 300px;
         padding: 6%;
     }
+
 </style>
 
 {% include 'nav.html' %}
@@ -139,7 +141,7 @@
                         <div id="recognition_map" style="width:565px;height:350px;"></div>
 
                         <div class="btn-area">
-                            <button id="btn" type="submit">제출</button>
+                            <button class = base_button id="btn" type="submit" style="margin-top: 10px;width: 150px">제출</button>
                         </div>
 
                     </div>
@@ -182,7 +184,7 @@
                         <div id="statistic_map" style="width:565px;height:350px;"></div>
 
                         <div class="btn-area">
-                            <button id="btn" type="submit">제출</button>
+                            <button class= base_button id="btn" type="submit" style="width: 150px;margin-top: 10px">제출</button>
                         </div>
 
                     </div>

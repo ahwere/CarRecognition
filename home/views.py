@@ -29,6 +29,10 @@ def index(req) :
     return render(req, "index.html", {'user': user_name, 'cctv': cctv_list, 'count': range(cctv.count())})
 
 def login(req):
+    cur_user = req.user
+    if cur_user.is_authenticated:
+        return redirect("home:index")
+
     if req.method == 'POST':
         username = req.POST['username']
         password = req.POST['password']
@@ -53,6 +57,10 @@ def logout(req):
     return redirect('home:index')
 
 def register(req):
+    cur_user = req.user
+    if cur_user.is_authenticated:
+        return redirect("home:index")
+
     if req.method == 'POST':
         user_form = UserCreationForm(req.POST)
         if user_form.is_valid():
@@ -151,17 +159,12 @@ def search_record(req):
     startdate=datetime.date(y1,m1,d1)
     enddate = datetime.date(y2,m2,d2)
 
-    userlogs = UserLog.objects.filter(Q(user=auth.get_user(req))&Q(search_time__gte=startdate,end_time__lte=enddate))
+    userlogs = list(UserLog.objects.filter(Q(user=auth.get_user(req))&Q(search_time__gte=startdate,end_time__lte=enddate)).values())
 
-    cctvlogs = []
-    i = 0
 
-    for userlog in userlogs:
-        query = CctvLog.objects.filter(Q(cctv_id=userlog.cctv_id) & Q(appearance_time__gte=userlog.search_time, appearance_time__lte=userlog.end_time)).order_by('appearance_time')
-        log_list = list(query.values())
-        for value in log_list:
-            datetemp = value['appearance_time'].strftime("%m/%d/%Y %H:%M:%S")
-            value['appearance_time'] = datetemp
-            cctvlogs.append(value)
-
-    return JsonResponse(cctvlogs, safe=False)
+    for value in userlogs:
+        datetemp = value['search_time'].strftime("%Y/%m/%d %H:%M:%S")
+        value['search_time'] = datetemp
+        datetemp2 = value['end_time'].strftime("%Y/%m/%d %H:%M:%S")
+        value['end_time'] = datetemp2
+    return JsonResponse(userlogs, safe=False)
