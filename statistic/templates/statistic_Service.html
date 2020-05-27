@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/graph.css' %}">
     <link rel="stylesheet" href="{% static 'css/service.css' %}">
+    <link rel="stylesheet" href="{% static 'css/button.css' %}">
     <link rel="stylesheet" type="text/css"
           href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
@@ -57,14 +58,11 @@
                 </form>
             </div>
         {% else %}
-            <a class="btn" href="{% url 'recognition:recognition' %}" id="tab_button" style="color: black">
-                <i class="fa fa-car fa-lg" style="margin-right: 5px;"></i> Recognition</a>
+            <a class="themeBtn" href="{% url 'recognition:recognition' %}" id="tab_button" style="color: black; width: 200px">
+                <i class="fa fa-car fa-lg" style="margin-right: 5px;"></i>Go Recognition</a>
             <br>
         {% endif %}
 
-        <a class="btn active" href="{% url 'statistic:statistic' %}" id="tab_button" style="color: black">
-            <i class="fa fa-pie-chart fa-lg" aria-hidden="true" style="margin-right: 5px;"></i>
-            <span style="margin-right: 15px;">Statistics</span></a>
     </div>
 
     <div style="text-align:center;height: 400px;">
@@ -201,7 +199,7 @@
                         <div id="statistic_map" style="width:565px;height:350px;"></div>
 
                         <div class="btn-area">
-                            <button id="btn" type="submit">제출</button>
+                            <button class = base_button id="btn" type="submit" style="margin-top: 10px; width: 150px">제출</button>
                         </div>
 
                     </div>

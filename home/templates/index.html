@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/button.css' %}">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -35,27 +36,6 @@
         text-shadow: black 0.2em 0.2em 0.2em;
         height: 300px;
         padding: 6%;
-    }
-
-    #btn {
-        border: 1px solid #ccc;
-        width:150px;
-        margin-top: 10px;
-        padding: 6px 12px;
-        color: #666;
-        cursor: pointer;
-        border-radius: 3px 3px;
-        box-shadow: 0 1px #fff inset, 0 1px #ddd;
-        background: #000000;
-        background: linear-gradient(to right, #eeeeee 0%, #ffffff 100%);
-        font-weight: bold;
-    }
-    #btn:hover,
-    #btn:focus,
-    #btn:active{
-        color:#000000;
-        border:none;
-
     }
 
 </style>
@@ -161,7 +141,7 @@
                         <div id="recognition_map" style="width:565px;height:350px;"></div>
 
                         <div class="btn-area">
-                            <button id="btn" type="submit">제출</button>
+                            <button class = base_button id="btn" type="submit" style="margin-top: 10px;width: 150px">제출</button>
                         </div>
 
                     </div>
@@ -204,7 +184,7 @@
                         <div id="statistic_map" style="width:565px;height:350px;"></div>
 
                         <div class="btn-area">
-                            <button id="btn" type="submit">제출</button>
+                            <button class= base_button id="btn" type="submit" style="width: 150px;margin-top: 10px">제출</button>
                         </div>
 
                     </div>

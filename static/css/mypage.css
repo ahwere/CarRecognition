@@ -28,26 +28,7 @@ input::-webkit-input-placeholder {
     padding: 8px 12px !important;
 }
 
-.base_button {
-    border: 1px solid #ccc;
-    margin-top: 28px;
-    padding: 6px 12px;
-    color: #666;
-    cursor: pointer;
-    margin-bottom: 28px;
-    border-radius: 3px 3px;
-    box-shadow: 0 1px #fff inset, 0 1px #ddd;
-    background: #000000;
-    background: linear-gradient(to right, #eeeeee 0%, #ffffff 100%);
 
-}
-.base_button:hover,
-.base_button:focus,
-.base_button:active{
-	color:#000000;
-	border:none;
-
-}
 
 
 .req{

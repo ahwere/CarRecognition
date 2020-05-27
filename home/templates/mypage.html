@@ -9,6 +9,7 @@
 		{% load static %}
 
         <link rel="stylesheet" href="{% static 'css/mypage.css' %}">
+        <link rel="stylesheet" href="{% static 'css/button.css' %}">
 		<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -161,7 +162,7 @@
 
 				</form>
                     <div class="col-sm-3">
-                        <input class="base_button" id = "search_button" value="기록 조회" style="margin-top: 0px; width:150px; margin-left: 20px; font-size: large;"; readonly>
+                        <input class="base_button" id = "search_button" value="기록 조회" style="margin-top: 0px; font-size:large; width:150px;"; readonly>
 					</div>
                     <iframe id="txtArea1" style="display:none"></iframe>
                 <script>
@@ -254,7 +255,7 @@
 						</div>
 					</div>
 					<div class="panel-body" id = filter_box style="display:none;">
-						<input type="text" class="form-control" id="result_table_filter" data-action="filter" data-filters="#result_table" placeholder="cctv id / model / color / emergency time" />
+						<input type="text" class="form-control" id="result_table_filter" data-action="filter" data-filters="#result_table" placeholder="cctv id / search time / end time" />
 					</div>
                     <div style="width:100%; height:260px; overflow:auto">
                         <table class="table table-hover" id="result_table" >
