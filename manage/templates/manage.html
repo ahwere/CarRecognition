@@ -2,33 +2,43 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
+<head>
 
-		<meta charset="URF-8">
-		<meta name = "viewport" content= "width = device-width", initial-scale="1">
-		<title>커피탄 리 : 관리자</title>
-		<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
-		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-		<script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
-    </head>
-    <style>
-        .nav-item > a:focus{
-            color: red;
-        }
-        h3{
-            text-align: center;
-        }
-        .box{
-            background-color: #9d9d9d;
-        }
-        li{
-            list-style: none;
-        }
-        table{
-            text-align: center;
-        }
+    <meta charset="URF-8">
+    <meta name="viewport" content="width = device-width" , initial-scale="1">
+    <title>커피탄 리 : 관리자</title>
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+</head>
+<style>
+    .nav-item > a:focus {
+        color: red;
+    }
+
+    h3 {
+        text-align: center;
+    }
+
+    .box {
+        background-color: #9d9d9d;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    table {
+        text-align: center;
+    }
 
         tbody {
             display:block;
@@ -42,59 +52,80 @@
             table-layout:fixed;
         }
 
-    </style>
-    <body>
-    {% include 'nav.html' %}
+</style>
+<body>
+{% include 'nav.html' %}
 <br>
-    <div class="container-fluid">
-        <div class="nav col-sm-2">
-            <ul class="nav nav-tabs nav-stacked">
-                <h3>Menu</h3>
-                <li class="nav-item active in">
-                    <a class="nav-link" data-toggle="tab" href="#tab-content-cctvManage" id="tab-cctvManage">
-                        <i class="fas fa-video fa-lg"></i>&nbsp;CCTV 관리</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " data-toggle="tab" href="#tab-content-userManage" id="tab-userManage" onclick="reaAllUser()">
-                        <i class="fas fa-users fa-lg"></i>&nbsp;회원 관리</a>
-                </li>
-            </ul>
-        </div>
+<div class="container-fluid">
+    <div class="nav col-sm-2">
+        <ul class="nav nav-tabs nav-stacked">
+            <h3>Menu</h3>
+            <li class="nav-item active in">
+                <a class="nav-link" data-toggle="tab" href="#tab-content-cctvManage" id="tab-cctvManage">
+                    <i class="fas fa-video fa-lg"></i>&nbsp;CCTV 관리</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " data-toggle="tab" href="#tab-content-userManage" id="tab-userManage"
+                   onclick="reaAllUser()">
+                    <i class="fas fa-users fa-lg"></i>&nbsp;회원 관리</a>
+            </li>
+        </ul>
+    </div>
 
-        <div class="tab-content col-sm-8 col-sm-offset-1">
-            <div class="tab-pane fade active in" id="tab-content-cctvManage">
-                <h3>CCTV 관리</h3>
-                <div class="box" style="background-color: white">
+    <div class="tab-content col-sm-8 col-sm-offset-1">
+        <div class="tab-pane fade active in" id="tab-content-cctvManage">
+            <h3>CCTV 관리</h3>
+            <div class="box" style="background-color: white">
 
 
-                 <div class="panel panel-primary">
+                <div class="panel panel-primary">
                     <div class="panel-heading">CCTV 목록</div>
-                    <div id = cctv_panel_body class="panel-body">
-                    <table class="table"><thead><tr><td>Location</td><td>VideoLink</td><td>StartTime</td><td></td></tr></thead>
-                        <tbody id="cctv_list_box">
+                    <div id=cctv_panel_body class="panel-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <td>Location</td>
+                                <td>VideoLink</td>
+                                <td>StartTime</td>
+                                <td></td>
+                            </tr>
+                            </thead>
+                            <tbody id="cctv_list_box">
 
                             {% for temp in qs %}
                                 <tr>
-                                    <td>{{temp.location}}</td>
-                                    <td>{{temp.video_link}}</td>
-                                    <td>{{temp.start_time}}</td>
-                                    <td><input type="button" value="삭제" onclick="location.href = '{% url 'manage:delCctv' temp.id %}'"></td>
+                                    <td>{{ temp.location }}</td>
+                                    <td>{{ temp.video_link }}</td>
+                                    <td>{{ temp.start_time }}</td>
+                                    <td><input type="button" value="삭제"
+                                               onclick="location.href = '{% url 'manage:delCctv' temp.id %}'"></td>
                                 </tr>
                             {% endfor %}
-                        </tbody></table>
+                            </tbody>
+                        </table>
 
                     </div>
-                 </div>
-
-                 <div style="background-color: #fff">
-                    <form method = "post" action="{% url 'manage:uploadcctv' %}" enctype="multipart/form-data" style="background-color: #fff">
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane fade active in" id="Recognize" style="width: 100%;">
+                        <a class="btn btn-lg btn-primary" data-target="#recogModal" data-toggle="modal"
+                           onclick="setlayout();">서비스
+                            시작하기</a>
+                    </div>
+                </div>
+                <div style="background-color: #fff">
+                    <form method="post" action="{% url 'manage:uploadcctv' %}" enctype="multipart/form-data"
+                          style="background-color: #fff">
                         {% csrf_token %}
                         <input id=input_video type="file" name="video">
+                        <input type="hidden" id="hidden_start_time" name="start_time" value="">
+                        <input type="hidden" id="hidden_end_time" name="end_time" value="">
+                        <input type="hidden" id="hidden_location" name="location" value="">
                         <button type="submit">Upload file</button>
                     </form>
-                 </div>
                 </div>
             </div>
+        </div>
 
             <div class="tab-pane fade in" id="tab-content-userManage">
                 <h3>회원 관리</h3>
@@ -104,99 +135,266 @@
                 </div>
             </div>
 
+        <div class="tab-pane fade in" id="tab-content-userManage">
+            <h3>회원 관리</h3>
+            <div class="panel panel-primary">
+                <div id="panel-heading" class="panel-heading">회원 목록</div>
+                <div id="panel-body" class="panel-body"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="modal" id="recogModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    차량 인식 서비스
+                    <button class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body" style="width:550px;height:480px;text-align: center;">
+                    <div class="col-sm-4">
+                        <span style="font-weight: bolder; font-size: 15px;">시작 시간</span>
+                        <input id="recognition_start_time" type="text" width="180"
+                               style="margin-bottom: 15px" readonly/>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">종료 시간</span>
+                        <input id="recognition_end_time" type="text" width="180"
+                               style="margin-bottom: 15px" readonly/>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">위치</span>
+                        <input id="recognition_location" name="location" value=""
+                               style="margin-bottom: 15px">
+                    </div>
+
+                    <div id="recognition_map" style="width:565px;height:350px;"></div>
+
+                    <div class="btn-area">
+                        <button id="btn" data-dismiss="modal" onclick="pass_info()">제출</button>
+                        {#                        <button id="btn" type="submit">제출</button>#}
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
+</div>
 
-    <br>
-        {% include 'footer.html' %}
 
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <script>alert("{{ message }}")</script>
-                {% endfor %}
-            </ul>
-        {% endif %}
+<br>
+{% include 'footer.html' %}
 
-    <script>
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <script>alert("{{ message }}")</script>
+        {% endfor %}
+    </ul>
+{% endif %}
 
-        function reaAllUser() {
-            $.ajax({
-                url: 'reaAllUser',
-                type: 'get',
-                dataType: 'json',
-                success:function (data) {
-                    $('#panel-heading').html("회원 목록")
-                    $('#panel-body').html('<table class="table"><thead><tr><td>아이디</td><td>이름</td><td>권한</td><td>회원 삭제</td></tr></thead>' +
-                        '<tbody id="user_list_box"></tbody></table>');
+<script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a8a08365e71499493906a12ac8f92432"></script>
+<script>
 
-                    for(var i in data) {
-                        var user_list = document.createElement("tr");
-                        user_list.innerHTML = '<td>' + data[i].username + '</td>' +
-                                '<td>' + data[i].name + '</td>' +
-                                '<td>' + '<select id="permission' + data[i].id + '" onchange="grantUser(' + data[i].id + ')">'
+    function reaAllUser() {
+        $.ajax({
+            url: 'reaAllUser',
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                $('#panel-heading').html("회원 목록")
+                $('#panel-body').html('<table class="table"><thead><tr><td>아이디</td><td>이름</td><td>권한</td><td>회원 삭제</td></tr></thead>' +
+                    '<tbody id="user_list_box"></tbody></table>');
+
+                for (var i in data) {
+                    var user_list = document.createElement("tr");
+                    user_list.innerHTML = '<td>' + data[i].username + '</td>' +
+                        '<td>' + data[i].name + '</td>' +
+                        '<td>' + '<select id="permission' + data[i].id + '" onchange="grantUser(' + data[i].id + ')">'
                         + '<option id="member' + data[i].id + '">' + 'member</option> <option id="admin' + data[i].id + '">' + 'admin</option>' + '</select>' + '</td>'
                         + '<td>' + '<input type="button" value="삭제" onclick="delUser(' + data[i].id + ')">'
 
 
-
-                        $('#user_list_box').append(user_list);
-                        if(data[i].permission == "member"){
-                            $('#member'+data[i].id).attr("selected","selected");
-                        }
-                        else {
-                            $('#admin'+data[i].id).attr("selected","selected");
-                        }
+                    $('#user_list_box').append(user_list);
+                    if (data[i].permission == "member") {
+                        $('#member' + data[i].id).attr("selected", "selected");
+                    } else {
+                        $('#admin' + data[i].id).attr("selected", "selected");
                     }
-                },
-                error:function (xhr,error) {
-                    alert("서버와의 통신에서 문제가 발생했습니다.");
-                    console.error("error : " + error);
                 }
-            });
+            },
+            error: function (xhr, error) {
+                alert("서버와의 통신에서 문제가 발생했습니다.");
+                console.error("error : " + error);
+            }
+        });
+    }
+
+    function delUser(id) {
+        $.ajax({
+            url: 'delUser',
+            dataType: 'json',
+            data: {
+                'id': id
+            },
+            type: 'get',
+            success: function (data) {
+                alert(data.data);
+                reaAllUser();
+            },
+
+            error: function (xhr, error) {
+                alert("서버와의 통신에서 문제가 발생했습니다.");
+                console.error("error : " + error);
+            }
+        });
+    }
+
+    function grantUser(id) {
+        $.ajax({
+            url: 'grantUser',
+            dataType: 'json',
+            data: {
+                'id': id,
+                'permission': $('#permission' + id).val()
+            },
+            type: 'get',
+            success: function (data) {
+                alert(data.data);
+
+            },
+            error: function (xhr, error) {
+                alert("서버와의 통신에서 문제가 발생했습니다.");
+                console.error("error : " + error);
+            }
+
+        });
+
+    }
+
+    function pass_info() {
+        document.getElementById("hidden_start_time").value = document.getElementById("recognition_start_time").value;
+        document.getElementById("hidden_end_time").value = document.getElementById("recognition_end_time").value;
+        document.getElementById("hidden_location").value = document.getElementById("recognition_location").value;
+    }
+
+    var recognition_container = document.getElementById('recognition_map');
+
+    var options = {
+        center: new kakao.maps.LatLng(37.549341, 127.0742582),
+        level: 3
+    };
+
+    var recognition_map = new kakao.maps.Map(recognition_container, options);
+
+    function setlayout() {
+        setTimeout(function () {
+                recognition_map.relayout();
+            }
+            , 0);
+    }
+
+    var cctv_obj = "{{ cctv }}".replace(/&quot;/g, '"');
+    var cctv_json = JSON.parse(cctv_obj);
+
+    // 마커 이미지의 이미지 주소입니다
+    var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+    var positions = [
+        {% for i in count %}
+            {
+                title: cctv_json[{{i}}].fields.location,
+                latlng: new kakao.maps.LatLng(cctv_json[{{i}}].fields.latitude, cctv_json[{{i}}].fields.longtitude)
+            },
+        {% endfor %}
+    ];
+
+    for (var i = 0; i < positions.length; i++) {
+
+        var imageSize = new kakao.maps.Size(24, 35);
+
+        // 마커를 생성합니다
+        var recognition_marker = new kakao.maps.Marker({
+            map: recognition_map, // 마커를 표시할 지도
+            position: positions[i].latlng, // 마커를 표시할 위치
+            title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+            clickable: true
+        });
+
+        var infowindow = new kakao.maps.InfoWindow({
+            content: positions[i].title // 인포윈도우에 표시할 내용
+        });
+
+        kakao.maps.event.addListener(recognition_marker, 'click', recognition_get_location(positions[i].title));
+        kakao.maps.event.addListener(recognition_marker, 'mouseover', makeOverListener(recognition_map, recognition_marker, infowindow));
+        kakao.maps.event.addListener(recognition_marker, 'mouseout', makeOutListener(infowindow));
+    }
+
+    var flag = 0;
+
+    kakao.maps.event.addListener(recognition_map, 'click', function (mouseEvent) {
+        // 클릭한 위치에 마커를 표시합니다
+        if (flag % 2 == 0) {
+            addMarker(mouseEvent.latLng);
+            flag++;
         }
+    });
 
-        function delUser(id) {
-            $.ajax({
-                url: 'delUser',
-                dataType: 'json',
-                data:{
-                  'id':id
-                },
-                type:'get',
-                success:function (data) {
-                    alert(data.data);
-                    reaAllUser();
-                },
+    function addMarker(position) {
 
-                 error:function (xhr,error) {
-                     alert("서버와의 통신에서 문제가 발생했습니다.");
-                    console.error("error : " + error);
-                }
-            });
-        }
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+            position: position
+        });
 
-        function grantUser(id) {
-            $.ajax({
-                url: 'grantUser',
-                dataType:'json',
-                data:{
-                    'id':id,
-                    'permission':$('#permission'+id).val()
-                },
-                type:'get',
-                success: function (data) {
-                    alert(data.data);
+        // 마커가 지도 위에 표시되도록 설정합니다
+        marker.setMap(recognition_map);
+    }
 
-                },
-                error: function (xhr,error) {
-                    alert("서버와의 통신에서 문제가 발생했습니다.");
-                    console.error("error : " + error);
-                }
 
-            });
+    // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
+    function makeOverListener(map, marker, infowindow) {
+        return function () {
+            infowindow.open(map, marker);
+        };
+    }
 
-        }
-    </script>
-	</body>
+    // 인포윈도우를 닫는 클로저를 만드는 함수입니다
+    function makeOutListener(infowindow) {
+        return function () {
+            infowindow.close();
+        };
+    }
+
+
+    function recognition_get_location(info) {
+        return function () {
+            document.getElementById("recognition_location").value = info;
+        };
+    }
+
+    $(function () {
+        $('#recognition_start_time').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+            ignoreReadonly: true
+        });
+    });
+
+    $(function () {
+        $('#recognition_end_time').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+            ignoreReadonly: true
+        });
+    });
+
+
+</script>
+</body>
 </html>
