@@ -16,6 +16,7 @@
         .search-sec{
             background: #F8F8F8;
             padding: 2.5rem;
+            border-radius: 25px;
         }
         .search-slt{
             display: block;
@@ -43,15 +44,22 @@
         }
         
         #tab_button{
-            font-size: 18px;
+            font-size: 15px;
             width: 100%;
-            border-radius: 0;
+            border-radius: 20px;
             border-bottom: 0.4px solid #bbbbbb;
             line-height: 40px;
+            background-color: #f0f0f0;
+            margin-top: 15px;
+
         }
 
         #result_div{
 /*            border: 1px solid black;*/
             font-size: 18px;
         }
-        
+        .menu{
+            height: 400px;
+            background-color: #F8F8F8;
+            border-radius: 25px;
+        }

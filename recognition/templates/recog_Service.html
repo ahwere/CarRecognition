@@ -34,11 +34,11 @@
                                  data-toggle="modal" onclick="setlayout()">검색하기</a></p>
     </div>
 </div>
-<br><br>
+<br>
 
 <div class="container">
 
-    <div class="col-lg-2">
+    <div class="col-lg-2 menu">
         {% if cctv_log %}
             <div>
                 <form action="{% url 'statistic:stat' %}" method="POST">
@@ -54,7 +54,7 @@
                 </form>
             </div>
         {% else %}
-            <a class="themeBtn" href="{% url 'statistic:statistic' %}" id="tab_button" style="color: black; width: 200px">
+            <a class="themeBtn" href="{% url 'statistic:statistic' %}" id="tab_button">
                 <i class="fa fa-pie-chart fa-lg" aria-hidden="true" style="margin-right: 5px;"></i>
                 <span style="margin-right: 15px;">Go Statistics</span></a>
         {% endif %}
