@@ -51,9 +51,9 @@
                     <input type="hidden" name="end_time" value="{{ date.end_time }}">
                     <input type="hidden" name="location" value="{{ date.location }}">
 
-                    <button class="btn" id="tab_button" style="color: black" type="submit">
-                        <i class="fa fa-pie-chart fa-lg" aria-hidden="true" style="margin-right: 5px;"></i>
-                        <span style="margin-right: 15px;">Statistics</span></button>
+                    <button class="themeBtn" id="tab_button" style="color: black; width:200px;" type="submit;">
+                        <i class="fa fa-car fa-lg" style="margin-right: 5px;"></i>
+                        <span style="margin-right: 15px;">Go Recognition</span></button>
 
                 </form>
             </div>
@@ -71,7 +71,7 @@
 
                 {% if dataset %}
                     <script src="https://code.highcharts.com/highcharts.src.js"></script>
-                    <div id="graph" style="width:75%;height:50%;margin:20px;"></div>
+                    <div id="graph" style="width:75%;height:100%;margin:20px;"></div>
                     <script>
                         Highcharts.chart('graph', {
                             chart: {
