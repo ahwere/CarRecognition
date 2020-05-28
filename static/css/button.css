@@ -33,6 +33,7 @@
     letter-spacing: 0.5px;
 	border:0px !important;
 	cursor:pointer;
+    box-shadow: black 0.1em 0.1em 0.1em;
 
 }
 .themeBtn:hover,

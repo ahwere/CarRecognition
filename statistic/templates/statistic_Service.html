@@ -28,20 +28,30 @@
 
 </head>
 
+<style>
+    .textbox{
+        width: 150px;
+        height: 31px;
+        text-align: center;
+    }
+</style>
 
 <body>
 
 {% include 'nav.html' %}
 <br>
 <div class="container">
-    <div class="row search-sec">
-        <p class="text-right"><a class="btn btn-sm btn-primary" data-target="#statisticModal"
-                                 data-toggle="modal" onclick="setlayout()">검색하기</a></p>
+    <div class="row search-sec" style="text-align: center">
+         <label>위치: </label>&nbsp;&nbsp;<input class="textbox" type="text" readonly placeholder="{{ date.location }}">&nbsp;&nbsp;
+        <label>시작시간: </label>&nbsp;&nbsp;<input class="textbox" type="text" readonly placeholder="{{ date.start_time }}">&nbsp;&nbsp;
+        <label>종료시간: </label>&nbsp;&nbsp;<input class="textbox" type="text" readonly placeholder="{{ date.end_time }}">&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="themeBtn" id="tab_button" style="width: 100px" data-target="#statisticModal"
+                                 data-toggle="modal" onclick="setlayout()">검색하기</a>
     </div>
 </div>
-<br><br>
+<br>
 <div class="container">
-    <div class="col-lg-2">
+    <div class="col-lg-2 menu">
 
         {% if dataset %}
             <div>
@@ -65,9 +75,8 @@
 
     </div>
 
-    <div style="text-align:center;height: 400px;">
-        <div class="container">
-            <div class="col-md-10" style="text-align:center;height: 400px;position: relative;">
+    <div style="text-align:center;">
+            <div class="col-lg-10" style="text-align:center;height: 500px;position: relative;">
 
                 {% if dataset %}
                     <script src="https://code.highcharts.com/highcharts.src.js"></script>
@@ -100,7 +109,8 @@
                         <button id="btn_page2" class="btn" onclick="page2_show()"
                                 style="position: absolute;right: 0px;height: 100%;opacity: 0%;width:50%;">다음
                         </button>
-                        사용법1
+
+                <img style="width: auto;height: auto;max-width: 100%;max-height: 470px;" src="{% static 'images/stat_menual1.png' %}">
                     </div>
                     <div id="page2" style="display: none;">
                         <button id="btn_page1" class="btn" onclick="page1_show()"
@@ -109,13 +119,15 @@
                         <button id="btn_page3" class="btn" onclick="page3_show()"
                                 style="position: absolute;right: 0px;height: 100%;opacity: 0%;width:50%;">다음
                         </button>
-                        사용법2
+
+                <img style="width: auto;height: auto;max-width: 100%;max-height: 470px;" src="{% static 'images/stat_menual2.png' %}">
                     </div>
                     <div id="page3" style="display: none">
                         <button id="btn_page2" class="btn" onclick="page2_show()"
                                 style="position: absolute;left: 0px;height: 100%;opacity: 0%;width:50%;">이전
                         </button>
-                        사용법3
+
+                <img style="width: auto;height: auto;max-width: 100%;max-height: 470px;" src="{% static 'images/stat_menual3.png' %}">
                     </div>
 
                     <div style="position: absolute;left:0px; bottom: 0px;width: 100%">
@@ -157,7 +169,7 @@
                     </div>
                 {% endif %}
             </div>
-        </div>
+
     </div>
 </div>
 
@@ -168,7 +180,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    차량 인식 서비스
+                    인식 통계 서비스
                     <button class="close" data-dismiss="modal">&times;</button>
                 </div>
 

@@ -24,21 +24,30 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
 
 </head>
-
+<style>
+    .textbox{
+        width: 150px;
+        height: 31px;
+        text-align: center;
+    }
+</style>
 <body>
 {% include 'nav.html' %}
 <br>
 <div class="container">
-    <div class="row search-sec">
-        <p class="text-right"><a class="btn btn-sm btn-primary" data-target="#recogModal"
-                                 data-toggle="modal" onclick="setlayout()">검색하기</a></p>
+    <div class="row search-sec" style="text-align: center;">
+        <label>위치: </label>&nbsp;&nbsp;<input class="textbox" type="text" readonly placeholder="{{ date.location }}">&nbsp;&nbsp;
+        <label>시작시간: </label>&nbsp;&nbsp;<input class="textbox" type="text" readonly placeholder="{{ date.start_time }}">&nbsp;&nbsp;
+        <label>종료시간: </label>&nbsp;&nbsp;<input class="textbox" type="text" readonly placeholder="{{ date.end_time }}">&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="themeBtn" id="tab_button" style="width: 100px" data-target="#recogModal"
+                                 data-toggle="modal" onclick="setlayout()">검색하기</a>
     </div>
 </div>
-<br><br>
+<br>
 
 <div class="container">
 
-    <div class="col-lg-2">
+    <div class="col-lg-2 menu">
         {% if cctv_log %}
             <div>
                 <form action="{% url 'statistic:stat' %}" method="POST">
@@ -47,7 +56,7 @@
                     <input type="hidden" name="end_time" value="{{ date.end_time }}">
                     <input type="hidden" name="location" value="{{ date.location }}">
 
-                    <button class="themeBtn" id="tab_button" style="color: black" type="submit">
+                    <button class="themeBtn" id="tab_button" type="submit">
                         <i class="fa fa-pie-chart fa-lg" aria-hidden="true" style="margin-right: 5px;"></i>
                         <span style="margin-right: 15px;">Go Statistics</span></button>
 
@@ -61,21 +70,21 @@
     </div>
 
     {% if cctv_log %}
-        <div class="col-lg-6" style="height: 400px;text-align: center;position: relative">
+        <div class="col-lg-6" style="height: 500px;text-align: center;position: relative">
             <video id="video" controls onplay="startAlert()" onpause="stopAlert()">
                 <source src="{% static 'videos/minchan.mp4' %}">
             </video>
-            <div id="car_list_box" class="col-lg-4"
-                 style="text-align:center; height: 400px;overflow: scroll;border: 1px solid black">
-            </div>
+        </div>
+        <div id="car_list_box" class="col-lg-4 menu"
+             style="text-align:center; height: 500px;overflow: scroll;">
         </div>
     {% else %}
-        <div class="col-lg-10" style="height: 400px;text-align: center;position: relative;">
+        <div class="col-lg-10" style="height: 500px;text-align: center;position: relative;">
             <div id="page1">
                 <button id="btn_page2" class="btn" onclick="page2_show()"
                         style="position: absolute;right: 0px;width:50%; height: 100%;opacity: 0%">다음
                 </button>
-                사용법1
+                <img style="width: auto;height: auto;max-width: 100%;max-height: 470px;" src="{% static 'images/recog_menual1.png' %}">
             </div>
             <div id="page2" style="display: none;">
                 <button id="btn_page1" class="btn" onclick="page1_show()"
@@ -84,13 +93,13 @@
                 <button id="btn_page3" class="btn" onclick="page3_show()"
                         style="position: absolute;right: 0px;width:50%; height: 100%;opacity: 0%">다음
                 </button>
-                사용법2
+                <img style="width: auto;height: auto;max-width: 100%;max-height: 470px;" src="{% static 'images/recog_menual2.png' %}">
             </div>
             <div id="page3" style="display: none">
                 <button id="btn_page2" class="btn" onclick="page2_show()"
                         style="position: absolute;left: 0px; width:50%; height: 100%;opacity: 0%">이전
                 </button>
-                사용법3
+                <img style="width: auto;height: auto;max-width: 100%;max-height: 470px;" src="{% static 'images/recog_menual3.png' %}">
             </div>
             <div style="position: absolute;left:0px;bottom:0px;width:100%;">
                 <input id="radio_page1" type="radio" name="page" value="1" checked="checked" onclick="page1_show()">

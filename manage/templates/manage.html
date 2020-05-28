@@ -8,6 +8,7 @@
     <meta name="viewport" content="width = device-width" , initial-scale="1">
     <title>커피탄 리 : 관리자</title>
     <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/button.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
@@ -20,16 +21,10 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
 </head>
 <style>
-    .nav-item > a:focus {
-        color: red;
-    }
+
 
     h3 {
         text-align: center;
-    }
-
-    .box {
-        background-color: #9d9d9d;
     }
 
     li {
@@ -51,43 +46,54 @@
             width:100%;
             table-layout:fixed;
         }
-
+    .menu{
+        background-color: #F8F8F8;
+        border-radius: 25px;
+        height: 600px;
+    }
+    .tab_btn{
+        font-size: 13px;
+        width: 100%;
+        border-radius: 30px;
+        line-height: 40px;
+        background-color: #f0f0f0;
+        margin-top: 15px;
+        color: black;
+    }
+    .btn_del{
+        border-radius: 15px;
+        width: 30%;
+        background-color: red;
+    }
 </style>
 <body>
 {% include 'nav.html' %}
 <br>
-<div class="container-fluid">
-    <div class="nav col-sm-2">
-        <ul class="nav nav-tabs nav-stacked">
-            <h3>Menu</h3>
-            <li class="nav-item active in">
-                <a class="nav-link" data-toggle="tab" href="#tab-content-cctvManage" id="tab-cctvManage">
-                    <i class="fas fa-video fa-lg"></i>&nbsp;CCTV 관리</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " data-toggle="tab" href="#tab-content-userManage" id="tab-userManage"
-                   onclick="reaAllUser()">
-                    <i class="fas fa-users fa-lg"></i>&nbsp;회원 관리</a>
-            </li>
-        </ul>
+<div class="container">
+    <div class="col-sm-2 menu">
+        <h3>MENU</h3>
+        <a class="themeBtn tab_btn" data-toggle="tab" href="#tab-content-cctvManage" id="tab-cctvManage">
+            <i class="fas fa-video fa-lg"></i>&nbsp;CCTV 관리</a>
+        <a class="themeBtn tab_btn" data-toggle="tab" href="#tab-content-userManage" id="tab-userManage"
+           onclick="reaAllUser()">
+            <i class="fas fa-users fa-lg"></i>&nbsp;회원 관리</a>
+
     </div>
 
-    <div class="tab-content col-sm-8 col-sm-offset-1">
+    <div class="tab-content col-sm-9 col-sm-offset-1 menu">
         <div class="tab-pane fade active in" id="tab-content-cctvManage">
-            <h3>CCTV 관리</h3>
-            <div class="box" style="background-color: white">
-
-
-                <div class="panel panel-primary">
-                    <div class="panel-heading">CCTV 목록</div>
+            <h3 style="margin:30px;">CCTV 관리</h3>
+            <div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="color: black;">CCTV 목록</div>
                     <div id=cctv_panel_body class="panel-body">
-                        <table class="table">
+                        <table class="table table-hover">
                             <thead>
                             <tr>
-                                <td>Location</td>
-                                <td>VideoLink</td>
-                                <td>StartTime</td>
-                                <td></td>
+                                <td>위치</td>
+                                <td>URL</td>
+                                <td>시작시간</td>
+                                <td>CCTV 삭제</td>
                             </tr>
                             </thead>
                             <tbody id="cctv_list_box">
@@ -97,7 +103,7 @@
                                     <td>{{ temp.location }}</td>
                                     <td>{{ temp.video_link }}</td>
                                     <td>{{ temp.start_time }}</td>
-                                    <td><input type="button" value="삭제"
+                                    <td><input type="button" value="삭제" class="btn_del"
                                                onclick="location.href = '{% url 'manage:delCctv' temp.id %}'"></td>
                                 </tr>
                             {% endfor %}
@@ -106,6 +112,7 @@
 
                     </div>
                 </div>
+
                 <div class="tab-content">
                     <div class="tab-pane fade active in" id="Recognize" style="width: 100%;">
                         <a class="btn btn-lg btn-primary" data-target="#recogModal" data-toggle="modal"
@@ -113,9 +120,8 @@
                             시작하기</a>
                     </div>
                 </div>
-                <div style="background-color: #fff">
-                    <form method="post" action="{% url 'manage:uploadcctv' %}" enctype="multipart/form-data"
-                          style="background-color: #fff">
+                <div>
+                    <form method="post" action="{% url 'manage:uploadcctv' %}" enctype="multipart/form-data">
                         {% csrf_token %}
                         <input id=input_video type="file" name="video">
                         <input type="hidden" id="hidden_start_time" name="start_time" value="">
@@ -128,21 +134,12 @@
         </div>
 
             <div class="tab-pane fade in" id="tab-content-userManage">
-                <h3>회원 관리</h3>
-                <div class="panel panel-primary" style="height: 427px">
+                <h3 style="margin: 30px">회원 관리</h3>
+                <div class="panel panel-default" style="height: 427px">
                     <div id="panel-heading" class="panel-heading">회원 목록</div>
                     <div id="panel-body" class="panel-body"></div>
                 </div>
             </div>
-
-        <div class="tab-pane fade in" id="tab-content-userManage">
-            <h3>회원 관리</h3>
-            <div class="panel panel-primary">
-                <div id="panel-heading" class="panel-heading">회원 목록</div>
-                <div id="panel-body" class="panel-body"></div>
-            </div>
-        </div>
-
     </div>
 </div>
 
@@ -210,7 +207,7 @@
             dataType: 'json',
             success: function (data) {
                 $('#panel-heading').html("회원 목록")
-                $('#panel-body').html('<table class="table"><thead><tr><td>아이디</td><td>이름</td><td>권한</td><td>회원 삭제</td></tr></thead>' +
+                $('#panel-body').html('<table class="table table-hover"><thead><tr><td>아이디</td><td>이름</td><td>권한</td><td>회원 삭제</td></tr></thead>' +
                     '<tbody id="user_list_box"></tbody></table>');
 
                 for (var i in data) {
@@ -219,7 +216,7 @@
                         '<td>' + data[i].name + '</td>' +
                         '<td>' + '<select id="permission' + data[i].id + '" onchange="grantUser(' + data[i].id + ')">'
                         + '<option id="member' + data[i].id + '">' + 'member</option> <option id="admin' + data[i].id + '">' + 'admin</option>' + '</select>' + '</td>'
-                        + '<td>' + '<input type="button" value="삭제" onclick="delUser(' + data[i].id + ')">'
+                        + '<td>' + '<input type="button" value="삭제" onclick="delUser(' + data[i].id + ')" class="btn_del">'
 
 
                     $('#user_list_box').append(user_list);
