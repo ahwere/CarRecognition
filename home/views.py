@@ -141,7 +141,7 @@ def dismember(req):
         else:
             messages.info(req,'비밀번호가 일치하지 않습니다.')
 
-    return render(req, "mypage.html",context)
+    return redirect("home:mypage")
 
 @csrf_exempt
 def search_record(req):
