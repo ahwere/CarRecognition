@@ -61,14 +61,14 @@
                     <input type="hidden" name="end_time" value="{{ date.end_time }}">
                     <input type="hidden" name="location" value="{{ date.location }}">
 
-                    <button class="themeBtn" id="tab_button" type="submit">
-                        <i class="fa fa-pie-chart fa-lg" aria-hidden="true" style="margin-right: 5px;"></i>
+                    <button class="themeBtn" id="tab_button" style="color: black;" type="submit;">
+                        <i class="fa fa-car fa-lg" style="margin-right: 5px;"></i>
                         <span style="margin-right: 15px;">Go Recognition</span></button>
 
                 </form>
             </div>
         {% else %}
-            <a class="themeBtn" href="{% url 'recognition:recognition' %}" id="tab_button">
+            <a class="themeBtn" href="{% url 'recognition:recognition' %}" id="tab_button" style="color: black;">
                 <i class="fa fa-car fa-lg" style="margin-right: 5px;"></i>Go Recognition</a>
             <br>
         {% endif %}
@@ -80,7 +80,7 @@
 
                 {% if dataset %}
                     <script src="https://code.highcharts.com/highcharts.src.js"></script>
-                    <div id="graph" style="width:75%;height:50%;margin:20px;"></div>
+                    <div id="graph" style="width:75%;height:100%;margin:20px;"></div>
                     <script>
                         Highcharts.chart('graph', {
                             chart: {
@@ -131,10 +131,10 @@
                     </div>
 
                     <div style="position: absolute;left:0px; bottom: 0px;width: 100%">
-                        <input id="radio_page1" type="radio" name="page" value="1" checked="checked"
+                        <input class = radiobtn id="radio_page1" type="radio" name="page" value="1" checked="checked"
                                onclick="page1_show()">
-                        <input id="radio_page2" type="radio" name="page" value="2" onclick="page2_show()">
-                        <input id="radio_page3" type="radio" name="page" value="3" onclick="page3_show()">
+                        <input class = radiobtn id="radio_page2" type="radio" name="page" value="2" onclick="page2_show()">
+                        <input class = radiobtn id="radio_page3" type="radio" name="page" value="3" onclick="page3_show()">
 
                         <script>
                             page1 = document.getElementById("page1");
