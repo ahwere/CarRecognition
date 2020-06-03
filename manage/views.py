@@ -34,6 +34,11 @@ def uploadcctv(req):
         start_time = req.POST['start_time']
         end_time = req.POST['end_time']
         location = req.POST['location']
+        latLng = req.POST['latLng']
+
+        temp = latLng.split(",")
+        altitude = temp[0][1:]
+        longtitude = temp[1][:-1]
 
         if uploaded_file == None:
             messages.info(req, "파일을 선택해 주세요.")

@@ -121,6 +121,7 @@
                         <input type="hidden" id="hidden_start_time" name="start_time" value="">
                         <input type="hidden" id="hidden_end_time" name="end_time" value="">
                         <input type="hidden" id="hidden_location" name="location" value="">
+                        <input type="hidden" id="hidden_latLng" name="latLng" value="">
                         <button type="submit">Upload file</button>
                     </form>
                 </div>
@@ -332,7 +333,7 @@
             content: positions[i].title // 인포윈도우에 표시할 내용
         });
 
-        kakao.maps.event.addListener(recognition_marker, 'click', recognition_get_location(positions[i].title));
+        kakao.maps.event.addListener(recognition_marker, 'click', recognition_get_location(positions[i].title, recognition_marker.getPosition()));
         kakao.maps.event.addListener(recognition_marker, 'mouseover', makeOverListener(recognition_map, recognition_marker, infowindow));
         kakao.maps.event.addListener(recognition_marker, 'mouseout', makeOutListener(infowindow));
     }
@@ -344,6 +345,8 @@
         if (flag % 2 == 0) {
             addMarker(mouseEvent.latLng);
             flag++;
+
+            document.getElementById("hidden_latLng").value = mouseEvent.latLng;
         }
     });
 
@@ -374,9 +377,10 @@
     }
 
 
-    function recognition_get_location(info) {
+    function recognition_get_location(info, position) {
         return function () {
             document.getElementById("recognition_location").value = info;
+            document.getElementById("hidden_latLng").value = position;
         };
     }
 
