@@ -72,13 +72,14 @@
     {% if cctv_log %}
         <div class="col-lg-6" style="height: 500px;text-align: center;position: relative">
             <video id="video" controls onplay="startAlert()" onpause="stopAlert()">
-                <source src="{% static 'videos/minchan.mp4' %}">
+                <source src="{% static 'videos/cctv1.mp4' %}">
             </video>
         </div>
         <div id="car_list_box" class="col-lg-4 menu"
              style="text-align:center; height: 500px;overflow: scroll;">
         </div>
     {% else %}
+        <script>alert('데이터가 입력되지 없습니다.')</script>
         <div class="col-lg-10" style="height: 500px;text-align: center;position: relative;">
             <div id="page1">
                 <button id="btn_page2" class="btn" onclick="page2_show()"
