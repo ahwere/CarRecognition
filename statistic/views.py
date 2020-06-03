@@ -59,6 +59,9 @@ def stat(req):
                 cctv_log = CctvLog.objects.filter(cctv_id=filter_cctv[0].id, appearance_time__gte=start_time,
                                                   appearance_time__lte=end_time).order_by('appearance_time')
 
+                if not cctv_log:
+                    messages.info(req,"검색된 데이터가 존재하지 않습니다.")
+
                 for i in cctv_log:
                     brand_arr.append(i.car_model.brand)
 

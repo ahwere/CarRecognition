@@ -45,6 +45,14 @@
 </div>
 <br>
 
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <script>alert("{{ message }}")</script>
+        {% endfor %}
+    </ul>
+{% endif %}
+
 <div class="container">
 
     <div class="col-lg-2 menu" style="text-align: center">
@@ -80,7 +88,6 @@
              style="text-align:center; height: 500px;overflow: scroll;">
         </div>
     {% else %}
-        <script>alert('데이터가 입력되지 없습니다.')</script>
         <div class="col-lg-10" style="height: 500px;text-align: center;position: relative;">
             <div id="page1">
                 <button id="btn_page2" class="btn" onclick="page2_show()"
@@ -146,51 +153,7 @@
 </div>
 
 <br>
-
-<div class="row">
-    <div class="modal" id="recogModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    차량 인식 서비스
-                    <button class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <form action="/recognition/recog/" method="POST">
-                    {% csrf_token %}
-                    <div class="modal-body" style="width:550px;height:480px;text-align: center;">
-                        <div class="col-sm-4">
-                            <span style="font-weight: bolder; font-size: 15px;">시작 시간</span>
-                            <input id="recognition_start_time" type="text" name="start_time"
-                                   value="{{ date.start_time }}" width="180"
-                                   style="margin-bottom: 15px" readonly/>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">종료 시간</span>
-                            <input id="recognition_end_time" type="text" name="end_time" value="{{ date.end_time }}"
-                                   width="180"
-                                   style="margin-bottom: 15px" readonly/>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">위치</span>
-                            <input id="recognition_location" name="location" width="180" value="{{ date.location }}"
-                                   style="margin-bottom: 15px" readonly>
-                        </div>
-
-                        <div id="recognition_map" style="width:565px;height:350px;"></div>
-
-                        <div class="btn-area">
-                            <button class=base_button id="btn" type="submit" style="width: 150px; margin-top: 10px">제출</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
+{% include 'recog_modal.html' %}
 {% include 'footer.html' %}
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a8a08365e71499493906a12ac8f92432"></script>

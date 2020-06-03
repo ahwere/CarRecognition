@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="modal" id="recogModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    차량 인식 서비스
+                    <button class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <form action="/recognition/recog/" method="POST">
+                    {% csrf_token %}
+                    <div class="modal-body" style="width:550px;height:480px;text-align: center;">
+                        <div class="col-sm-4">
+                            <span style="font-weight: bolder; font-size: 15px;">시작 시간</span>
+                            <input id="recognition_start_time" type="text" name="start_time" width="180"
+                                   style="margin-bottom: 15px"  required >
+                        </div>
+
+                        <div class="col-sm-4">
+                            <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">종료 시간</span>
+                            <input id="recognition_end_time" type="text" name="end_time" width="180"
+                                   style="margin-bottom: 15px" required>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">위치</span>
+                            <input id="recognition_location" name="location" width="180" value=""
+                                   style="margin-bottom: 15px"  readonly>
+                        </div>
+
+                        <div id="recognition_map" style="width:565px;height:350px;"></div>
+
+                        <div class="btn-area">
+                            <button class = base_button id="btn" type="submit" style="margin-top: 10px;width: 150px">제출</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

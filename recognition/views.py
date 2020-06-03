@@ -40,6 +40,7 @@ def recog(req):
             date['start_time'] = start_time
             date['end_time'] = end_time
 
+
             filter_cctv = Cctv.objects.filter(location=location, start_time__lte=start_time).order_by('start_time')
 
             if bool(filter_cctv) == False:
@@ -47,8 +48,9 @@ def recog(req):
             else:
                 cctv_log = CctvLog.objects.filter(cctv_id=filter_cctv[0].id, appearance_time__gte=start_time,
                                                   appearance_time__lte=end_time).order_by('appearance_time')
-
-            return render(req, "recog_Service.html", {'user': user, 'cctv_log': cctv_log, 'cctv': cctv_list, 'count': range(cctv.count()), 'date': date})
+                if not cctv_log:
+                    messages.info(req,"검색된 데이터가 존재하지 않습니다.")
+                return render(req, "recog_Service.html", {'user': user, 'cctv_log': cctv_log, 'cctv': cctv_list, 'count': range(cctv.count()), 'date': date})
 
         return render(req, "recog_Service.html", {'user': user, 'cctv': cctv_list, 'count': range(cctv.count())})
 

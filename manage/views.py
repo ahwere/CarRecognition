@@ -48,6 +48,7 @@ def uploadcctv(req):
             name = fs.save(uploaded_file.name, uploaded_file)
             # url = fs.url(name)
             messages.info(req, "동영상이 업로드 되었습니다.")
+            print(start_time + location)
             return redirect('manage:manage')
     else:
         return redirect('manage:manage')

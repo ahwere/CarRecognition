@@ -68,7 +68,7 @@
             </div>
 
     <div class="col-sm-8 col-sm-offset-1">
-        <div class="tab-content" style="border-radius: 25px">
+        <div class="tab-content" style="border-radius: 25px; width: 130%">
 
           <div class="tab-pane fade active in" id="Modify" style="width: 100%; height:568px;">
             <div class="row main">
@@ -145,7 +145,7 @@
               <!--수정-->
 
 
-         <div class="tab-pane fade in" id="Record" style="width: 100%; height:568px;">
+         <div class="tab-pane fade in" id="Record" style="width:100%; height:568px;">
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
 				<h3>검색 기록 조회</h3>
@@ -157,7 +157,7 @@
 					</div>
 
 					<div class="col-sm-1">
-						<span style="font-weight: bolder; font-size: 20px;margin-left: 6px;">&nbsp~</span>
+						<span style="font-weight: bolder; font-size: 20px;margin-left: 6px; vertical-align: -10px; ">&nbsp~</span>
 					</div>
 
 					<div class="col-sm-4">
@@ -251,7 +251,7 @@
 			<div class="col-md-12" id = result_panel style="display: none" >
 				<div class="panel panel-primary">
 					<div class="panel-heading" style="background-color: #6c757d">
-						<h3 class="panel-title">Search Record</h3>
+						<h3 class="panel-title">검색 기록</h3>
 						<div class="pull-right" style="margin-top: -18px;font-size: 15px;">
 							<span class="filter" id=filter_button data-toggle="tooltip" title="Toggle table filter" data-container="body" style="cursor: pointer;position: relative;margin-left:5px;">
 								<i class="glyphicon glyphicon-filter"></i>
@@ -262,22 +262,22 @@
 						<input type="text" class="form-control" id="result_table_filter" data-action="filter" data-filters="#result_table" placeholder="cctv id / search time / end time" />
 					</div>
                     <div style="width:100%; height:260px; overflow:auto">
-                        <table class="table table-hover" id="result_table" >
+                        <table class="table table-hover" id="result_table">
                             <thead>
                                 <tr>
-                                    <th>num</th>
-                                    <th>cctv id</th>
-                                    <th>search time</th>
-                                    <th>end time</th>
+                                    <th></th>
+                                    <th>CCTV 번호</th>
+                                    <th>시작시간</th>
+                                    <th>종료시간</th>
                                 </tr>
                             </thead>
-                            <tbody id="result_table_body">
+                            <tbody id="result_table_body" style="text-align: center;">
 
                             </tbody>
                         </table>
                     </div>
 				</div>
-                <button class="pull-right base_button" id="btnExport" onclick="fnExcelReport();" style="margin-top: 0px; margin-bottom: 0px;"> Export To Excel File </button>
+                <button class="pull-right base_button" id="btnExport" onclick="fnExcelReport();" style="margin-top: 0px; margin-bottom: 0px;"> 저장하기</button>
 			</div>
         </div>
 

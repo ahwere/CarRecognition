@@ -38,6 +38,14 @@
 
 <body>
 
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <script>alert("{{ message }}")</script>
+        {% endfor %}
+    </ul>
+{% endif %}
+
 {% include 'nav.html' %}
 <br>
 <div class="container">
@@ -174,53 +182,7 @@
 </div>
 
 <br>
-
-<div class="row">
-    <div class="modal" id="statisticModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    인식 통계 서비스
-                    <button class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <form action="/statistic/stat/" method="POST">
-                    {% csrf_token %}
-                    <div class="modal-body" style="width:550px;height:480px;text-align: center;">
-                        <div class="col-sm-4">
-                            <span style="font-weight: bolder; font-size: 15px;">시작 시간</span>
-                            <input id="statistic_start_time" type="text" name="start_time" value="{{ date.start_time }}"
-                                   width="180"
-                                   style="margin-bottom: 15px" readonly/>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">종료 시간</span>
-                            <input id="statistic_end_time" type="text" name="end_time" value="{{ date.end_time }}"
-                                   width="180"
-                                   style="margin-bottom: 15px" readonly/>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">위치</span>
-                            <input id="statistic_location" name="location" value="{{ date.location }}" width="180"
-                                   value=""
-                                   style="margin-bottom: 15px" readonly>
-                        </div>
-
-                        <div id="statistic_map" style="width:565px;height:350px;"></div>
-
-                        <div class="btn-area">
-                            <button class = base_button id="btn" type="submit" style="margin-top: 10px; width: 150px">제출</button>
-                        </div>
-
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
+{% include 'statistic_modal.html' %}
 {% include 'footer.html' %}
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a8a08365e71499493906a12ac8f92432"></script>
