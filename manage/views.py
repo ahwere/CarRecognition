@@ -36,6 +36,8 @@ def uploadcctv(req):
         location = req.POST['location']
         latLng = req.POST['latLng']
 
+        # return HttpResponse(latLng)
+
         temp = latLng.split(",")
         altitude = temp[0][1:]
         longtitude = temp[1][:-1]
