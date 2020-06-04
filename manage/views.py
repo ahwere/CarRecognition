@@ -7,6 +7,8 @@ from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from recognition.models import Cctv
+import Module.tracker_video_classifier
+
 # Create your views here.
 def manage(req):
     cur_user = req.user
@@ -37,8 +39,8 @@ def uploadcctv(req):
         latLng = req.POST['latLng']
 
         temp = latLng.split(",")
-        altitude = temp[0][1:]
-        longtitude = temp[1][:-1]
+        latitude = temp[0][1:]
+        longtitude = temp[1][1:-1]
 
         if uploaded_file == None:
             messages.info(req, "파일을 선택해 주세요.")
@@ -53,6 +55,9 @@ def uploadcctv(req):
             name = fs.save(uploaded_file.name, uploaded_file)
             # url = fs.url(name)
             messages.info(req, "동영상이 업로드 되었습니다.")
+
+            Module.tracker_video_classifier.Wls(uploaded_file.name, start_time, location, latitude, longtitude)
+
             return redirect('manage:manage')
     else:
         return redirect('manage:manage')
