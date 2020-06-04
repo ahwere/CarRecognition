@@ -36,23 +36,24 @@
     }
 
     .tbodytemp {
-            display:block;
-            height:250px;
-            overflow: auto;
+        display: block;
+        height: 250px;
+        overflow: auto;
     }
 
     .theadtemp, .tbodytemp tr {
-        display:table;
-        width:100%;
-        table-layout:fixed;
+        display: table;
+        width: 100%;
+        table-layout: fixed;
     }
 
-    .menu{
+    .menu {
         background-color: #F8F8F8;
         border-radius: 25px;
         height: 600px;
     }
-    .tab_btn{
+
+    .tab_btn {
         font-size: 13px;
         width: 100%;
         border-radius: 30px;
@@ -61,14 +62,15 @@
         margin-top: 15px;
         color: black;
     }
-    .btn_del{
+
+    .btn_del {
         border-radius: 15px;
         width: 35%;
         background-color: white;
         font-weight: bold;
     }
 
-    #basic_button{
+    #basic_button {
         background-color: #efefef;
         color: black;
         border-color: gray;
@@ -78,170 +80,215 @@
         text-align: center;
 
     }
-    #basic_button:hover{
+
+    #basic_button:hover {
         background-color: #e5e5e5;
+    }
+
+    #loading {
+        width: 50%;
+        height: 50%;
+        top: 0;
+        left: 25%;
+        position: fixed;
+        display: block;
+        opacity: 0.8;
+        background: white;
+        z-index: 99;
+        text-align: center;
+    }
+
+    #loading > img {
+    {#position: absolute;#}{#top: 500px;#}{#left:500px;#}{#z-index: 100;#}
+        width: 100%;
+        height: 100vh;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+
     }
 </style>
 <body>
-{% include 'nav.html' %}
-<br>
-<div class="container">
-    <div class="col-sm-2 menu">
-        <h3>MENU</h3>
-        <a class="themeBtn tab_btn" data-toggle="tab" href="#tab-content-cctvManage" id="tab-cctvManage">
-            <i class="fas fa-video fa-lg"></i>&nbsp;CCTV 관리</a>
-        <a class="themeBtn tab_btn" data-toggle="tab" href="#tab-content-userManage" id="tab-userManage"
-           onclick="reaAllUser()">
-            <i class="fas fa-users fa-lg"></i>&nbsp;회원 관리</a>
+<div id="load">
+    {% include 'nav.html' %}
+    <br>
 
-    </div>
+    <div class="container">
+        <div class="col-sm-2 menu">
+            <h3>MENU</h3>
+            <a class="themeBtn tab_btn" data-toggle="tab" href="#tab-content-cctvManage" id="tab-cctvManage">
+                <i class="fas fa-video fa-lg"></i>&nbsp;CCTV 관리</a>
+            <a class="themeBtn tab_btn" data-toggle="tab" href="#tab-content-userManage" id="tab-userManage"
+               onclick="reaAllUser()">
+                <i class="fas fa-users fa-lg"></i>&nbsp;회원 관리</a>
 
-    <div class="tab-content col-sm-9 col-sm-offset-1 menu">
-        <div class="tab-pane fade active in" id="tab-content-cctvManage">
-            <h3 style="margin:30px;">CCTV 관리</h3>
-            <div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" style="color: black;">
-                        <h3 class="panel-title" style="text-align: left;">CCTV 목록</h3>
-						<div class="pull-right" style="margin-top: -18px;font-size: 15px;">
-							<span class="filter" id="filter_button1" data-toggle="tooltip" title="Toggle table filter" data-container="body" style="cursor: pointer;position: relative;margin-left:5px;">
+        </div>
+
+        <div class="tab-content col-sm-9 col-sm-offset-1 menu">
+            <div class="tab-pane fade active in" id="tab-content-cctvManage">
+                <h3 style="margin:30px;">CCTV 관리</h3>
+                <div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="color: black;">
+                            <h3 class="panel-title" style="text-align: left;">CCTV 목록</h3>
+                            <div class="pull-right" style="margin-top: -18px;font-size: 15px;">
+							<span class="filter" id="filter_button1" data-toggle="tooltip" title="Toggle table filter"
+                                  data-container="body" style="cursor: pointer;position: relative;margin-left:5px;">
 								<i class="glyphicon glyphicon-filter"></i>
 							</span>
-						</div>
-                    </div>
-                <div class="panel-body" id = filter_box1 style="display:none;">
-						<input type="text" class="form-control" id="result_table_filter" data-action="filter" data-filters="#result_table" placeholder="검색할 데이터를 입력하세요." />
-                </div>
-                    <div id=cctv_panel_body class="panel-body">
-                        <table class="table table-hover" id = 'result_table'>
-                            <thead class="theadtemp">
-                            <tr>
-                                <td>위치</td>
-                                <td>URL</td>
-                                <td>시작시간</td>
-                                <td>CCTV 삭제</td>
-                            </tr>
-                            </thead>
-                            <tbody class = tbodytemp id="cctv_list_box">
-
-                            {% for temp in qs %}
+                            </div>
+                        </div>
+                        <div class="panel-body" id=filter_box1 style="display:none;">
+                            <input type="text" class="form-control" id="result_table_filter" data-action="filter"
+                                   data-filters="#result_table" placeholder="검색할 데이터를 입력하세요."/>
+                        </div>
+                        <div id=cctv_panel_body class="panel-body">
+                            <table class="table table-hover" id='result_table'>
+                                <thead class="theadtemp">
                                 <tr>
-                                    <td>{{ temp.location }}</td>
-                                    <td>{{ temp.video_link }}</td>
-                                    <td>{{ temp.start_time }}</td>
-                                    <td><input type="button" value="Delete" class="btn_del"
-                                               onclick="location.href = '{% url 'manage:delCctv' temp.id %}'"></td>
+                                    <td>위치</td>
+                                    <td>URL</td>
+                                    <td>시작시간</td>
+                                    <td>CCTV 삭제</td>
                                 </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody class=tbodytemp id="cctv_list_box">
 
-                    </div>
-                </div>
-                <br>
-                <div style="text-align: center;">
-                    <div class="tab-pane fade active in" id="Recognize" style="width: 100%;">
-                        <button class="btn btn-lg btn-default" data-target="#recogModal" data-toggle="modal" style="border-radius: 30px"
-                           onclick="setlayout();">CCTV 업로드</button>
-                    </div>
-                </div>
+                                {% for temp in qs %}
+                                    <tr>
+                                        <td>{{ temp.location }}</td>
+                                        <td>{{ temp.video_link }}</td>
+                                        <td>{{ temp.start_time }}</td>
+                                        <td><input type="button" value="Delete" class="btn_del"
+                                                   onclick="location.href = '{% url 'manage:delCctv' temp.id %}'"></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
 
-{#                <div>#}
-{#                    <form method="post" action="{% url 'manage:uploadcctv' %}" enctype="multipart/form-data">#}
-{#                        {% csrf_token %}#}
-{#                        <input id=input_video type="file" name="video">#}
-{#                        <input type="hidden" id="hidden_start_time" name="start_time" value="">#}
-{#                        <input type="hidden" id="hidden_end_time" name="end_time" value="">#}
-{#                        <input type="hidden" id="hidden_location" name="location" value="">#}
-{#                        <input type="hidden" id="hidden_latLng" name="latLng" value="">#}
-{#                        <button type="submit">Upload file</button>#}
-{#                    </form>#}
-{#                </div>#}
+                        </div>
+                    </div>
+                    <br>
+                    <div style="text-align: center;">
+                        <div class="tab-pane fade active in" id="Recognize" style="width: 100%;">
+                            <button class="btn btn-lg btn-default" data-target="#recogModal" data-toggle="modal"
+                                    style="border-radius: 30px"
+                                    onclick="setlayout();">CCTV 업로드
+                            </button>
+                        </div>
+                    </div>
+
+{#                    <div>#}
+{#                        <form method="post" action="{% url 'manage:uploadcctv' %}" enctype="multipart/form-data">#}
+{#                            {% csrf_token %}#}
+{#                            <input id=input_video type="file" name="video">#}
+{#                            <input type="hidden" id="hidden_start_time" name="start_time" value="">#}
+{#                            <input type="hidden" id="hidden_end_time" name="end_time" value="">#}
+{#                            <input type="hidden" id="hidden_location" name="location" value="">#}
+{#                            <input type="hidden" id="hidden_latLng" name="latLng" value="">#}
+{#                            <button type="submit">Upload file</button>#}
+{#                        </form>#}
+{#                    </div>#}
+                </div>
             </div>
-        </div>
 
             <div class="tab-pane fade in" id="tab-content-userManage">
                 <h3 style="margin: 30px">회원 관리</h3>
                 <div class="panel panel-default" style="height: 427px">
                     <div id="panel-heading" class="panel-heading">
                         <h3 class="panel-title" style="text-align: left;">회원 목록</h3>
-						<div class="pull-right" style="margin-top: -18px;font-size: 15px;">
-							<span class="filter" id="filter_button2" data-toggle="tooltip" title="Toggle table filter" data-container="body" style="cursor: pointer;position: relative;margin-left:5px;">
+                        <div class="pull-right" style="margin-top: -18px;font-size: 15px;">
+							<span class="filter" id="filter_button2" data-toggle="tooltip" title="Toggle table filter"
+                                  data-container="body" style="cursor: pointer;position: relative;margin-left:5px;">
 								<i class="glyphicon glyphicon-filter"></i>
 							</span>
-						</div>
+                        </div>
                     </div>
-                    <div class="panel-body" id = filter_box2 style="display:none;">
-						<input type="text" class="form-control" id="result_table_filter" data-action="filter" data-filters="#result_table2" placeholder="검색할 데이터를 입력하세요." />
-                   </div>
+                    <div class="panel-body" id=filter_box2 style="display:none;">
+                        <input type="text" class="form-control" id="result_table_filter" data-action="filter"
+                               data-filters="#result_table2" placeholder="검색할 데이터를 입력하세요."/>
+                    </div>
                     <div id="panel-body" class="panel-body">
-                        <input type="text" class="form-control" id="result_table_filter" data-action="filter" data-filters="#result_table2" placeholder="cctv id / search time / end time" />
-                	</div>
-                </div>
-            </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="modal" id="recogModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content" style="height: 600px;">
-                <div class="modal-header">
-                    CCTV 업로드
-                    <button class="close" data-dismiss="modal">&times;</button>
-                </div>
-
-                <div class="modal-body" style="text-align: center;">
-                    <form method="post" action="{% url 'manage:uploadcctv' %}" enctype="multipart/form-data">
-                        {% csrf_token %}
-
-                        <input type="hidden" id="hidden_start_time" name="start_time" value="">
-                        <input type="hidden" id="hidden_end_time" name="end_time" value="">
-                        <input type="hidden" id="hidden_location" name="location" value="">
-                        <input type="hidden" id="hidden_latLng" name="latLng" value="">
-
-                        <div class="col-sm-4" style="padding: 0px;">
-                            <span style="font-weight: bolder; font-size: 15px;">시작 시간</span>
-                            <input id="recognition_start_time" type="text" width="180"
-                                   style="margin-bottom: 15px" required>
-                        </div>
-
-                        <div class="col-sm-4" style="padding: 0px;">
-                            <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px ">종료 시간</span>
-                            <input id="recognition_end_time" type="text" width="180"
-                                   style="margin-bottom: 15px" required>
-                        </div>
-
-                        <div class="col-sm-4" style="padding: 0px;">
-                            <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">위치</span>
-                            <input id="recognition_location" name="location" value=""
-                                   style="margin-bottom: 15px" required>
-                        </div>
-
-                        <div id="recognition_map" style="width:565px;height:350px;"></div>
-                        <br>
-                        <input id=input_video type="file" name="video">
-                        <br>
-                        <button class="btn btn-default" type="submit" style="width: 120px" onclick="pass_info()">제출</button>
-                    </form>
+                        <input type="text" class="form-control" id="result_table_filter" data-action="filter"
+                               data-filters="#result_table2" placeholder="cctv id / search time / end time"/>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="modal" id="recogModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content" style="height: 600px;">
+                    <div class="modal-header">
+                        CCTV 업로드
+                        <button class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body" style="text-align: center;">
+                        <form method="post" action="{% url 'manage:uploadcctv' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <input type="hidden" id="hidden_start_time" name="start_time" value="">
+                            <input type="hidden" id="hidden_end_time" name="end_time" value="">
+                            <input type="hidden" id="hidden_location" name="location" value="">
+                            <input type="hidden" id="hidden_latLng" name="latLng" value="">
+
+                            <div class="col-sm-4" style="padding: 0px;">
+                                <span style="font-weight: bolder; font-size: 15px;">시작 시간</span>
+                                <input id="recognition_start_time" type="text" width="180"
+                                       style="margin-bottom: 15px" required>
+                            </div>
+
+                            <div class="col-sm-4" style="padding: 0px;">
+                                <span style="font-weight: bolder; font-size: 15px;"
+                                      style="margin-bottom: 15px ">종료 시간</span>
+                                <input id="recognition_end_time" type="text" width="180"
+                                       style="margin-bottom: 15px" required>
+                            </div>
+
+                            <div class="col-sm-4" style="padding: 0px;">
+                                <span style="font-weight: bolder; font-size: 15px;"
+                                      style="margin-bottom: 15px">위치</span>
+                                <input id="recognition_location" name="location" value=""
+                                       style="margin-bottom: 15px" required>
+                            </div>
+
+                            <div id="recognition_map" style="width:565px;height:350px;"></div>
+                            <br>
+                            <input id=input_video type="file" name="video">
+                            <br>
+                            <button class="btn btn-default" type="submit" style="width: 120px" onclick="pass_info()">
+                                제출
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div id="loading">
+        <img src="{% static 'images/loading.gif' %}" alt="loading">
+    </div>
+    <br>
+    {% include 'footer.html' %}
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <script>alert("{{ message }}")</script>
+            {% endfor %}
+        </ul>
+    {% endif %}
 </div>
-
-
-<br>
-{% include 'footer.html' %}
-
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <script>alert("{{ message }}")</script>
-        {% endfor %}
-    </ul>
-{% endif %}
-
 <script src="{% static 'vendor/bootstrap/js/bootstrap.js' %}"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a8a08365e71499493906a12ac8f92432"></script>
 <script>
@@ -321,10 +368,36 @@
 
     }
 
+    $(document).ready(function () {
+        $('#loading').hide();
+    });
+
     function pass_info() {
         document.getElementById("hidden_start_time").value = document.getElementById("recognition_start_time").value;
         document.getElementById("hidden_end_time").value = document.getElementById("recognition_end_time").value;
         document.getElementById("hidden_location").value = document.getElementById("recognition_location").value;
+
+        $('#loading').show();
+        $('#recogModal').hide();
+        {#$.ajax({#}
+        {#    url: 'loading',#}
+        {#    dataType: 'json',#}
+        {##}
+        {#    type: 'get',#}
+        {#    success: function (data) {#}
+        {#        alert(data.data);#}
+        {##}
+        {#    },#}
+        {#    error: function (xhr, error) {#}
+        {#        alert("서버와의 통신에서 문제가 발생했습니다.");#}
+        {#        console.error("error : " + error);#}
+        {#    }#}
+        {##}
+        {#    }#}
+        {#    )#}
+        {#;#}
+
+
     }
 
     var recognition_container = document.getElementById('recognition_map');
@@ -418,7 +491,7 @@
     }
 
 
-    function recognition_get_location(info) {
+    function recognition_get_location(info, position) {
         return function () {
             document.getElementById("recognition_location").value = info;
             document.getElementById("hidden_latLng").value = position;
@@ -439,55 +512,97 @@
         });
     });
 
-    (function(){
-                    'use strict';
-                    var $ = jQuery;
-                    $.fn.extend({
-                        filterTable: function(){
-                            return this.each(function(){
-                                $(this).on('keyup', function(e){
-                                    $('.filterTable_no_results').remove();
-                                    var $this = $(this),
-                                        search = $this.val().toLowerCase(),
-                                        target = $this.attr('data-filters'),
-                                        $target = $(target),
-                                        $rows = $target.find('tbody tr');
+    (function () {
+        'use strict';
+        var $ = jQuery;
+        $.fn.extend({
+            filterTable: function () {
+                return this.each(function () {
+                    $(this).on('keyup', function (e) {
+                        $('.filterTable_no_results').remove();
+                        var $this = $(this),
+                            search = $this.val().toLowerCase(),
+                            target = $this.attr('data-filters'),
+                            $target = $(target),
+                            $rows = $target.find('tbody tr');
 
-                                    if(search == '') {
-                                        $rows.show();
-                                    } else {
-                                        $rows.each(function(){
-                                            var $this = $(this);
-                                            $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
-                                        })
-                                        if($target.find('tbody tr:visible').size() === 0) {
-                                            var col_count = $target.find('tr').first().find('td').size();
-                                            var no_results = $('<tr class="filterTable_no_results"><td colspan="'+col_count+'">No results found</td></tr>')
-                                            $target.find('tbody').append(no_results);
-                                        }
-                                    }
-                                });
-                            });
+                        if (search == '') {
+                            $rows.show();
+                        } else {
+                            $rows.each(function () {
+                                var $this = $(this);
+                                $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
+                            })
+                            if ($target.find('tbody tr:visible').size() === 0) {
+                                var col_count = $target.find('tr').first().find('td').size();
+                                var no_results = $('<tr class="filterTable_no_results"><td colspan="' + col_count + '">No results found</td></tr>')
+                                $target.find('tbody').append(no_results);
+                            }
                         }
                     });
-                    $('[data-action="filter"]').filterTable();
-                })(jQuery);
-
-                jQuery('#filter_button1').click(function () {
-                    if($("#filter_box1").css("display") == "none"){
-                        jQuery('#filter_box1').css("display", "block");
-                    } else {
-                        jQuery('#filter_box1').css("display", "none");
-                    }
                 });
+            }
+        });
+        $('[data-action="filter"]').filterTable();
+    })(jQuery);
 
-                jQuery('#filter_button2').click(function () {
-                    if($("#filter_box2").css("display") == "none"){
-                        jQuery('#filter_box2').css("display", "block");
-                    } else {
-                        jQuery('#filter_box2').css("display", "none");
-                    }
-                });
+    jQuery('#filter_button1').click(function () {
+        if ($("#filter_box1").css("display") == "none") {
+            jQuery('#filter_box1').css("display", "block");
+        } else {
+            jQuery('#filter_box1').css("display", "none");
+        }
+    });
+
+    jQuery('#filter_button2').click(function () {
+        if ($("#filter_box2").css("display") == "none") {
+            jQuery('#filter_box2').css("display", "block");
+        } else {
+            jQuery('#filter_box2').css("display", "none");
+        }
+    });
+
+
+    function test(imageName) {
+        LoadingWithMask('your site\'s image path');
+        setTimeout("closeLoadingWithMask()", 30000000000000);
+    }
+
+    function LoadingWithMask(gif) {
+        //화면의 높이와 너비를 구합니다.
+        var maskHeight = $(document).height();
+        var maskWidth = window.document.body.clientWidth;
+
+        //화면에 출력할 마스크를 설정해줍니다.
+        var mask = "<div id='mask' style='position:absolute; z-index:9000; background-color:#000000; display:none; left:0; top:0;'></div>";
+        var loadingImg = '';
+
+        loadingImg += " <img src='" + gif + "' style='position: absolute; display: block; margin: 0px auto;'/>";
+
+        //화면에 레이어 추가
+        $('body')
+            .append(mask)
+
+        //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채웁니다.
+        $('#mask').css({
+            'width': maskWidth,
+            'height': maskHeight,
+            'opacity': '0.3'
+        });
+
+        //마스크 표시
+        $('#mask').show();
+
+        //로딩중 이미지 표시
+        $('#loadingImg').append(loadingImg);
+        $('#loadingImg').show();
+    }
+
+    function closeLoadingWithMask() {
+        $('#mask, #loadingImg').hide();
+        $('#mask, #loadingImg').empty();
+    }
+
 
 </script>
 </body>
