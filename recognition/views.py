@@ -42,6 +42,8 @@ def recog(req):
 
             filter_cctv = Cctv.objects.filter(location=location, start_time__lte=start_time).order_by('start_time')
 
+            print(filter_cctv[0].video_link)
+
             if bool(filter_cctv) == False:
                 cctv_log = []
             else:

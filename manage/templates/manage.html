@@ -35,13 +35,13 @@
         text-align: center;
     }
 
-        tbody {
+        .tbodytemp {
             display:block;
             height:250px;
             overflow:auto;
         }
 
-        thead, tbody tr {
+        .theadtemp, .tbodytemp tr {
             display:table;
             width:100%;
             table-layout:fixed;
@@ -62,8 +62,23 @@
     }
     .btn_del{
         border-radius: 15px;
-        width: 30%;
-        background-color: red;
+        width: 35%;
+        background-color: #FF0033;
+        font-weight: bold;
+    }
+
+    #basic_button{
+        background-color: #efefef;
+        color: black;
+        border-color: gray;
+        border-radius: 3px;
+        width: 130px;
+        height: 30px;
+        text-align: center;
+
+    }
+    #basic_button:hover{
+        background-color: #e5e5e5;
     }
 </style>
 <body>
@@ -88,7 +103,7 @@
                     <div class="panel-heading" style="color: black;">CCTV 목록</div>
                     <div id=cctv_panel_body class="panel-body">
                         <table class="table table-hover">
-                            <thead>
+                            <thead class="theadtemp">
                             <tr>
                                 <td>위치</td>
                                 <td>URL</td>
@@ -96,14 +111,14 @@
                                 <td>CCTV 삭제</td>
                             </tr>
                             </thead>
-                            <tbody id="cctv_list_box">
+                            <tbody class = tbodytemp id="cctv_list_box">
 
                             {% for temp in qs %}
                                 <tr>
                                     <td>{{ temp.location }}</td>
                                     <td>{{ temp.video_link }}</td>
                                     <td>{{ temp.start_time }}</td>
-                                    <td><input type="button" value="삭제" class="btn_del"
+                                    <td><input type="button" value="Delete" class="btn_del"
                                                onclick="location.href = '{% url 'manage:delCctv' temp.id %}'"></td>
                                 </tr>
                             {% endfor %}
@@ -115,11 +130,11 @@
 
                 <div class="tab-content">
                     <div class="tab-pane fade active in" id="Recognize" style="width: 100%;">
-                        <a class="btn btn-lg btn-primary" data-target="#recogModal" data-toggle="modal"
-                           onclick="setlayout();">서비스
-                            시작하기</a>
+                        <a class="btn btn-primary" id = basic_button data-target="#recogModal" data-toggle="modal" style=""
+                           onclick="setlayout();">CCTV 위치 선택</a>
                     </div>
                 </div>
+
                 <div>
                     <form method="post" action="{% url 'manage:uploadcctv' %}" enctype="multipart/form-data">
                         {% csrf_token %}
@@ -127,6 +142,7 @@
                         <input type="hidden" id="hidden_start_time" name="start_time" value="">
                         <input type="hidden" id="hidden_end_time" name="end_time" value="">
                         <input type="hidden" id="hidden_location" name="location" value="">
+                        <input type="hidden" id="hidden_latLng" name="latLng" value="">
                         <button type="submit">Upload file</button>
                     </form>
                 </div>
@@ -174,7 +190,7 @@
                     <div id="recognition_map" style="width:565px;height:350px;"></div>
 
                     <div class="btn-area">
-                        <button id="btn" data-dismiss="modal" onclick="pass_info()">제출</button>
+                        <button class = base_button id="btn" data-dismiss="modal" onclick="pass_info()" style="margin-top: 10px;width: 150px;">제출</button>
                         {#                        <button id="btn" type="submit">제출</button>#}
                     </div>
 
@@ -207,8 +223,8 @@
             dataType: 'json',
             success: function (data) {
                 $('#panel-heading').html("회원 목록")
-                $('#panel-body').html('<table class="table table-hover"><thead><tr><td>아이디</td><td>이름</td><td>권한</td><td>회원 삭제</td></tr></thead>' +
-                    '<tbody id="user_list_box"></tbody></table>');
+                $('#panel-body').html('<table class="table table-hover"><thead class=theadtemp><tr><td>아이디</td><td>이름</td><td>권한</td><td>회원 삭제</td></tr></thead>' +
+                    '<tbody class = tbodytemp id="user_list_box"></tbody></table>');
 
                 for (var i in data) {
                     var user_list = document.createElement("tr");
@@ -216,7 +232,7 @@
                         '<td>' + data[i].name + '</td>' +
                         '<td>' + '<select id="permission' + data[i].id + '" onchange="grantUser(' + data[i].id + ')">'
                         + '<option id="member' + data[i].id + '">' + 'member</option> <option id="admin' + data[i].id + '">' + 'admin</option>' + '</select>' + '</td>'
-                        + '<td>' + '<input type="button" value="삭제" onclick="delUser(' + data[i].id + ')" class="btn_del">'
+                        + '<td>' + '<input type="button" value="Delete" onclick="delUser(' + data[i].id + ')" class="btn_del">'
 
 
                     $('#user_list_box').append(user_list);
@@ -329,7 +345,7 @@
             content: positions[i].title // 인포윈도우에 표시할 내용
         });
 
-        kakao.maps.event.addListener(recognition_marker, 'click', recognition_get_location(positions[i].title));
+        kakao.maps.event.addListener(recognition_marker, 'click', recognition_get_location(positions[i].title, recognition_marker.getPosition()));
         kakao.maps.event.addListener(recognition_marker, 'mouseover', makeOverListener(recognition_map, recognition_marker, infowindow));
         kakao.maps.event.addListener(recognition_marker, 'mouseout', makeOutListener(infowindow));
     }
@@ -341,6 +357,8 @@
         if (flag % 2 == 0) {
             addMarker(mouseEvent.latLng);
             flag++;
+
+            document.getElementById("hidden_latLng").value = mouseEvent.latLng;
         }
     });
 
@@ -371,9 +389,10 @@
     }
 
 
-    function recognition_get_location(info) {
+    function recognition_get_location(info, position) {
         return function () {
             document.getElementById("recognition_location").value = info;
+            document.getElementById("hidden_latLng").value = position;
         };
     }
 
