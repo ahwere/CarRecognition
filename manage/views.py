@@ -36,8 +36,6 @@ def uploadcctv(req):
         location = req.POST['location']
         latLng = req.POST['latLng']
 
-        # return HttpResponse(latLng)
-
         temp = latLng.split(",")
         altitude = temp[0][1:]
         longtitude = temp[1][:-1]
@@ -55,7 +53,6 @@ def uploadcctv(req):
             name = fs.save(uploaded_file.name, uploaded_file)
             # url = fs.url(name)
             messages.info(req, "동영상이 업로드 되었습니다.")
-            print(start_time + location)
             return redirect('manage:manage')
     else:
         return redirect('manage:manage')

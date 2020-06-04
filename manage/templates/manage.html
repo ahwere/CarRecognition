@@ -35,17 +35,18 @@
         text-align: center;
     }
 
-        .tbodytemp {
+    .tbodytemp {
             display:block;
             height:250px;
-            overflow:auto;
-        }
+            overflow: auto;
+    }
 
-        .theadtemp, .tbodytemp tr {
-            display:table;
-            width:100%;
-            table-layout:fixed;
-        }
+    .theadtemp, .tbodytemp tr {
+        display:table;
+        width:100%;
+        table-layout:fixed;
+    }
+
     .menu{
         background-color: #F8F8F8;
         border-radius: 25px;
@@ -63,7 +64,7 @@
     .btn_del{
         border-radius: 15px;
         width: 35%;
-        background-color: #FF0033;
+        background-color: white;
         font-weight: bold;
     }
 
@@ -109,7 +110,7 @@
 						</div>
                     </div>
                 <div class="panel-body" id = filter_box1 style="display:none;">
-						<input type="text" class="form-control" id="result_table_filter" data-action="filter" data-filters="#result_table" placeholder="cctv id / search time / end time" />
+						<input type="text" class="form-control" id="result_table_filter" data-action="filter" data-filters="#result_table" placeholder="검색할 데이터를 입력하세요." />
                 </div>
                     <div id=cctv_panel_body class="panel-body">
                         <table class="table table-hover" id = 'result_table'>
@@ -137,11 +138,11 @@
 
                     </div>
                 </div>
-
-                <div class="tab-content">
+                <br>
+                <div style="text-align: center;">
                     <div class="tab-pane fade active in" id="Recognize" style="width: 100%;">
-                        <a class="btn btn-primary" id = basic_button data-target="#recogModal" data-toggle="modal" style=""
-                           onclick="setlayout();">CCTV 업로드</a>
+                        <button class="btn btn-lg btn-default" data-target="#recogModal" data-toggle="modal" style="border-radius: 30px"
+                           onclick="setlayout();">CCTV 업로드</button>
                     </div>
                 </div>
 
@@ -171,8 +172,8 @@
 						</div>
                     </div>
                     <div class="panel-body" id = filter_box2 style="display:none;">
-						<input type="text" class="form-control" id="result_table_filter" data-action="filter" data-filters="#result_table2" placeholder="cctv id / search time / end time" />
-                </div>
+						<input type="text" class="form-control" id="result_table_filter" data-action="filter" data-filters="#result_table2" placeholder="검색할 데이터를 입력하세요." />
+                   </div>
                     <div id="panel-body" class="panel-body">
                         <input type="text" class="form-control" id="result_table_filter" data-action="filter" data-filters="#result_table2" placeholder="cctv id / search time / end time" />
                 	</div>
@@ -184,45 +185,45 @@
 <div class="row">
     <div class="modal" id="recogModal" tabindex="-1">
         <div class="modal-dialog">
-            <div class="modal-content" style="height:650px;">
+            <div class="modal-content" style="height: 600px;">
                 <div class="modal-header">
                     CCTV 업로드
                     <button class="close" data-dismiss="modal">&times;</button>
                 </div>
 
-                <div class="modal-body" style="width:550px;height:480px;text-align: center;">
-                    <div class="col-sm-4">
-                        <span style="font-weight: bolder; font-size: 15px;">시작 시간</span>
-                        <input id="recognition_start_time" type="text" width="180"
-                               style="margin-bottom: 15px" readonly/>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">종료 시간</span>
-                        <input id="recognition_end_time" type="text" width="180"
-                               style="margin-bottom: 15px" readonly/>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">위치</span>
-                        <input id="recognition_location" name="location" value=""
-                               style="margin-bottom: 15px">
-                    </div>
-
-                    <div id="recognition_map" style="width:565px;height:350px;"></div>
-                <br>
-                <div>
+                <div class="modal-body" style="text-align: center;">
                     <form method="post" action="{% url 'manage:uploadcctv' %}" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <input id=input_video type="file" name="video">
+
                         <input type="hidden" id="hidden_start_time" name="start_time" value="">
                         <input type="hidden" id="hidden_end_time" name="end_time" value="">
                         <input type="hidden" id="hidden_location" name="location" value="">
                         <input type="hidden" id="hidden_latLng" name="latLng" value="">
-                        <br><br>
-                        <button class="btn btn-default" type="submit" style="width: 100px">제출</button>
+
+                        <div class="col-sm-4" style="padding: 0px;">
+                            <span style="font-weight: bolder; font-size: 15px;">시작 시간</span>
+                            <input id="recognition_start_time" type="text" width="180"
+                                   style="margin-bottom: 15px" required>
+                        </div>
+
+                        <div class="col-sm-4" style="padding: 0px;">
+                            <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px ">종료 시간</span>
+                            <input id="recognition_end_time" type="text" width="180"
+                                   style="margin-bottom: 15px" required>
+                        </div>
+
+                        <div class="col-sm-4" style="padding: 0px;">
+                            <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">위치</span>
+                            <input id="recognition_location" name="location" value=""
+                                   style="margin-bottom: 15px" required>
+                        </div>
+
+                        <div id="recognition_map" style="width:565px;height:350px;"></div>
+                        <br>
+                        <input id=input_video type="file" name="video">
+                        <br>
+                        <button class="btn btn-default" type="submit" style="width: 120px" onclick="pass_info()">제출</button>
                     </form>
-                </div>
                 </div>
             </div>
         </div>
@@ -438,6 +439,55 @@
         });
     });
 
+    (function(){
+                    'use strict';
+                    var $ = jQuery;
+                    $.fn.extend({
+                        filterTable: function(){
+                            return this.each(function(){
+                                $(this).on('keyup', function(e){
+                                    $('.filterTable_no_results').remove();
+                                    var $this = $(this),
+                                        search = $this.val().toLowerCase(),
+                                        target = $this.attr('data-filters'),
+                                        $target = $(target),
+                                        $rows = $target.find('tbody tr');
+
+                                    if(search == '') {
+                                        $rows.show();
+                                    } else {
+                                        $rows.each(function(){
+                                            var $this = $(this);
+                                            $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
+                                        })
+                                        if($target.find('tbody tr:visible').size() === 0) {
+                                            var col_count = $target.find('tr').first().find('td').size();
+                                            var no_results = $('<tr class="filterTable_no_results"><td colspan="'+col_count+'">No results found</td></tr>')
+                                            $target.find('tbody').append(no_results);
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                    });
+                    $('[data-action="filter"]').filterTable();
+                })(jQuery);
+
+                jQuery('#filter_button1').click(function () {
+                    if($("#filter_box1").css("display") == "none"){
+                        jQuery('#filter_box1').css("display", "block");
+                    } else {
+                        jQuery('#filter_box1').css("display", "none");
+                    }
+                });
+
+                jQuery('#filter_button2').click(function () {
+                    if($("#filter_box2").css("display") == "none"){
+                        jQuery('#filter_box2').css("display", "block");
+                    } else {
+                        jQuery('#filter_box2').css("display", "none");
+                    }
+                });
 
 </script>
 </body>

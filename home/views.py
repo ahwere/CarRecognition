@@ -159,12 +159,19 @@ def search_record(req):
     startdate=datetime.date(y1,m1,d1)
     enddate = datetime.date(y2,m2,d2)
 
-    userlogs = list(UserLog.objects.filter(Q(user=auth.get_user(req))&Q(search_time__gte=startdate,end_time__lte=enddate)).values())
+    userlogs = list(UserLog.objects.filter(
+        Q(user=auth.get_user(req)) & Q(search_time__gte=startdate, end_time__lte=enddate)).values())
 
+    infolist = []
 
     for value in userlogs:
+        cctv_name = Cctv.objects.get(id = value['cctv_id_id'])
+        value['location'] = cctv_name.location
+        infolist.append(value)
+
         datetemp = value['search_time'].strftime("%Y/%m/%d %H:%M:%S")
         value['search_time'] = datetemp
         datetemp2 = value['end_time'].strftime("%Y/%m/%d %H:%M:%S")
         value['end_time'] = datetemp2
-    return JsonResponse(userlogs, safe=False)
+
+    return JsonResponse(infolist, safe=False)
