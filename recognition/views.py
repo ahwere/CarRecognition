@@ -24,7 +24,6 @@ def recognition(req):
         messages.info(req, '로그인 후 이용가능합니다.')
         return redirect("home:index")
 
-
 def recog(req):
     cur_user = req.user
     cctv = Cctv.objects.all()
@@ -48,14 +47,14 @@ def recog(req):
                 return redirect("recognition:recognition")
 
             filter_cctv = Cctv.objects.filter(location=location, start_time__lte=start_time).order_by('start_time')
-            print(filter_cctv)
+
             if bool(filter_cctv) == False:
                 cctv_log = []
                 video_link = []
             else:
                 cctv_log = CctvLog.objects.filter(cctv_id=filter_cctv[0].id, appearance_time__gte=start_time,
                                                   appearance_time__lte=end_time).order_by('appearance_time')
-                print(cctv_log)
+
                 video_link = filter_cctv[0].video_link.split("static/")[1]
                 time1 = int(start_time[17]) * 10
                 time2 = int(start_time[18])
@@ -89,6 +88,7 @@ def recog(req):
 
 
 def recogTime(req):
+
     x = req.GET['time']
 
     context = {

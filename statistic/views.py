@@ -47,6 +47,10 @@ def stat(req):
             date['start_time'] = start_time
             date['end_time'] = end_time
 
+            if (start_time > end_time):
+                messages.info(req, "검색 시간을 확인해주세요.")
+                return redirect("recognition:recognition")
+
             # print(location)
 
             filter_cctv = Cctv.objects.filter(location=location, start_time__lte=start_time).order_by('start_time')
