@@ -45,6 +45,8 @@
 </div>
 <br>
 
+<div class="container">
+
 {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -52,8 +54,6 @@
         {% endfor %}
     </ul>
 {% endif %}
-
-<div class="container">
 
     <div class="col-lg-2 menu" style="text-align: center">
         <h3>MENU</h3>
@@ -80,12 +80,13 @@
 
     {% if cctv_log %}
         <div class="col-lg-6" style="height: 500px;text-align: center;position: relative">
-            <video id="video" controls onplay="startAlert()" onpause="stopAlert()">
-                <source src="{% static 'videos/cctv1.mp4' %}">
+            <video id="video" controls onplay="startAlert()" onpause="stopAlert()" style="width: 100%;height: 100%;">
+{#                <source src="{% static 'videos/minchan.mp4' %}">#}
+                <source src="{% static video_link %}#t={{ stime }},{{ etime }}" type="video/mp4">
             </video>
         </div>
         <div id="car_list_box" class="col-lg-4 menu"
-             style="text-align:center; height: 500px;overflow: scroll;">
+             style="text-align:left;height: 500px;overflow: auto;">
         </div>
     {% else %}
         <div class="col-lg-10" style="height: 500px;text-align: center;position: relative;">
@@ -110,7 +111,7 @@
                 </button>
                 <img style="width: auto;height: auto;max-width: 100%;max-height: 470px;" src="{% static 'images/recog_menual3.png' %}">
             </div>
-            <div style="position: absolute;left:0px;bottom:-15px;width:100%;">
+            <div style="position: absolute;left:0px;bottom:0px;width:100%;">
                 <input class = radiobtn id="radio_page1" type="radio" name="page" value="1" checked="checked" onclick="page1_show()">
                 <input class = radiobtn id="radio_page2" type="radio" name="page" value="2" onclick="page2_show()">
                 <input class = radiobtn id="radio_page3" type="radio" name="page" value="3" onclick="page3_show()">
@@ -153,7 +154,51 @@
 </div>
 
 <br>
-{% include 'recog_modal.html' %}
+
+<div class="row">
+    <div class="modal" id="recogModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    차량 인식 서비스
+                    <button class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <form action="/recognition/recog/" method="POST">
+                    {% csrf_token %}
+                    <div class="modal-body" style="width:550px;height:480px;text-align: center;">
+                        <div class="col-sm-4">
+                            <span style="font-weight: bolder; font-size: 15px;">시작 시간</span>
+                            <input id="recognition_start_time" type="text" name="start_time"
+                                   value="{{ date.start_time }}" width="180"
+                                   style="margin-bottom: 15px" readonly/>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">종료 시간</span>
+                            <input id="recognition_end_time" type="text" name="end_time" value="{{ date.end_time }}"
+                                   width="180"
+                                   style="margin-bottom: 15px" readonly/>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <span style="font-weight: bolder; font-size: 15px;" style="margin-bottom: 15px">위치</span>
+                            <input id="recognition_location" name="location" width="180" value="{{ date.location }}"
+                                   style="margin-bottom: 15px" readonly>
+                        </div>
+
+                        <div id="recognition_map" style="width:565px;height:350px;"></div>
+
+                        <div class="btn-area">
+                            <button class=base_button id="btn" type="submit" style="width: 150px; margin-top: 10px">제출</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% include 'footer.html' %}
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a8a08365e71499493906a12ac8f92432"></script>
@@ -170,7 +215,8 @@
             if (x == {{ cctv_log.0.appearance_time.second }} && y =={{ cctv_log.0.appearance_time.minute }}) {
                 var car_list = document.createElement("li");
 
-                car_list.innerHTML = '{{ cctv_log.0.color }}' + ' ' + '{{ cctv_log.0.car_model.model }}' + ' ' + '{{ cctv_log.0.appearance_time }}'
+                car_list.innerHTML = '{{ cctv_log.0.color }}' + ' ' + '{{ cctv_log.0.car_model.model }}' + '<br>' + '{{ cctv_log.0.appearance_time.date }}' + ' ' + '{{ cctv_log.0.appearance_time.hour }}'
+                        + '시 ' +  '{{ cctv_log.0.appearance_time.minute }}' + '분 ' + '{{ cctv_log.0.appearance_time.second }}' + '초' +'<hr>'
                 $('#car_list_box').prepend(car_list);
 
             }
@@ -187,7 +233,8 @@
                     if (x == {{ log.appearance_time.second }} && y == {{ log.appearance_time.minute }}) {
                         var car_list = document.createElement("li");
 
-                        car_list.innerHTML = car_list.innerHTML = '{{ log.color }}' + ' ' + '{{ log.car_model.model }}' + ' ' + '{{ log.appearance_time }}'
+                        car_list.innerHTML = car_list.innerHTML = '{{ log.color }}' + ' ' + '{{ log.car_model.model }}' + '<br>' + '{{ log.appearance_time.date }}' + ' ' + '{{ log.appearance_time.hour }}'
+                        + '시 ' +  '{{ log.appearance_time.minute }}' + '분 ' + '{{ log.appearance_time.second }}' + '초' + '<hr>'
 
                         $('#car_list_box').prepend(car_list);
 
@@ -291,4 +338,3 @@
 </script>
 </body>
 </html>
-

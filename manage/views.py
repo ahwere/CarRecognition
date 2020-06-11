@@ -8,10 +8,10 @@ from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from recognition.models import Cctv
 import Module.tracker_video_classifier
-import time
 
 # Create your views here.
 def manage(req):
+    messages.info(req,"동영상이 업로드 되었습니다.")
     cur_user = req.user
 
     cctv = Cctv.objects.all()
@@ -39,8 +39,6 @@ def uploadcctv(req):
         location = req.POST['location']
         latLng = req.POST['latLng']
 
-        print(latLng)
-
         temp = latLng.split(",")
         latitude = temp[0][1:]
         longtitude = temp[1][1:-1]
@@ -56,11 +54,11 @@ def uploadcctv(req):
 
             fs = FileSystemStorage()
             name = fs.save(uploaded_file.name, uploaded_file)
-             # url = fs.url(name)
+            # url = fs.url(name)
             messages.info(req, "동영상이 업로드 되었습니다.")
-            time.sleep(10)
 
-            #Module.tracker_video_classifier.Wls(uploaded_file.name, start_time, location, latitude, longtitude)
+            Module.tracker_video_classifier.Wls(uploaded_file.name, start_time, location, latitude, longtitude)
+
             return redirect('manage:manage')
     else:
         return redirect('manage:manage')
