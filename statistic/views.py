@@ -47,6 +47,10 @@ def stat(req):
             date['start_time'] = start_time
             date['end_time'] = end_time
 
+            if (start_time > end_time):
+                messages.info(req, "검색 시간을 확인해주세요.")
+                return redirect("recognition:recognition")
+
             # print(location)
 
             filter_cctv = Cctv.objects.filter(location=location, start_time__lte=start_time).order_by('start_time')
@@ -58,9 +62,6 @@ def stat(req):
             else:
                 cctv_log = CctvLog.objects.filter(cctv_id=filter_cctv[0].id, appearance_time__gte=start_time,
                                                   appearance_time__lte=end_time).order_by('appearance_time')
-
-                if not cctv_log:
-                    messages.info(req,"검색된 데이터가 존재하지 않습니다.")
 
                 for i in cctv_log:
                     brand_arr.append(i.car_model.brand)
@@ -74,6 +75,9 @@ def stat(req):
                     temp_dic['brand'] = i
                     temp_dic['car_count'] = brand_dic[i]
                     submit_arr.append(temp_dic)
+
+            if not cctv_log:
+                messages.info(req, "검색된 데이터가 존재하지 않습니다.")
 
         return render(req, "statistic_Service.html", {'user': user, 'cctv': cctv_list, 'count': range(cctv.count()), 'dataset': submit_arr, 'date': date})
 
