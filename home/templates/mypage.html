@@ -210,13 +210,50 @@
                             }
                         });
 
+                        $('#search_button').click(function() {
+                            $('#result_table_body2').empty();
+                            $.ajax({
+                                url:"{% url 'home:search_record2' %}",
+                                type: 'post',
+                                data: {
+                                    'date1':$('#datepicker1').val(),
+                                    'date2':$('#datepicker2').val()
+                                },
+                                dataType: 'json',
+                                success: function (data) {
+                                    i=1;
+                                    for (var name in data){
+                                        $('#result_table_body2')
+                                            .append('<tr>'+
+                                                '<td>'+i+'</td>'+
+                                                '<td>'+data[name].cctv_id_id+'</td>'+
+                                                '<td>'+data[name].car_model_id+'</td>'+
+                                                '<td>'+data[name].color+'</td>'+
+                                                '<td>'+data[name].appearance_time+'</td>'+ '</tr>')
+                                            i++;
+                                    }
+
+                                },
+
+                                error: function(request,status,error){
+                                    alert("입력값을 확인해 주세요.")
+                                }
+
+                            })
+
+
+                            if($("#result_panel").css("display") == "none"){
+                                jQuery('#result_panel').css("display", "block");
+                            }
+                        });
+
 
                         function fnExcelReport()
                         {
                             var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
                             var textRange;
                             var j=0;
-                            tab = document.getElementById('result_table'); // id of table
+                            tab = document.getElementById('result_table2'); // id of table
 
                             for(j = 0 ; j < tab.rows.length ; j++)
                             {
@@ -277,6 +314,21 @@
                                 </tr>
                             </thead>
                             <tbody id="result_table_body" style="text-align: center;">
+
+                            </tbody>
+                        </table>
+
+						<table class="table table-hover" id="result_table2" style="display: none">
+                            <thead>
+                                <tr>
+                                    <th>num</th>
+                                    <th>CCTV id</th>
+                                    <th>차종</th>
+                                    <th>색깔</th>
+									<th>emergency time</th>
+                                </tr>
+                            </thead>
+                            <tbody id="result_table_body2" style="text-align: center;">
 
                             </tbody>
                         </table>

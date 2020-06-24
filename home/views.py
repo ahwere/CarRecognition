@@ -175,3 +175,35 @@ def search_record(req):
         value['end_time'] = datetemp2
 
     return JsonResponse(infolist, safe=False)
+
+
+@csrf_exempt
+def search_record2(req):
+
+    date1 = req.POST.get('date1','')
+    date2 = req.POST.get('date2','')
+
+    m1 = int(date1[0:2])
+    d1 = int(date1[3:5])
+    y1 = int(date1[6:10])
+    m2 = int(date2[0:2])
+    d2 = int(date2[3:5])
+    y2 = int(date2[6:10])
+
+    startdate=datetime.date(y1,m1,d1)
+    enddate = datetime.date(y2,m2,d2)
+
+    userlogs = UserLog.objects.filter(Q(user=auth.get_user(req))&Q(search_time__gte=startdate,end_time__lte=enddate))
+
+    cctvlogs = []
+    i = 0
+
+    for userlog in userlogs:
+        query = CctvLog.objects.filter(Q(cctv_id=userlog.cctv_id) & Q(appearance_time__gte=userlog.search_time, appearance_time__lte=userlog.end_time))
+        log_list = list(query.values())
+        for value in log_list:
+            datetemp = value['appearance_time'].strftime("%m/%d/%Y %H:%M:%S")
+            value['appearance_time'] = datetemp
+            cctvlogs.append(value)
+
+    return JsonResponse(cctvlogs, safe=False)
